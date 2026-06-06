@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Node Overview - TEC SERVER</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
+<script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            'tec-bg': '#0f171a',
+            'tec-sidebar': '#131c20',
+            'tec-card': '#1a2428',
+            'tec-accent': '#10b981', // Emerald 500
+            'tec-accent-dim': '#064e3b',
+            'tec-text-dim': '#94a3b8',
+            'tec-border': '#2d3a3f',
+            'tec-warning': '#f59e0b',
+            'tec-danger': '#ef4444',
+          }
+        }
+      }
+    }
+  </script>
+<style data-purpose="custom-layout">
+    body {
+      background-color: #0f171a;
+      color: #e2e8f0;
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    }
+    .scrollbar-hide::-webkit-scrollbar {
+      display: none;
+    }
+    /* Simple line chart mock using SVG background for high fidelity */
+    .chart-background {
+      background-image: linear-gradient(rgba(16, 185, 129, 0.1) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(16, 185, 129, 0.1) 1px, transparent 1px);
+      background-size: 40px 40px;
+    }
+  </style>
+</head>
+<body class="h-screen flex overflow-hidden">
+<!-- BEGIN: LeftSidebar -->
+<aside class="w-64 bg-tec-sidebar border-r border-tec-border flex flex-col shrink-0" data-purpose="main-navigation">
+<div class="p-6 flex items-center gap-2">
+<span class="text-xl font-bold tracking-tighter text-white">TEC SERVER</span>
+</div>
+<!-- Node Selector -->
+<div class="px-4 mb-8">
+<div class="bg-tec-card p-3 rounded-lg border border-tec-border flex items-center gap-3">
+<div class="bg-tec-accent/20 p-2 rounded">
+<i class="fas fa-server text-tec-accent"></i>
+</div>
+<div>
+<div class="text-xs font-bold text-white">Root-Node-01</div>
+<div class="text-[10px] text-tec-text-dim">192.168.1.105</div>
+</div>
+</div>
+</div>
+<!-- Nav Links -->
+<nav class="flex-1 px-2 space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 text-tec-accent bg-tec-accent/10 border-l-4 border-tec-accent font-medium transition-colors" href="#">
+<i class="fas fa-th-large w-5"></i>
+<span>Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-tec-text-dim hover:text-white hover:bg-white/5 transition-colors" href="#">
+<i class="fas fa-microchip w-5"></i>
+<span>Processes</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-tec-text-dim hover:text-white hover:bg-white/5 transition-colors" href="#">
+<i class="fas fa-users w-5"></i>
+<span>Users</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-tec-text-dim hover:text-white hover:bg-white/5 transition-colors" href="#">
+<i class="fas fa-triangle-exclamation w-5"></i>
+<span>Alerts</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-tec-text-dim hover:text-white hover:bg-white/5 transition-colors" href="#">
+<i class="fas fa-file-lines w-5"></i>
+<span>Reports</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-tec-text-dim hover:text-white hover:bg-white/5 transition-colors" href="#">
+<i class="fas fa-gear w-5"></i>
+<span>Settings</span>
+</a>
+</nav>
+<!-- Service Status -->
+<div class="p-4 mt-auto">
+<div class="bg-tec-card p-4 rounded-lg border border-tec-border">
+<div class="text-[10px] uppercase tracking-wider text-tec-text-dim font-bold mb-2">Service Status</div>
+<div class="space-y-1">
+<div class="flex items-center gap-2 text-xs">
+<span class="w-2 h-2 rounded-full bg-tec-accent"></span>
+<span class="text-tec-text-dim">PostgreSQL: <span class="text-white font-medium">ACTIVE</span></span>
+</div>
+<div class="flex items-center gap-2 text-xs">
+<span class="w-2 h-2 rounded-full bg-tec-accent"></span>
+<span class="text-tec-text-dim">Nginx: <span class="text-white font-medium">ACTIVE</span></span>
+</div>
+</div>
+</div>
+</div>
+</aside>
+<!-- END: LeftSidebar -->
+<!-- BEGIN: MainContent -->
+<main class="flex-1 flex flex-col overflow-hidden">
+<!-- BEGIN: TopHeader -->
+<header class="h-16 border-b border-tec-border flex items-center justify-between px-8 bg-tec-bg" data-purpose="global-header">
+<div class="relative w-96">
+<i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-tec-text-dim text-sm"></i>
+<input class="w-full bg-tec-card border border-tec-border rounded-md py-1.5 pl-10 pr-4 text-sm focus:ring-1 focus:ring-tec-accent focus:border-tec-accent outline-none" placeholder="Search resources..." type="text"/>
+</div>
+<div class="flex items-center gap-8">
+<nav class="flex gap-6 text-sm font-medium">
+<a class="text-white border-b-2 border-tec-accent pb-5 mt-5" href="#">System Health</a>
+<a class="text-tec-text-dim hover:text-white transition-colors py-5 mt-5" href="#">Logs</a>
+<a class="text-tec-text-dim hover:text-white transition-colors py-5 mt-5" href="#">Deployments</a>
+</nav>
+<div class="flex items-center gap-4 text-tec-text-dim border-l border-tec-border pl-8">
+<button class="hover:text-white"><i class="far fa-bell text-lg"></i></button>
+<button class="hover:text-white"><i class="fas fa-gear text-lg"></i></button>
+<div class="w-8 h-8 rounded-full overflow-hidden border border-tec-accent">
+<img alt="Profile" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuATSldjGWbXKrPxfMHhpwViXuw5JJwlU0TM1DA9yfmDE49K8opqfg54c2tz9Bju8Jz1TsQ0w0t0j-FvlYYuK_fBv-095TGi3iPPsAFyY2AgjTzFTjTM5dbTZlXfwbNQfPxX-YC4fUG6wiQP5kg4vic6xnM4LY1gXMChzQ1crQQMcccy8Ae4WK-5BksDMx29zFj9AGyoVOmmFogJ2o9A20QGSmFsOEi2RuWTx4BdL-6Yc9KpSJYlpCJ7xiLtYK4MeXHOfl9E9BOx8UJL"/>
+</div>
+</div>
+</div>
+</header>
+<!-- END: TopHeader -->
+<div class="flex-1 overflow-y-auto p-8 scrollbar-hide">
+<!-- BEGIN: HeroSection -->
+<section class="flex justify-between items-end mb-8">
+<div>
+<h1 class="text-3xl font-bold text-white mb-2">Node Overview</h1>
+<div class="flex items-center gap-2 text-tec-text-dim text-sm">
+<i class="far fa-calendar"></i>
+<span>Live system telemetry from Root-Node-01</span>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex gap-8">
+<div class="text-right">
+<div class="text-[10px] uppercase font-bold text-tec-text-dim">Users Active</div>
+<div class="text-xl font-bold text-white">12 <span class="text-tec-accent text-xs font-normal">+2.4%</span></div>
+</div>
+<div class="text-right">
+<div class="text-[10px] uppercase font-bold text-tec-text-dim">Uptime</div>
+<div class="text-xl font-bold text-white">14d 6h <span class="text-tec-text-dim text-[10px] font-normal">v2.4.1</span></div>
+</div>
+</div>
+<div class="flex items-center bg-tec-card border border-tec-border rounded-lg p-1">
+<div class="flex items-center px-3 py-1 gap-2 border-r border-tec-border mr-2">
+<span class="text-xs text-tec-text-dim">Real-time</span>
+<div class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-9 h-5 bg-tec-border peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-tec-accent"></div>
+</div>
+</div>
+<button class="flex items-center gap-2 px-3 py-1 bg-cyan-500/10 text-cyan-400 rounded-md text-sm font-medium hover:bg-cyan-500/20 transition-colors">
+<i class="fas fa-rotate"></i>
+              Refresh
+            </button>
+</div>
+</div>
+</section>
+<!-- END: HeroSection -->
+<div class="grid grid-cols-12 gap-6">
+<!-- Left Column: Metrics & Graph -->
+<div class="col-span-12 lg:col-span-9 space-y-6">
+<!-- BEGIN: MetricCards -->
+<div class="grid grid-cols-4 gap-4" data-purpose="resource-metrics">
+<!-- CPU -->
+<div class="bg-tec-card border border-tec-border p-5 rounded-xl relative overflow-hidden">
+<div class="flex justify-between items-start mb-4">
+<div class="w-10 h-10 rounded-lg bg-cyan-500/10 flex items-center justify-center text-cyan-400">
+<i class="fas fa-gauge-high"></i>
+</div>
+<div class="w-2 h-2 rounded-full bg-tec-accent"></div>
+</div>
+<div class="text-tec-text-dim text-xs font-bold uppercase mb-1">CPU Usage</div>
+<div id="cpu-value"
+class="text-2xl font-bold text-white mb-4">
+0%
+</div>
+<div class="w-full bg-tec-border h-1 rounded-full overflow-hidden">
+<div id="cpu-bar"
+class="bg-tec-accent h-full"
+style="width:0%">
+</div>
+</div>
+</div>
+<!-- RAM -->
+<div class="bg-tec-card border border-tec-border p-5 rounded-xl relative overflow-hidden">
+<div class="flex justify-between items-start mb-4">
+<div class="w-10 h-10 rounded-lg bg-tec-warning/10 flex items-center justify-center text-tec-warning">
+<i class="fas fa-memory"></i>
+</div>
+<div class="w-2 h-2 rounded-full bg-tec-warning"></div>
+</div>
+<div class="text-tec-text-dim text-xs font-bold uppercase mb-1">RAM Usage</div>
+<div id="ram-value"
+class="text-2xl font-bold text-white mb-4">
+0%
+</div>
+<div class="w-full bg-tec-border h-1 rounded-full overflow-hidden">
+<div id="ram-bar"
+class="bg-tec-warning h-full"
+style="width:0%">
+</div>
+</div>
+</div>
+<!-- Disk -->
+<div class="bg-tec-card border border-tec-border p-5 rounded-xl relative overflow-hidden">
+<div class="flex justify-between items-start mb-4">
+<div class="w-10 h-10 rounded-lg bg-tec-accent/10 flex items-center justify-center text-tec-accent">
+<i class="fas fa-database"></i>
+</div>
+<div class="w-2 h-2 rounded-full bg-tec-accent"></div>
+</div>
+<div class="text-tec-text-dim text-xs font-bold uppercase mb-1">Disk Usage</div>
+<div id="disk-value"
+class="text-2xl font-bold text-white mb-4">
+0%
+</div>
+<div class="w-full bg-tec-border h-1 rounded-full overflow-hidden">
+<div id="disk-bar"
+class="bg-tec-accent h-full"
+style="width:0%">
+</div>
+</div>
+</div>
+<!-- Swap -->
+<div class="bg-tec-card border border-tec-border p-5 rounded-xl relative overflow-hidden">
+<div class="flex justify-between items-start mb-4">
+<div class="w-10 h-10 rounded-lg bg-tec-danger/10 flex items-center justify-center text-tec-danger">
+<i class="fas fa-right-left"></i>
+</div>
+<div class="w-2 h-2 rounded-full bg-tec-danger"></div>
+</div>
+<div class="text-tec-text-dim text-xs font-bold uppercase mb-1">Swap Usage</div>
+<div id="swap-value"
+class="text-2xl font-bold text-white mb-4">
+0%
+</div>
+<div class="w-full bg-tec-border h-1 rounded-full overflow-hidden">
+<div id="swap-bar"
+class="bg-tec-danger h-full"
+style="width:0%">
+</div>
+</div>
+</div>
+</div>
+<!-- END: MetricCards -->
+<!-- BEGIN: UtilizationHistory -->
+<div class="bg-tec-card border border-tec-border p-6 rounded-xl" data-purpose="utilization-chart">
+<div class="flex justify-between items-center mb-6">
+<h2 class="text-sm font-bold text-white uppercase tracking-wider">Resource Utilization History</h2>
+<div class="flex gap-4">
+<div class="flex items-center gap-2 text-[10px] text-tec-text-dim uppercase">
+<span class="w-2 h-2 rounded-full bg-cyan-400"></span> CPU %
+                </div>
+<div class="flex items-center gap-2 text-[10px] text-tec-text-dim uppercase">
+<span class="w-2 h-2 rounded-full bg-tec-accent"></span> RAM %
+                </div>
+</div>
+</div>
+<!-- Graph Area -->
+<div class="h-64 relative chart-background rounded-lg border border-white/5 overflow-hidden">
+<!-- Y Axis Mock -->
+<div class="absolute left-2 top-0 bottom-0 flex flex-col justify-between text-[10px] text-tec-text-dim py-2">
+<span>100</span><span>80</span><span>60</span><span>40</span><span>20</span><span>10</span><span>0</span>
+</div>
+<!-- Fake Line Chart -->
+<svg class="absolute inset-0 w-full h-full preserve-3d" viewbox="0 0 1000 256">
+<!-- Line 1: CPU -->
+<path d="M0,180 L100,185 L200,175 L300,182 L400,170 L500,175 L600,180 L700,185 L800,178 L900,180 L1000,175" fill="none" stroke="#22d3ee" stroke-width="2"></path>
+<!-- Line 2: RAM -->
+<path d="M0,80 L100,75 L200,85 L300,80 L400,78 L500,75 L600,72 L700,78 L800,80 L900,82 L1000,75" fill="none" stroke="#10b981" stroke-width="2"></path>
+<!-- Area for RAM -->
+<path d="M0,80 L100,75 L200,85 L300,80 L400,78 L500,75 L600,72 L700,78 L800,80 L900,82 L1000,75 L1000,256 L0,256 Z" fill="rgba(16, 185, 129, 0.05)"></path>
+</svg>
+<!-- X Axis Mock -->
+<div class="absolute bottom-2 left-10 right-0 flex justify-between text-[10px] text-tec-text-dim px-4">
+<span>12:00</span><span>12:05</span><span>12:10</span><span>12:15</span><span>12:20</span><span>12:25</span><span>12:30</span><span>12:35</span><span>12:40</span><span>12:45</span>
+</div>
+</div>
+</div>
+<!-- END: UtilizationHistory -->
+</div>
+<!-- BEGIN: SidebarAlerts -->
+<aside class="col-span-12 lg:col-span-3 space-y-4">
+<h2 class="text-sm font-bold text-white uppercase tracking-wider px-1">Active Alerts (3)</h2>
+<div class="space-y-3">
+<!-- Critical -->
+<div class="bg-red-500/10 border border-red-500/20 p-4 rounded-xl flex gap-3">
+<div class="mt-1"><i class="fas fa-triangle-exclamation text-tec-danger"></i></div>
+<div>
+<div class="text-sm font-bold text-white">Critical: Swap &gt; 90%</div>
+<div class="text-[10px] text-tec-text-dim mt-1">2 minutes ago on Root-Node-01</div>
+</div>
+</div>
+<!-- Warning -->
+<div class="bg-orange-500/10 border border-orange-500/20 p-4 rounded-xl flex gap-3">
+<div class="mt-1"><i class="fas fa-circle-exclamation text-tec-warning"></i></div>
+<div>
+<div class="text-sm font-bold text-white">Warning: RAM &gt; 80%</div>
+<div class="text-[10px] text-tec-text-dim mt-1">15 minutes ago on Root-Node-01</div>
+</div>
+</div>
+<!-- Resolved -->
+<div class="bg-tec-card/50 border border-tec-border p-4 rounded-xl flex gap-3 opacity-60">
+<div class="mt-1"><i class="fas fa-circle-info text-tec-text-dim"></i></div>
+<div>
+<div class="text-sm font-bold text-white">Resolved: SSL Renewal</div>
+<div class="text-[10px] text-tec-text-dim mt-1">1 hour ago</div>
+</div>
+</div>
+</div>
+<button class="w-full py-2 bg-tec-card border border-tec-border text-white text-sm font-bold rounded-lg hover:bg-tec-border transition-colors">
+            View All Alerts
+          </button>
+</aside>
+<!-- END: SidebarAlerts -->
+</div>
+<!-- BEGIN: ProcessTable -->
+<section class="mt-8 bg-tec-sidebar border border-tec-border rounded-xl overflow-hidden" data-purpose="process-table">
+<div class="p-4 border-b border-tec-border flex justify-between items-center">
+<h2 class="text-sm font-bold text-white uppercase tracking-wider">Top 5 Linux Processes</h2>
+<div class="flex gap-2">
+<button class="px-3 py-1 bg-red-500/10 text-red-400 border border-red-500/30 rounded text-[10px] font-bold uppercase hover:bg-red-500/20">Kill Task</button>
+<button class="px-3 py-1 bg-tec-card text-tec-text-dim border border-tec-border rounded text-[10px] font-bold uppercase hover:text-white">Export</button>
+</div>
+</div>
+<table class="w-full text-left text-xs">
+<thead class="bg-tec-card/30 text-tec-text-dim border-b border-tec-border uppercase font-bold">
+<tr>
+<th class="px-6 py-4">PID</th>
+<th class="px-6 py-4">USER</th>
+<th class="px-6 py-4">CPU %</th>
+<th class="px-6 py-4">MEM %</th>
+<th class="px-6 py-4">COMMAND</th>
+<th class="px-6 py-4 text-right">STATUS</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-tec-border">
+<tr class="hover:bg-white/5 transition-colors">
+<td class="px-6 py-4 text-tec-text-dim">31422</td>
+<td class="px-6 py-4 text-white">nginx</td>
+<td class="px-6 py-4 text-tec-accent font-medium">24.2</td>
+<td class="px-6 py-4 text-tec-text-dim">4.5</td>
+<td class="px-6 py-4 text-white">nginx: worker process</td>
+<td class="px-6 py-4 text-right"><span class="inline-block w-2 h-2 rounded-full bg-tec-accent shadow-[0_0_8px_rgba(16,185,129,0.5)]"></span></td>
+</tr>
+<tr class="hover:bg-white/5 transition-colors">
+<td class="px-6 py-4 text-tec-text-dim">1029</td>
+<td class="px-6 py-4 text-white">postgres</td>
+<td class="px-6 py-4 text-tec-accent font-medium">18.1</td>
+<td class="px-6 py-4 text-tec-text-dim">12.8</td>
+<td class="px-6 py-4 text-white">postgres: checkpointer</td>
+<td class="px-6 py-4 text-right"><span class="inline-block w-2 h-2 rounded-full bg-tec-accent shadow-[0_0_8px_rgba(16,185,129,0.5)]"></span></td>
+</tr>
+<tr class="hover:bg-white/5 transition-colors">
+<td class="px-6 py-4 text-tec-text-dim">4410</td>
+<td class="px-6 py-4 text-white">root</td>
+<td class="px-6 py-4 text-tec-accent font-medium">14.0</td>
+<td class="px-6 py-4 text-tec-text-dim">34.2</td>
+<td class="px-6 py-4 text-white">java -jar metrics-collector.jar</td>
+<td class="px-6 py-4 text-right"><span class="inline-block w-2 h-2 rounded-full bg-tec-warning shadow-[0_0_8px_rgba(245,158,11,0.5)]"></span></td>
+</tr>
+<tr class="hover:bg-white/5 transition-colors">
+<td class="px-6 py-4 text-tec-text-dim">5521</td>
+<td class="px-6 py-4 text-white">prometheus</td>
+<td class="px-6 py-4 text-tec-accent font-medium">8.2</td>
+<td class="px-6 py-4 text-tec-text-dim">15.1</td>
+<td class="px-6 py-4 text-white">/usr/bin/prometheus --config</td>
+<td class="px-6 py-4 text-right"><span class="inline-block w-2 h-2 rounded-full bg-tec-accent shadow-[0_0_8px_rgba(16,185,129,0.5)]"></span></td>
+</tr>
+<tr class="hover:bg-white/5 transition-colors">
+<td class="px-6 py-4 text-tec-text-dim">8891</td>
+<td class="px-6 py-4 text-white">grafana</td>
+<td class="px-6 py-4 text-tec-accent font-medium">3.5</td>
+<td class="px-6 py-4 text-tec-text-dim">6.2</td>
+<td class="px-6 py-4 text-white">grafana-server --homepath</td>
+<td class="px-6 py-4 text-right"><span class="inline-block w-2 h-2 rounded-full bg-tec-accent shadow-[0_0_8px_rgba(16,185,129,0.5)]"></span></td>
+</tr>
+</tbody>
+</table>
+</section>
+<!-- END: ProcessTable -->
+</div>
+</main>
+<!-- END: MainContent -->
+
+
+<script>
+
+function loadMonitoring(){
+
+    fetch("/api/monitoring")
+    .then(response => response.json())
+    .then(data => {
+
+        const cpu = data.cpu_usage || 0;
+        const ram = data.ram_usage || 0;
+        const disk = data.disk_usage || 0;
+        const swap = data.swap_usage || 0;
+
+        const cpuValue = document.getElementById("cpu-value");
+        const ramValue = document.getElementById("ram-value");
+        const diskValue = document.getElementById("disk-value");
+        const swapValue = document.getElementById("swap-value");
+
+        if(cpuValue) cpuValue.innerHTML = cpu + "%";
+        if(ramValue) ramValue.innerHTML = ram + "%";
+        if(diskValue) diskValue.innerHTML = disk + "%";
+        if(swapValue) swapValue.innerHTML = swap + "%";
+
+    });
+
+}
+
+loadMonitoring();
+
+setInterval(loadMonitoring,5000);
+
+</script>
+</body>
+</html>

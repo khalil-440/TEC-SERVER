@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Login - Enterprise Suite</title>
+<!-- Tailwind CSS CDN with plugins -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Google Fonts: Inter for clean typography -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+          },
+          colors: {
+            'tec-dark': '#0b1419',
+            'tec-blue': '#9de6ff',
+            'tec-glow': 'rgba(157, 230, 255, 0.3)',
+            'tec-border': '#1e292e',
+          }
+        }
+      }
+    }
+  </script>
+<style data-purpose="background-styles">
+    body {
+      background-color: #050a0c;
+      /* Radial gradient to mimic the subtle lighting in the reference */
+      background-image: radial-gradient(circle at 50% 50%, #0d1b22 0%, #050a0c 100%);
+      min-height: 100vh;
+      color: #e2e8f0;
+    }
+    
+    /* Subtle glow for the login card */
+    .login-card-glow {
+      box-shadow: 0 0 50px rgba(0, 0, 0, 0.5), 0 0 20px rgba(157, 230, 255, 0.05);
+    }
+
+    /* Input focus effects */
+    .tec-input:focus {
+      border-color: #9de6ff;
+      box-shadow: 0 0 8px rgba(157, 230, 255, 0.2);
+      outline: none;
+    }
+
+    /* Custom checkbox styling to match dark theme */
+    .tec-checkbox {
+      background-color: transparent;
+      border-color: #334155;
+      border-radius: 2px;
+    }
+    .tec-checkbox:checked {
+      background-color: #9de6ff;
+      border-color: #9de6ff;
+    }
+  </style>
+<style data-purpose="component-styles">
+    /* Header icon glow */
+    .icon-container {
+      border: 1px solid rgba(157, 230, 255, 0.3);
+      box-shadow: 0 0 15px rgba(157, 230, 255, 0.2);
+      background: rgba(15, 23, 42, 0.8);
+    }
+
+    /* Button specific glow */
+    .btn-login {
+      box-shadow: 0 0 15px rgba(157, 230, 255, 0.4);
+      transition: all 0.3s ease;
+    }
+    .btn-login:hover {
+      box-shadow: 0 0 25px rgba(157, 230, 255, 0.6);
+      transform: translateY(-1px);
+    }
+    .btn-login:active {
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body class="flex flex-col items-center justify-center p-4">
+<!-- BEGIN: BrandingSection -->
+<header class="flex flex-col items-center mb-8" data-purpose="site-branding">
+<!-- Icon Placeholder mimicking the terminal icon -->
+<div class="icon-container w-12 h-12 flex items-center justify-center rounded-lg mb-4">
+<svg fill="none" height="24" stroke="#9de6ff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+<polyline points="4 17 10 11 4 5"></polyline>
+<line x1="12" x2="20" y1="19" y2="19"></line>
+</svg>
+</div>
+<h1 class="text-3xl font-bold tracking-widest text-white uppercase mb-1">TEC SERVER</h1>
+<p class="text-[10px] tracking-[0.2em] text-slate-500 font-semibold uppercase">System Authentication Required</p>
+</header>
+<!-- END: BrandingSection -->
+<!-- BEGIN: LoginCard -->
+<main class="w-full max-w-md" data-purpose="login-container">
+<div class="login-card-glow bg-tec-dark/60 backdrop-blur-sm border border-tec-border p-10 rounded-xl">
+<form action="#" class="space-y-6" method="POST">
+<!-- Username Field -->
+<div class="space-y-2">
+<label class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider" for="username">Username</label>
+<div class="relative">
+<span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<svg class="h-4 w-4 text-slate-500" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</span>
+<input class="tec-input block w-full pl-10 pr-3 py-2.5 bg-black/40 border border-slate-700 rounded-md text-sm text-white placeholder-slate-600 focus:ring-0" id="username" name="username" placeholder="root_admin" type="text"/>
+</div>
+</div>
+<!-- Password Field -->
+<div class="space-y-2">
+<div class="flex justify-between items-center">
+<label class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider" for="password">Password</label>
+<a class="text-[10px] font-bold text-cyan-400 hover:text-cyan-300 transition-colors uppercase tracking-wider" href="#">Forgot?</a>
+</div>
+<div class="relative">
+<span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<svg class="h-4 w-4 text-slate-500" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</span>
+<input class="tec-input block w-full pl-10 pr-10 py-2.5 bg-black/40 border border-slate-700 rounded-md text-sm text-white placeholder-slate-600 focus:ring-0" id="password" name="password" type="password" value="********"/>
+<button class="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-500 hover:text-slate-300" type="button">
+<svg class="h-4 w-4" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+<path d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</button>
+</div>
+</div>
+<!-- Remember Me Checkbox -->
+<div class="flex items-center">
+<input class="tec-checkbox h-4 w-4 text-tec-blue focus:ring-offset-0 focus:ring-0" id="stay-authenticated" name="stay-authenticated" type="checkbox"/>
+<label class="ml-3 block text-xs text-slate-400 font-medium" for="stay-authenticated">
+            Stay authenticated on this terminal
+          </label>
+</div>
+<!-- Submit Button -->
+<div>
+<button class="btn-login w-full flex justify-center items-center px-4 py-4 border border-transparent rounded-lg text-sm font-extrabold text-tec-dark bg-tec-blue hover:bg-cyan-200 focus:outline-none uppercase tracking-widest" type="submit">
+            Initialize Login
+            <svg class="ml-2 h-4 w-4" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"></path>
+</svg>
+</button>
+</div>
+<!-- Registration Link -->
+<div class="pt-6 text-center">
+<p class="text-xs text-slate-500">
+            New node deployment? <a class="text-emerald-400 font-bold hover:underline" href="#">Register Device</a>
+</p>
+</div>
+</form>
+</div>
+</main>
+<!-- END: LoginCard -->
+<!-- BEGIN: FooterStatus -->
+<footer class="mt-12 w-full max-w-md flex justify-between px-2" data-purpose="status-bar">
+<div class="flex items-center space-x-2">
+<span class="relative flex h-2 w-2">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+</span>
+<span class="text-[10px] text-slate-500 font-bold tracking-widest uppercase">Node_01_Active</span>
+</div>
+<div class="text-[10px] text-slate-600 font-bold tracking-widest uppercase">
+      V2.4.0-Stable
+    </div>
+</footer>
+<!-- END: FooterStatus -->
+<!-- JavaScript for small UI interactions -->
+<script data-purpose="interactivity">
+    // Simple password visibility toggle
+    document.querySelector('button[type="button"]').addEventListener('click', function() {
+      const passwordInput = document.getElementById('password');
+      if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+      } else {
+        passwordInput.type = 'password';
+      }
+    });
+
+    // Form submission simulation
+    document.querySelector('form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const btn = this.querySelector('button[type="submit"]');
+      const originalContent = btn.innerHTML;
+      btn.disabled = true;
+      btn.innerHTML = 'Establishing Link...';
+      
+      setTimeout(() => {
+        btn.innerHTML = 'Authentication Granted';
+        btn.style.backgroundColor = '#10b981'; // emerald-500
+        setTimeout(() => {
+          btn.disabled = false;
+          btn.innerHTML = originalContent;
+          btn.style.backgroundColor = '';
+        }, 2000);
+      }, 1500);
+    });
+  </script>
+</body></html>
