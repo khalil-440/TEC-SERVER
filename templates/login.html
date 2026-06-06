@@ -184,21 +184,13 @@
 
     // Form submission simulation
     document.querySelector('form').addEventListener('submit', function(e) {
-      e.preventDefault();
-      const btn = this.querySelector('button[type="submit"]');
-      const originalContent = btn.innerHTML;
-      btn.disabled = true;
-      btn.innerHTML = 'Establishing Link...';
-      
-      setTimeout(() => {
-        btn.innerHTML = 'Authentication Granted';
-        btn.style.backgroundColor = '#10b981'; // emerald-500
-        setTimeout(() => {
-          btn.disabled = false;
-          btn.innerHTML = originalContent;
-          btn.style.backgroundColor = '';
-        }, 2000);
-      }, 1500);
-    });
+      document.querySelector('form').addEventListener('submit', function() {
+
+  const btn = this.querySelector('button[type="submit"]');
+
+  btn.disabled = true;
+  btn.innerHTML = 'Establishing Link...';
+
+});
   </script>
 </body></html>
