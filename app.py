@@ -36,19 +36,63 @@ def dashboard():
     cur = db.cursor()
 
     cur.execute("""
-    SELECT *
-    FROM monitoring_logs
-    ORDER BY id DESC
-    LIMIT 1
+        SELECT *
+        FROM monitoring_logs
+        ORDER BY id DESC
+        LIMIT 1
     """)
 
     monitoring = cur.fetchone()
 
+    if monitoring is None:
+        monitoring = {
+            "cpu_usage": 0,
+            "ram_usage": 0,
+            "disk_usage": 0,
+            "swap_usage": 0,
+            "active_users": 0
+        }
+
     return render_template(
         "dashboard.html",
-        monitoring=monitoring
+        monitoring=monitoring,
+        username=session["user"]
     )
 
+from flask import jsonify
+
+@app.route("/api/monitoring")
+def api_monitoring():
+
+    db = get_db()
+    cur = db.cursor()
+
+    cur.execute("""
+        SELECT *
+        FROM monitoring_logs
+        ORDER BY id DESC
+        LIMIT 1
+    """)
+
+    monitoring = cur.fetchone()
+
+    if monitoring is None:
+        return jsonify({
+            "cpu_usage": 0,
+            "ram_usage": 0,
+            "disk_usage": 0,
+            "swap_usage": 0,
+            "active_users": 0
+        })
+
+    return jsonify(monitoring)
+
+@app.route("/test-login")
+def test_login():
+
+    session["user"] = "tecadmin"
+
+    return redirect("/dashboard")
 
 # ======================
 # ALERTS
