@@ -168,7 +168,7 @@ def users():
 def processes():
 
     data = subprocess.check_output(
-        ["bash","scripts/process.sh"]
+        ["bash","scripts/processes.sh"]
     ).decode()
 
     return render_template(
