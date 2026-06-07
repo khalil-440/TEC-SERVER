@@ -1,290 +1,434 @@
-<!DOCTYPE html>
-
-<html class="h-full" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>TEC SERVER - Alert History</title>
-<!-- BEGIN: External Scripts and Styles -->
+<!DOCTYPE html><html class="dark" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Alert History - TEC SERVER</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
-<script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            'tec-dark-bg': '#0f171c',
-            'tec-sidebar-bg': '#0d1317',
-            'tec-card-bg': '#141e24',
-            'tec-border': '#1f2937',
-            'tec-accent-green': '#10b981',
-            'tec-accent-red': '#ef4444',
-            'tec-accent-orange': '#f59e0b',
-            'tec-text-muted': '#9ca3af',
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Geist:wght@400;500&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            line-height: 1;
+            text-transform: none;
+            letter-spacing: normal;
+            word-wrap: normal;
+            white-space: nowrap;
+            direction: ltr;
+        }
+        .glass-panel {
+            background: rgba(22, 24, 29, 0.7);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #2D2F36;
+            border-radius: 10px;
+        }
+        .status-glow-error {
+            box-shadow: 0 0 8px rgba(255, 180, 171, 0.2);
+        }
+        .status-glow-success {
+            box-shadow: 0 0 8px rgba(78, 222, 163, 0.2);
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-error": "#690005",
+                      "on-secondary-container": "#00311f",
+                      "on-primary": "#003543",
+                      "on-primary-fixed-variant": "#004e60",
+                      "surface-bright": "#333a3d",
+                      "error": "#ffb4ab",
+                      "surface-container-lowest": "#090f12",
+                      "on-secondary-fixed": "#002113",
+                      "surface-variant": "#2f3639",
+                      "on-primary-fixed": "#001f28",
+                      "tertiary-fixed-dim": "#ffba49",
+                      "background": "#0e1417",
+                      "tertiary-container": "#feb127",
+                      "surface-dim": "#0e1417",
+                      "primary-fixed": "#b7eaff",
+                      "inverse-primary": "#00677f",
+                      "error-container": "#93000a",
+                      "on-tertiary": "#442b00",
+                      "on-surface": "#dde3e7",
+                      "surface-container-low": "#161d1f",
+                      "secondary-container": "#00a572",
+                      "primary": "#a4e6ff",
+                      "outline-variant": "#3c494e",
+                      "on-error-container": "#ffdad6",
+                      "outline": "#859399",
+                      "on-primary-container": "#00566a",
+                      "on-secondary-fixed-variant": "#005236",
+                      "surface-container": "#1a2123",
+                      "on-tertiary-container": "#6b4700",
+                      "tertiary-fixed": "#ffddb1",
+                      "on-background": "#dde3e7",
+                      "on-secondary": "#003824",
+                      "secondary": "#4edea3",
+                      "surface": "#0e1417",
+                      "on-surface-variant": "#bbc9cf",
+                      "inverse-surface": "#dde3e7",
+                      "inverse-on-surface": "#2b3134",
+                      "surface-container-high": "#242b2e",
+                      "surface-tint": "#4cd6ff",
+                      "surface-container-highest": "#2f3639",
+                      "on-tertiary-fixed-variant": "#624000",
+                      "primary-fixed-dim": "#4cd6ff",
+                      "on-tertiary-fixed": "#291800",
+                      "secondary-fixed-dim": "#4edea3",
+                      "secondary-fixed": "#6ffbbe",
+                      "primary-container": "#00d1ff",
+                      "tertiary": "#ffd59c"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "widget-gap": "16px",
+                      "gutter": "24px",
+                      "margin-desktop": "32px",
+                      "margin-mobile": "16px",
+                      "unit": "4px"
+              },
+              "fontFamily": {
+                      "body-sm": ["Inter"],
+                      "mono-data": ["Geist"],
+                      "body-base": ["Inter"],
+                      "mono-code": ["Geist"],
+                      "headline-md": ["Inter"],
+                      "headline-lg": ["Inter"]
+              },
+              "fontSize": {
+                      "body-sm": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                      "mono-data": ["13px", {"lineHeight": "1.4", "fontWeight": "500"}],
+                      "body-base": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                      "mono-code": ["12px", {"lineHeight": "1.6", "letterSpacing": "0.02em", "fontWeight": "400"}],
+                      "headline-md": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                      "headline-lg": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+              }
+            }
           }
         }
-      }
-    }
-  </script>
-<style data-purpose="custom-layout">
-    body {
-      background-color: #0f171c;
-      color: #e5e7eb;
-      font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    }
-    .scrollbar-hide::-webkit-scrollbar {
-      display: none;
-    }
-    .severity-critical {
-      background-color: rgba(239, 68, 68, 0.2);
-      color: #ef4444;
-      border: 1px solid rgba(239, 68, 68, 0.3);
-    }
-    .severity-warning {
-      background-color: rgba(245, 158, 11, 0.2);
-      color: #f59e0b;
-      border: 1px solid rgba(245, 158, 11, 0.3);
-    }
-    .live-mode-badge {
-      background-color: rgba(16, 185, 129, 0.1);
-      color: #10b981;
-      border: 1px solid rgba(16, 185, 129, 0.4);
-    }
-  </style>
-<!-- END: External Scripts and Styles -->
+    </script>
 </head>
-<body class="h-full overflow-hidden flex">
-<!-- BEGIN: Sidebar -->
-<aside class="w-64 bg-tec-sidebar-bg border-r border-tec-border flex flex-col shrink-0" data-purpose="main-sidebar">
-<div class="p-6">
-<h1 class="text-xl font-bold tracking-wider text-gray-400">TEC SERVER</h1>
-</div>
-<!-- Node Information -->
-<div class="px-6 py-4 border-b border-tec-border">
-<div class="flex items-start gap-3">
-<div class="mt-1"><i class="fa-solid fa-server text-tec-text-muted"></i></div>
-<div>
-<div class="text-sm font-semibold">Root-Node-01</div>
-<div class="text-xs text-tec-text-muted">192.168.1.105</div>
-</div>
-</div>
-</div>
-<!-- Navigation Links -->
-<nav class="flex-1 mt-6 px-4 space-y-1">
-<a class="flex items-center gap-3 px-4 py-3 text-sm text-tec-text-muted hover:text-white transition-colors" href="/dashboard">
-<i class="fa-solid fa-table-columns w-5"></i> Dashboard
-      </a>
-<a class="flex items-center gap-3 px-4 py-3 text-sm text-tec-text-muted hover:text-white transition-colors" href="/processes">
-<i class="fa-solid fa-microchip w-5"></i> Processes
-      </a>
-<!-- Active Link -->
-<a class="flex items-center gap-3 px-4 py-3 text-sm text-tec-accent-green bg-tec-accent-green/10 border-l-4 border-tec-accent-green" href="/alert">
-<i class="fa-solid fa-triangle-exclamation w-5"></i> Alerts
-      </a>
-<a class="flex items-center gap-3 px-4 py-3 text-sm text-tec-text-muted hover:text-white transition-colors" href="/users">
-<i class="fa-solid fa-users w-5"></i> Users
-      </a>
-<a class="flex items-center gap-3 px-4 py-3 text-sm text-tec-text-muted hover:text-white transition-colors" href="/reports">
-<i class="fa-solid fa-chart-line w-5"></i> Reports
-      </a>
-<a class="flex items-center gap-3 px-4 py-3 text-sm text-tec-text-muted hover:text-white transition-colors" href="/settings">
-<i class="fa-solid fa-gear w-5"></i> Settings
-      </a>
+<body class="bg-background text-on-surface font-body-base overflow-hidden">
+<!-- TopNavBar -->
+<header class="fixed top-0 right-0 left-0 z-50 flex justify-between items-center px-gutter h-16 bg-surface-dim/80 backdrop-blur-xl border-b border-outline-variant">
+<div class="flex items-center gap-8">
+<span class="text-headline-md font-headline-md font-bold text-primary">TEC SERVER</span>
+<div class="hidden md:flex gap-6 items-center">
+<nav class="flex gap-6">
+<a class="text-on-surface-variant font-medium hover:text-primary transition-colors" href="#">Dashboard</a>
+<a class="text-on-surface-variant font-medium hover:text-primary transition-colors" href="#">Processes</a>
+<a class="text-primary font-bold border-b-2 border-primary" href="#">Alerts</a>
 </nav>
-</aside>
-<!-- END: Sidebar -->
-<!-- BEGIN: Main Content Area -->
-<main class="flex-1 flex flex-col min-w-0 overflow-hidden">
-<!-- BEGIN: Top Navigation Bar -->
-<header class="h-16 border-b border-tec-border flex items-center justify-between px-8 shrink-0">
-<div class="flex items-center gap-8 text-sm font-medium">
-<a class="text-tec-text-muted hover:text-white" href="/dashboard">Dashboard</a>
-<a class="text-tec-text-muted hover:text-white" href="/processes">Processes</a>
-<a class="text-white border-b-2 border-tec-accent-green py-5" href="#">Alerts</a>
 </div>
-<div class="flex items-center gap-6">
-<button class="text-tec-text-muted hover:text-white"><i class="fa-regular fa-bell text-lg"></i></button>
-<button class="text-tec-text-muted hover:text-white"><i class="fa-solid fa-gear text-lg"></i></button>
-<div class="w-8 h-8 rounded-full bg-slate-700 flex items-center justify-center border border-tec-border">
-<img alt="User" class="w-full h-full rounded-full object-cover hidden" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDWFymw9EG_fxeQCYre4Dm9VHxzTAwms812qby2-wVEa_VhEAIk8AIhbnGCJSIq4qgvVydBacwhigkVa4H6bqelZrZnOGhG73Rc9jrt-ihZqwB3q8-8Lqa4NrKgP0Y9EiZp8ZV4rEajTrqqe9H13dotdbFb7UTp59s9D2rV3-v1EFdA-IrmjS0KjxRBlgXxuTiqaU5jm0qZxXazlN3aAfguTRWAImyWZTCdzfLlFuOLGFcv10vBPrhXAOBbRmVWJNC9YpGyWHQzn6CG"/>
-<i class="fa-solid fa-user text-xs"></i>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex gap-2">
+<button class="p-2 material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors">notifications</button>
+<button class="p-2 material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors">settings</button>
+</div>
+<div class="w-8 h-8 rounded-full overflow-hidden border border-outline-variant">
+<img alt="Administrator Profile" data-alt="A close-up high-resolution profile avatar of a tech administrator with glowing cybernetic glasses in a dark futuristic room illuminated by cool blue terminal screens. The lighting is low-key with sharp highlights on facial features, embodying a high-contrast dark mode aesthetic and precision-focused atmosphere." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDRk1G7p84nImNLlq6SKGlNDki9FQ1w-JMz-9akJsYhrGq1MmQuBTZRt9r2tWdfHNkPl4Jc4RgSBeruihSenL4u0c_Yb7-5NvRVnepTvDj8cLyMw7GOOpKuHNZ-0b5z0PxWxmh-pl8VFrGf_vzvgLwEMxAuylVRWoUwTGVOiNp1-KEOmIxoYXkhn25jM5G1248_LjPonQiEYk7hCahUKemuEKPd88-zicdh5dFXodRgHyFRbrevXdZdSmR1FXw9IePrweplblmHvA">
 </div>
 </div>
 </header>
-<!-- END: Top Navigation Bar -->
-<!-- BEGIN: Dashboard Scrollable Body -->
-<div class="flex-1 overflow-y-auto p-8 scrollbar-hide">
-<!-- BEGIN: Page Header Actions -->
-<div class="flex justify-between items-start mb-8">
+<!-- SideNavBar (Desktop Only) -->
+<aside class="fixed left-0 top-0 bottom-0 w-[280px] z-40 flex flex-col pt-20 bg-surface-container-lowest border-r border-outline-variant hidden md:flex">
+<div class="px-6 py-4 flex flex-col gap-1">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">dns</span>
 <div>
-<h2 class="text-3xl font-bold mb-2">Alert History</h2>
-<p class="text-tec-text-muted text-sm">Real-time log of system threshold breaches and node status changes.</p>
-</div>
-<div class="flex gap-3">
-<button class="bg-red-400/20 text-red-400 hover:bg-red-400/30 transition px-4 py-2 rounded text-sm font-medium flex items-center gap-2">
-<i class="fa-solid fa-eraser text-xs"></i> Clear All Alerts
-          </button>
-<button class="bg-tec-card-bg border border-tec-border hover:bg-tec-border transition px-4 py-2 rounded text-sm font-medium flex items-center gap-2">
-            All Severities <i class="fa-solid fa-filter text-xs"></i>
-</button>
+<h3 class="text-on-surface font-mono-code font-bold">Root-Node-01</h3>
+<p class="text-on-surface-variant font-mono-code opacity-70">192.168.1.105</p>
 </div>
 </div>
-<!-- END: Page Header Actions -->
-<div class="grid grid-cols-12 gap-6">
-<!-- BEGIN: System Event Stream Table -->
-<div class="col-span-8 bg-tec-card-bg border border-tec-border rounded-lg overflow-hidden flex flex-col">
-<div class="p-5 flex justify-between items-center border-b border-tec-border">
-<h3 class="font-semibold text-gray-300">System Event Stream</h3>
-<span class="live-mode-badge text-[10px] px-2 py-0.5 rounded font-bold uppercase tracking-widest">LIVE_MODE</span>
+</div>
+<nav class="mt-8 flex flex-col">
+<a class="flex items-center gap-4 px-6 py-4 text-on-surface-variant opacity-70 hover:opacity-100 hover:bg-surface-container-high transition-all active:translate-x-1 duration-150" href="/dashboard">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-mono-code text-mono-code">Dashboard</span>
+</a>
+<a class="flex items-center gap-4 px-6 py-4 text-on-surface-variant opacity-70 hover:opacity-100 hover:bg-surface-container-high transition-all active:translate-x-1 duration-150" href="/processes">
+<span class="material-symbols-outlined">memory</span>
+<span class="font-mono-code text-mono-code">Processes</span>
+</a>
+<a class="flex items-center gap-4 px-6 py-4 bg-secondary-container/20 text-secondary border-l-4 border-secondary font-bold transition-all active:translate-x-1 duration-150" href="/alert">
+<span class="material-symbols-outlined">warning</span>
+<span class="font-mono-code text-mono-code">Alerts</span>
+</a>
+<a class="flex items-center gap-4 px-6 py-4 text-on-surface-variant opacity-70 hover:opacity-100 hover:bg-surface-container-high transition-all active:translate-x-1 duration-150" href="/users">
+<span class="material-symbols-outlined">group</span>
+<span class="font-mono-code text-mono-code">Users</span>
+</a>
+<a class="flex items-center gap-4 px-6 py-4 text-on-surface-variant opacity-70 hover:opacity-100 hover:bg-surface-container-high transition-all active:translate-x-1 duration-150" href="/reports">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-mono-code text-mono-code">Reports</span>
+</a>
+<a class="flex items-center gap-4 px-6 py-4 text-on-surface-variant opacity-70 hover:opacity-100 hover:bg-surface-container-high transition-all active:translate-x-1 duration-150" href="/settings">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-mono-code text-mono-code">Settings</span>
+</a>
+</nav>
+</aside>
+<!-- Main Content Canvas -->
+<main class="md:ml-[280px] pt-16 h-screen flex flex-col overflow-hidden">
+<div class="flex-1 overflow-y-auto p-gutter custom-scrollbar">
+<!-- Page Header -->
+<div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
+<div>
+<h1 class="text-headline-lg font-headline-lg text-on-surface mb-2">Alert History</h1>
+<p class="text-on-surface-variant">Real-time log of system threshold breaches and node status changes.</p>
+</div>
+<div class="flex flex-wrap gap-3">
+<button class="flex items-center gap-2 px-4 py-2 bg-error text-on-error font-bold rounded hover:opacity-90 active:scale-95 transition-all" id="clearBtn">
+<span class="material-symbols-outlined text-[20px]">delete_sweep</span>
+                        Clear All Alerts
+                    </button>
+<div class="relative group">
+<select class="appearance-none bg-surface-container-high border-none text-on-surface px-4 py-2 pr-10 rounded cursor-pointer focus:ring-1 focus:ring-primary">
+<option>All Severities</option>
+<option>Critical Only</option>
+<option>Warning Only</option>
+<option>Info Only</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-2 pointer-events-none text-on-surface-variant">filter_list</span>
+</div>
+</div>
+</div>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-12 gap-widget-gap">
+<!-- Main Alert Log (Table Container) -->
+<div class="col-span-12 lg:col-span-8 bg-surface-container-low border border-outline-variant rounded-xl overflow-hidden flex flex-col">
+<div class="px-6 py-4 border-b border-outline-variant flex items-center justify-between">
+<h2 class="font-headline-md text-[18px]">System Event Stream</h2>
+<span class="text-mono-code text-[11px] text-secondary bg-secondary-container/10 px-2 py-0.5 rounded border border-secondary/20">LIVE_MODE</span>
 </div>
 <div class="overflow-x-auto">
-<table class="w-full text-left">
+<table class="w-full text-left border-collapse">
 <thead>
-<tr class="text-[10px] uppercase tracking-wider text-tec-text-muted border-b border-tec-border">
-<th class="px-6 py-4 font-semibold">Timestamp</th>
-<th class="px-6 py-4 font-semibold">Type</th>
-<th class="px-6 py-4 font-semibold">Value</th>
-<th class="px-6 py-4 font-semibold text-center">Severity</th>
-<th class="px-6 py-4 font-semibold text-right">Status</th>
+<tr class="bg-surface-container-highest/30">
+<th class="px-6 py-3 font-mono-code text-[11px] uppercase tracking-wider text-on-surface-variant">Timestamp</th>
+<th class="px-6 py-3 font-mono-code text-[11px] uppercase tracking-wider text-on-surface-variant">Type</th>
+<th class="px-6 py-3 font-mono-code text-[11px] uppercase tracking-wider text-on-surface-variant">Value</th>
+<th class="px-6 py-3 font-mono-code text-[11px] uppercase tracking-wider text-on-surface-variant">Severity</th>
+<th class="px-6 py-3 font-mono-code text-[11px] uppercase tracking-wider text-on-surface-variant">Status</th>
 </tr>
 </thead>
-<tbody class="text-sm divide-y divide-tec-border/50">
-<!-- Row 1 -->
-<tr class="hover:bg-white/5 transition-colors">
-<td class="px-6 py-4 text-tec-text-muted whitespace-nowrap">2023-11-24 14:32:01</td>
-<td class="px-6 py-4 font-medium"><i class="fa-solid fa-microchip mr-2 text-blue-400"></i> CPU</td>
-<td class="px-6 py-4 font-medium">98.4%</td>
-<td class="px-6 py-4 text-center">
-<span class="severity-critical px-3 py-0.5 rounded-full text-[10px] font-bold uppercase">Critical</span>
+<tbody class="divide-y divide-outline-variant/30 font-mono-data text-mono-data">
+<tr class="hover:bg-white/[0.02] transition-colors">
+<td class="px-6 py-4 text-on-surface-variant">2023-11-24 14:32:01</td>
+<td class="px-6 py-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-primary">memory</span> CPU
+                                    </td>
+<td class="px-6 py-4">98.4%</td>
+<td class="px-6 py-4">
+<span class="px-2 py-1 bg-error-container text-error text-[11px] rounded-full font-bold uppercase tracking-tighter border border-error/20 status-glow-error">Critical</span>
 </td>
-<td class="px-6 py-4 text-right">
-<span class="flex items-center justify-end gap-2"><span class="w-1.5 h-1.5 rounded-full bg-red-500"></span> Active</span>
-</td>
-</tr>
-<!-- Row 2 -->
-<tr class="hover:bg-white/5 transition-colors">
-<td class="px-6 py-4 text-tec-text-muted whitespace-nowrap">2023-11-24 14:28:45</td>
-<td class="px-6 py-4 font-medium"><i class="fa-solid fa-memory mr-2 text-blue-400"></i> RAM</td>
-<td class="px-6 py-4 font-medium">84.2%</td>
-<td class="px-6 py-4 text-center">
-<span class="severity-warning px-3 py-0.5 rounded-full text-[10px] font-bold uppercase">Warning</span>
-</td>
-<td class="px-6 py-4 text-right text-tec-text-muted">
-<span class="flex items-center justify-end gap-2"><span class="w-1.5 h-1.5 rounded-full bg-gray-500"></span> Cleared</span>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-error animate-pulse"></span> Active
+                                        </div>
 </td>
 </tr>
-<!-- Row 3 -->
-<tr class="hover:bg-white/5 transition-colors">
-<td class="px-6 py-4 text-tec-text-muted whitespace-nowrap">2023-11-24 14:15:22</td>
-<td class="px-6 py-4 font-medium"><i class="fa-solid fa-hard-drive mr-2 text-blue-400"></i> Disk</td>
-<td class="px-6 py-4 font-medium">92.0%</td>
-<td class="px-6 py-4 text-center">
-<span class="severity-critical px-3 py-0.5 rounded-full text-[10px] font-bold uppercase">Critical</span>
+<tr class="hover:bg-white/[0.02] transition-colors bg-white/[0.01]">
+<td class="px-6 py-4 text-on-surface-variant">2023-11-24 14:28:45</td>
+<td class="px-6 py-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-primary">database</span> RAM
+                                    </td>
+<td class="px-6 py-4">84.2%</td>
+<td class="px-6 py-4">
+<span class="px-2 py-1 bg-tertiary-container text-on-tertiary-container text-[11px] rounded-full font-bold uppercase tracking-tighter">Warning</span>
 </td>
-<td class="px-6 py-4 text-right text-tec-text-muted">
-<span class="flex items-center justify-end gap-2"><span class="w-1.5 h-1.5 rounded-full bg-gray-500"></span> Cleared</span>
-</td>
-</tr>
-<!-- Row 4 -->
-<tr class="hover:bg-white/5 transition-colors">
-<td class="px-6 py-4 text-tec-text-muted whitespace-nowrap">2023-11-24 13:59:10</td>
-<td class="px-6 py-4 font-medium"><i class="fa-solid fa-network-wired mr-2 text-blue-400"></i> Net I/O</td>
-<td class="px-6 py-4 font-medium">1.2 GB/s</td>
-<td class="px-6 py-4 text-center">
-<span class="severity-warning px-3 py-0.5 rounded-full text-[10px] font-bold uppercase">Warning</span>
-</td>
-<td class="px-6 py-4 text-right text-tec-text-muted">
-<span class="flex items-center justify-end gap-2"><span class="w-1.5 h-1.5 rounded-full bg-gray-500"></span> Cleared</span>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="w-2 h-2 rounded-full bg-outline"></span> Cleared
+                                        </div>
 </td>
 </tr>
-<!-- Row 5 -->
-<tr class="hover:bg-white/5 transition-colors border-b-0">
-<td class="px-6 py-4 text-tec-text-muted whitespace-nowrap">2023-11-24 13:45:00</td>
-<td class="px-6 py-4 font-medium"><i class="fa-solid fa-microchip mr-2 text-blue-400"></i> CPU</td>
-<td class="px-6 py-4 font-medium">99.1%</td>
-<td class="px-6 py-4 text-center">
-<span class="severity-critical px-3 py-0.5 rounded-full text-[10px] font-bold uppercase">Critical</span>
+<tr class="hover:bg-white/[0.02] transition-colors">
+<td class="px-6 py-4 text-on-surface-variant">2023-11-24 14:15:22</td>
+<td class="px-6 py-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-primary">hard_drive</span> Disk
+                                    </td>
+<td class="px-6 py-4">92.0%</td>
+<td class="px-6 py-4">
+<span class="px-2 py-1 bg-error-container text-error text-[11px] rounded-full font-bold uppercase tracking-tighter border border-error/20">Critical</span>
 </td>
-<td class="px-6 py-4 text-right">
-<span class="flex items-center justify-end gap-2"><span class="w-1.5 h-1.5 rounded-full bg-red-500"></span> Active</span>
+<td class="px-6 py-4 text-on-surface-variant">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-outline"></span> Cleared
+                                        </div>
+</td>
+</tr>
+<tr class="hover:bg-white/[0.02] transition-colors bg-white/[0.01]">
+<td class="px-6 py-4 text-on-surface-variant">2023-11-24 13:59:10</td>
+<td class="px-6 py-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-primary">network_check</span> Net I/O
+                                    </td>
+<td class="px-6 py-4">1.2 GB/s</td>
+<td class="px-6 py-4">
+<span class="px-2 py-1 bg-tertiary-container text-on-tertiary-container text-[11px] rounded-full font-bold uppercase tracking-tighter">Warning</span>
+</td>
+<td class="px-6 py-4 text-on-surface-variant">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-outline"></span> Cleared
+                                        </div>
+</td>
+</tr>
+<tr class="hover:bg-white/[0.02] transition-colors">
+<td class="px-6 py-4 text-on-surface-variant">2023-11-24 13:45:00</td>
+<td class="px-6 py-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-primary">memory</span> CPU
+                                    </td>
+<td class="px-6 py-4">99.1%</td>
+<td class="px-6 py-4">
+<span class="px-2 py-1 bg-error-container text-error text-[11px] rounded-full font-bold uppercase tracking-tighter border border-error/20 status-glow-error">Critical</span>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-error animate-pulse"></span> Active
+                                        </div>
 </td>
 </tr>
 </tbody>
 </table>
 </div>
 </div>
-<!-- END: System Event Stream Table -->
-<!-- BEGIN: Right Sidebar Panels -->
-<div class="col-span-4 flex flex-col gap-6">
-<!-- Dispatch Log -->
-<div class="bg-tec-card-bg border border-tec-border rounded-lg p-5 flex flex-col" data-purpose="dispatch-log">
-<div class="flex justify-between items-center mb-6">
-<h3 class="font-semibold text-gray-300">Dispatch Log</h3>
-<i class="fa-solid fa-envelope-open-text text-tec-text-muted"></i>
+<!-- Simulated Email Log Section -->
+<div class="col-span-12 lg:col-span-4 flex flex-col gap-widget-gap">
+<!-- Dispatch Insights -->
+<div class="bg-surface-container-low border border-outline-variant rounded-xl p-6 flex flex-col gap-4">
+<div class="flex items-center justify-between">
+<h2 class="font-headline-md text-[18px]">Dispatch Log</h2>
+<span class="material-symbols-outlined text-on-surface-variant">mail_lock</span>
 </div>
-<div class="space-y-4 flex-1">
-<!-- Log Item 1 -->
-<div class="pl-3 border-l-2 border-blue-400">
-<div class="flex justify-between items-center text-[10px] mb-1">
-<span class="text-blue-400 font-bold tracking-tight">OUTGOING EMAIL</span>
-<span class="text-tec-text-muted">14:32:05</span>
+<div class="space-y-4">
+<!-- Email Item -->
+<div class="p-3 rounded-lg bg-surface-container-highest/20 border-l-2 border-primary group hover:bg-surface-container-highest/40 transition-colors cursor-pointer">
+<div class="flex justify-between items-start mb-1">
+<span class="text-mono-code text-[10px] text-primary uppercase">Outgoing Email</span>
+<span class="text-mono-code text-[10px] text-on-surface-variant">14:32:05</span>
 </div>
-<p class="text-sm font-bold text-gray-100">CRITICAL: Node-01 CPU SPIKE</p>
-<p class="text-xs text-tec-text-muted truncate">To: admin-oncall@devops.sh • Status:...</p>
+<h4 class="text-body-sm font-bold truncate">CRITICAL: Node-01 CPU SPIKE</h4>
+<p class="text-[12px] text-on-surface-variant line-clamp-1">To: admin-oncall@devops.sh • Status: Delivered</p>
 </div>
-<!-- Log Item 2 -->
-<div class="pl-3 border-l-2 border-orange-400">
-<div class="flex justify-between items-center text-[10px] mb-1">
-<span class="text-orange-400 font-bold tracking-tight">OUTGOING SMS</span>
-<span class="text-tec-text-muted">14:28:50</span>
+<div class="p-3 rounded-lg bg-surface-container-highest/20 border-l-2 border-tertiary group hover:bg-surface-container-highest/40 transition-colors cursor-pointer">
+<div class="flex justify-between items-start mb-1">
+<span class="text-mono-code text-[10px] text-tertiary uppercase">Outgoing SMS</span>
+<span class="text-mono-code text-[10px] text-on-surface-variant">14:28:50</span>
 </div>
-<p class="text-sm font-bold text-gray-100">WARNING: Memory threshold 8...</p>
-<p class="text-xs text-tec-text-muted truncate">To: +1 555-0123 • Status: Queued</p>
+<h4 class="text-body-sm font-bold truncate">WARNING: Memory threshold 85%</h4>
+<p class="text-[12px] text-on-surface-variant line-clamp-1">To: +1 555-0123 • Status: Queued</p>
 </div>
-<!-- Log Item 3 -->
-<div class="pl-3 border-l-2 border-tec-accent-green">
-<div class="flex justify-between items-center text-[10px] mb-1">
-<span class="text-tec-accent-green font-bold tracking-tight">WEBHOOK PUSH</span>
-<span class="text-tec-text-muted">14:15:30</span>
+<div class="p-3 rounded-lg bg-surface-container-highest/20 border-l-2 border-secondary group hover:bg-surface-container-highest/40 transition-colors cursor-pointer">
+<div class="flex justify-between items-start mb-1">
+<span class="text-mono-code text-[10px] text-secondary uppercase">Webhook Push</span>
+<span class="text-mono-code text-[10px] text-on-surface-variant">14:15:30</span>
 </div>
-<p class="text-sm font-bold text-gray-100">Alert Resolved: Disk Space</p>
-<p class="text-xs text-tec-text-muted truncate">Payload sent to Slack #monitoring • ...</p>
+<h4 class="text-body-sm font-bold truncate">Alert Resolved: Disk Space</h4>
+<p class="text-[12px] text-on-surface-variant line-clamp-1">Payload sent to Slack #monitoring • Status: 200 OK</p>
 </div>
-<!-- Log Item 4 -->
-<div class="pl-3 border-l-2 border-blue-400/50">
-<div class="flex justify-between items-center text-[10px] mb-1">
-<span class="text-blue-400/70 font-bold tracking-tight">OUTGOING EMAIL</span>
-<span class="text-tec-text-muted">13:45:10</span>
+<div class="p-3 rounded-lg bg-surface-container-highest/20 border-l-2 border-primary group hover:bg-surface-container-highest/40 transition-colors cursor-pointer opacity-50">
+<div class="flex justify-between items-start mb-1">
+<span class="text-mono-code text-[10px] text-primary uppercase">Outgoing Email</span>
+<span class="text-mono-code text-[10px] text-on-surface-variant">13:45:10</span>
 </div>
-<p class="text-sm font-bold text-gray-100">CRITICAL: Service Downtime</p>
-<p class="text-xs text-tec-text-muted truncate">To: dev-team@corp.io • Status:...</p>
+<h4 class="text-body-sm font-bold truncate">CRITICAL: Service Downtime</h4>
+<p class="text-[12px] text-on-surface-variant line-clamp-1">To: dev-team@corp.io • Status: Delivered</p>
 </div>
 </div>
-<button class="mt-6 text-center text-xs text-tec-text-muted hover:text-white transition font-semibold">
-              View All Dispatches <i class="fa-solid fa-chevron-right ml-1 text-[8px]"></i>
+<button class="w-full py-2 text-mono-code text-on-surface-variant hover:text-primary transition-colors border-t border-outline-variant mt-2 flex items-center justify-center gap-2">
+                            View All Dispatches <span class="material-symbols-outlined text-[16px]">chevron_right</span>
 </button>
 </div>
-<!-- System Health Score -->
-<div class="bg-tec-card-bg border border-tec-border rounded-lg p-5" data-purpose="health-score-card">
-<h3 class="text-[10px] font-bold text-tec-accent-green uppercase tracking-widest mb-4">System Health Score</h3>
-<div class="flex items-end gap-1 mb-2">
-<span class="text-5xl font-bold text-white">82</span>
-<span class="text-xl text-tec-text-muted pb-1">/100</span>
-<div class="ml-auto mb-1">
-<!-- SVG Wave for Visual Flourish -->
-<svg class="text-tec-accent-green opacity-40" height="20" viewbox="0 0 60 20" width="60">
-<path d="M0 15 Q 15 5, 30 15 T 60 15" fill="none" stroke="currentColor" stroke-width="2"></path>
+<!-- Atmospheric Gauge / Status Card -->
+<div class="relative overflow-hidden bg-surface-container-low border border-outline-variant rounded-xl p-6 h-40 group">
+<div class="relative z-10">
+<p class="text-mono-code text-secondary text-[11px] mb-2">SYSTEM HEALTH SCORE</p>
+<h3 class="text-headline-lg font-mono-data text-secondary">82<span class="text-body-base opacity-50 ml-1">/100</span></h3>
+<p class="text-body-sm text-on-surface-variant mt-2">Stability trending up <span class="text-secondary">+4%</span></p>
+</div>
+<div class="absolute bottom-[-20%] right-[-10%] w-32 h-32 bg-secondary/10 rounded-full blur-3xl group-hover:bg-secondary/20 transition-all duration-700"></div>
+<div class="absolute inset-0 opacity-10 pointer-events-none">
+<svg class="w-full h-full" viewBox="0 0 100 100">
+<path class="text-secondary" d="M0 80 Q 25 20, 50 60 T 100 40" fill="none" stroke="currentColor" stroke-width="0.5"></path>
 </svg>
 </div>
 </div>
-<p class="text-xs text-gray-300">
-              Stability trending up <span class="text-tec-accent-green font-bold">+4%</span>
-</p>
 </div>
 </div>
-<!-- END: Right Sidebar Panels -->
 </div>
-</div>
-<!-- END: Dashboard Scrollable Body -->
 </main>
-<!-- END: Main Content Area -->
+<!-- Success Modal (Hidden by default) -->
+<div class="fixed inset-0 z-[60] flex items-center justify-center bg-black/80 backdrop-blur-sm hidden opacity-0 transition-opacity duration-300" id="successModal">
+<div class="glass-panel p-8 rounded-xl max-w-md w-full text-center transform scale-95 transition-transform duration-300" id="modalContent">
+<div class="w-16 h-16 bg-secondary-container/20 rounded-full flex items-center justify-center mx-auto mb-4 border border-secondary/30 status-glow-success">
+<span class="material-symbols-outlined text-secondary text-[40px]">check_circle</span>
+</div>
+<h3 class="text-headline-md mb-2">Log Database Purged</h3>
+<p class="text-on-surface-variant mb-6">All historical alert entries have been moved to archival storage. Current dashboard view refreshed.</p>
+<button class="w-full py-3 bg-secondary text-on-secondary font-bold rounded-lg hover:bg-secondary-fixed transition-colors" onclick="closeModal()">Acknowledge</button>
+</div>
+</div>
+<script>
+        const clearBtn = document.getElementById('clearBtn');
+        const successModal = document.getElementById('successModal');
+        const modalContent = document.getElementById('modalContent');
+
+        clearBtn.addEventListener('click', () => {
+            successModal.classList.remove('hidden');
+            setTimeout(() => {
+                successModal.classList.remove('opacity-0');
+                modalContent.classList.remove('scale-95');
+            }, 10);
+        });
+
+        function closeModal() {
+            successModal.classList.add('opacity-0');
+            modalContent.classList.add('scale-95');
+            setTimeout(() => {
+                successModal.classList.add('hidden');
+                // Simulate table clearing
+                const rows = document.querySelectorAll('tbody tr');
+                rows.forEach((row, index) => {
+                    if (index > 0) { // Keep one row as placeholder or simulated fresh state
+                        row.classList.add('opacity-0', 'translate-x-4');
+                        setTimeout(() => row.remove(), 300);
+                    }
+                });
+            }, 300);
+        }
+
+        // Add subtle hover interaction for table rows
+        document.querySelectorAll('tbody tr').forEach(row => {
+            row.addEventListener('mouseenter', () => {
+                row.querySelector('.material-symbols-outlined').style.transform = 'scale(1.2)';
+            });
+            row.addEventListener('mouseleave', () => {
+                row.querySelector('.material-symbols-outlined').style.transform = 'scale(1)';
+            });
+        });
+    </script>
+
+
+
+
 </body></html>

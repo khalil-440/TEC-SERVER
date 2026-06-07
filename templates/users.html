@@ -1,379 +1,526 @@
-<!DOCTYPE html>
-
-<html lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>User Management - Enterprise Suite</title>
-<!-- Tailwind CSS v3 CDN -->
+<!DOCTYPE html><html class="dark" lang="en" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title class="">TEC SERVER - User Management</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<!-- Inter Font -->
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
-<script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: {
-            sans: ['Inter', 'sans-serif'],
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Geist:wght@400;500&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-error": "#690005",
+                      "on-secondary-container": "#00311f",
+                      "on-primary": "#003543",
+                      "on-primary-fixed-variant": "#004e60",
+                      "surface-bright": "#333a3d",
+                      "error": "#ffb4ab",
+                      "surface-container-lowest": "#090f12",
+                      "on-secondary-fixed": "#002113",
+                      "surface-variant": "#2f3639",
+                      "on-primary-fixed": "#001f28",
+                      "tertiary-fixed-dim": "#ffba49",
+                      "background": "#0e1417",
+                      "tertiary-container": "#feb127",
+                      "surface-dim": "#0e1417",
+                      "primary-fixed": "#b7eaff",
+                      "inverse-primary": "#00677f",
+                      "error-container": "#93000a",
+                      "on-tertiary": "#442b00",
+                      "on-surface": "#dde3e7",
+                      "surface-container-low": "#161d1f",
+                      "secondary-container": "#00a572",
+                      "primary": "#a4e6ff",
+                      "outline-variant": "#3c494e",
+                      "on-error-container": "#ffdad6",
+                      "outline": "#859399",
+                      "on-primary-container": "#00566a",
+                      "on-secondary-fixed-variant": "#005236",
+                      "surface-container": "#1a2123",
+                      "on-tertiary-container": "#6b4700",
+                      "tertiary-fixed": "#ffddb1",
+                      "on-background": "#dde3e7",
+                      "on-secondary": "#003824",
+                      "secondary": "#4edea3",
+                      "surface": "#0e1417",
+                      "on-surface-variant": "#bbc9cf",
+                      "inverse-surface": "#dde3e7",
+                      "inverse-on-surface": "#2b3134",
+                      "surface-container-high": "#242b2e",
+                      "surface-tint": "#4cd6ff",
+                      "surface-container-highest": "#2f3639",
+                      "on-tertiary-fixed-variant": "#624000",
+                      "primary-fixed-dim": "#4cd6ff",
+                      "on-tertiary-fixed": "#291800",
+                      "secondary-fixed-dim": "#4edea3",
+                      "secondary-fixed": "#6ffbbe",
+                      "primary-container": "#00d1ff",
+                      "tertiary": "#ffd59c"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "widget-gap": "16px",
+                      "gutter": "24px",
+                      "margin-desktop": "32px",
+                      "margin-mobile": "16px",
+                      "unit": "4px"
+              },
+              "fontFamily": {
+                      "body-sm": ["Inter"],
+                      "mono-data": ["Geist"],
+                      "body-base": ["Inter"],
+                      "mono-code": ["Geist"],
+                      "headline-md": ["Inter"],
+                      "headline-lg": ["Inter"]
+              },
+              "fontSize": {
+                      "body-sm": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                      "mono-data": ["13px", {"lineHeight": "1.4", "fontWeight": "500"}],
+                      "body-base": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                      "mono-code": ["12px", {"lineHeight": "1.6", "letterSpacing": "0.02em", "fontWeight": "400"}],
+                      "headline-md": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                      "headline-lg": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+              }
+            },
           },
-          colors: {
-            'slate-950': '#0a0f14',
-            'slate-900': '#111821',
-            'slate-800': '#1a222c',
-            'brand-teal': '#2dd4bf',
-            'brand-cyan': '#22d3ee',
-            'active-green': '#10b981',
-          }
         }
-      }
-    }
-  </script>
-<style data-purpose="custom-layout">
-    body {
-      background-color: #0a0f14;
-      color: #e2e8f0;
-    }
-    .active-nav-bg {
-      background: linear-gradient(90deg, rgba(45, 212, 191, 0.1) 0%, rgba(45, 212, 191, 0) 100%);
-      border-left: 2px solid #2dd4bf;
-    }
-    .glow-cyan {
-      box-shadow: 0 0 15px rgba(34, 211, 238, 0.3);
-    }
-    .custom-scrollbar::-webkit-scrollbar {
-      width: 6px;
-    }
-    .custom-scrollbar::-webkit-scrollbar-thumb {
-      background: #334155;
-      border-radius: 10px;
-    }
-  </style>
+    </script>
+<style>
+        .glass-panel {
+            backdrop-filter: blur(20px);
+            background-color: rgba(22, 29, 31, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #090f12;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #3c494e;
+            border-radius: 10px;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
 </head>
-<body class="font-sans antialiased h-screen flex overflow-hidden">
-<!-- BEGIN: Sidebar -->
-<aside class="w-64 border-r border-slate-800 flex flex-col h-full bg-slate-950" data-purpose="side-navigation">
-<div class="p-6 border-b border-slate-800 flex items-center space-x-3">
-<div class="w-8 h-8 bg-brand-teal rounded flex items-center justify-center font-bold text-slate-950">R</div>
-<div>
-<h2 class="text-sm font-semibold">Root-Node-01</h2>
-<p class="text-[10px] text-slate-500">192.168.1.105</p>
+<body class="bg-background text-on-background font-body-base selection:bg-primary/30 min-h-screen">
+<!-- TopAppBar -->
+<header class="fixed top-0 right-0 left-0 z-50 flex justify-between items-center px-gutter h-16 bg-surface-dim/80 backdrop-blur-xl border-b border-outline-variant">
+<div class="flex items-center gap-4">
+<span class="text-headline-md font-headline-md font-bold text-primary">TEC SERVER</span>
+<div class="hidden md:flex ml-8 gap-6 h-full">
+<a class="flex items-center text-on-surface-variant font-medium hover:text-primary transition-colors h-16" href="#">Infrastructure</a>
+<a class="flex items-center text-primary font-bold border-b-2 border-primary transition-colors h-16" href="#">Access Management</a>
+<a class="flex items-center text-on-surface-variant font-medium hover:text-primary transition-colors h-16" href="#">Security</a>
 </div>
 </div>
-<nav class="flex-1 py-4 space-y-1">
-<a class="flex items-center px-6 py-3 text-slate-400 hover:text-white transition-colors" href="/dashboard">
-<svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-        Dashboard
-      </a>
-<a class="flex items-center px-6 py-3 text-slate-400 hover:text-white transition-colors" href="/processes">
-<svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-        Processes
-      </a>
-<a class="flex items-center px-6 py-3 text-brand-teal active-nav-bg font-medium" href="/users">
-<svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-        Users
-      </a>
-<a class="flex items-center px-6 py-3 text-slate-400 hover:text-white transition-colors" href="/alert">
-<svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-        Alerts
-      </a>
-<a class="flex items-center px-6 py-3 text-slate-400 hover:text-white transition-colors" href="/reports">
-<svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-        Reports
-      </a>
-<a class="flex items-center px-6 py-3 text-slate-400 hover:text-white transition-colors" href="/settings">
-<svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-        Settings
-      </a>
-</nav>
-<div class="p-6 bg-slate-900 mt-auto mx-4 mb-4 rounded-lg border border-slate-800" data-purpose="system-load-indicator">
-<div class="flex justify-between text-[10px] mb-1">
-<span class="text-slate-500 uppercase font-bold tracking-wider">System Load</span>
-<span class="text-brand-teal">24%</span>
+<div class="flex items-center gap-6">
+<div class="relative hidden lg:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-[20px]">search</span>
+<input class="bg-surface-container-low border border-outline-variant rounded-lg pl-10 pr-4 py-2 text-body-sm w-64 focus:outline-none focus:border-primary transition-all" placeholder="Global search..." type="text">
 </div>
-<div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
-<div class="bg-brand-teal h-full w-[24%]"></div>
-</div>
-</div>
-</aside>
-<!-- END: Sidebar -->
-<!-- Main Container -->
-<div class="flex-1 flex flex-col min-w-0">
-<!-- BEGIN: Top Bar -->
-<header class="h-16 border-b border-slate-800 flex items-center justify-between px-8 bg-slate-950/50 backdrop-blur-md">
-<nav class="flex items-center space-x-8 h-full">
-<a class="text-slate-400 text-sm font-medium hover:text-white transition-colors" href="#">Infrastructure</a>
-<a class="text-white text-sm font-medium relative h-full flex items-center" href="#">
-          Access Management
-          <span class="absolute bottom-0 left-0 w-full h-0.5 bg-brand-teal"></span>
-</a>
-<a class="text-slate-400 text-sm font-medium hover:text-white transition-colors" href="#">Security</a>
-</nav>
-<div class="flex items-center space-x-6">
-<div class="relative">
-<input class="bg-slate-900 border-slate-800 text-sm rounded-md pl-10 pr-4 py-1.5 w-64 focus:ring-brand-teal focus:border-brand-teal transition-all" placeholder="Global search..." type="text"/>
-<svg class="w-4 h-4 absolute left-3 top-2.5 text-slate-500" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-</div>
-<div class="flex items-center space-x-4">
-<button class="text-slate-400 hover:text-white"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg></button>
-<button class="text-slate-400 hover:text-white"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg></button>
-<div class="w-8 h-8 rounded-full overflow-hidden border border-brand-teal/50">
-<img alt="Profile" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAp05rY7YE8K11jA25ZoFlIS4X5rIuy4szLqGEC72UQSTJLO5B3jXSFlA9VPKAXCvFkbYJ0Uuja2WM-xG1suC0SPYfyNbPHp3vIPOB1SBnTFh29YQLEJMN_kahLIgHcDFnVfMy73o_GiNDy8hNrr438rkFSjDIry3oeu0hEK7YZsIDY4nLEIMDVkYuve-ZpxhBNjUHulQmxCM-urjQCcLLSmSNedguZ98fVbsAvwMp7kkRqFdqJX3QF0DLGaJbmhe16Cg1Qw3X2QGT-"/>
-</div>
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors">notifications</button>
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors">settings</button>
+<img alt="Administrator Profile" class="w-8 h-8 rounded-full border border-outline-variant" data-alt="A professional headshot of a corporate IT administrator with a clean-cut look, wearing a modern dark suit. The lighting is sophisticated and moody, typical of a high-end tech environment, with subtle blue and teal rim lighting. The background is a soft-focus data center with glowing server racks, reinforcing the DevOps and system management theme." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC53U4dAvw74W_sL8hhb2jyLhYFvUVkIuqKGBES2zdnmFGNU0YaAlB6ZeG8JTfmiGGLHWBokQ0dJKYYFYjbUlCanlhj4jTj0n9Z68d1vfORYo_qHmO-dFFmI4QYa2532-k8zDqAWfhfD-End6exDvE86V3AEsjN1RM8aNMjflK9G1G4Q9RVtB5dOF3_JpBTSmkLZKTUTPFbg6ewjvB_yVYhDr6SJPEKE_V7CXElEu83UYVXwNFEPWMwaOgE-MMu1EYGuSfSEKUukg">
 </div>
 </div>
 </header>
-<!-- END: Top Bar -->
-<!-- BEGIN: Main Content Area -->
-<main class="flex-1 overflow-y-auto custom-scrollbar p-8 flex space-x-8">
-<!-- Central Control Section -->
-<section class="flex-1 min-w-0" data-purpose="user-management-center">
-<div class="flex items-center justify-between mb-8">
+<!-- SideNavBar -->
+<nav class="fixed left-0 top-0 bottom-0 w-[280px] z-40 flex flex-col pt-20 bg-surface-container-lowest border-r border-outline-variant hidden md:flex">
+<div class="px-6 py-4 flex items-center gap-3 border-b border-outline-variant/30 mb-4">
+<div class="w-10 h-10 rounded-lg bg-primary-container/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">dns</span>
+</div>
+<div class="flex flex-col">
+<span class="font-mono-code text-primary font-bold text-[14px]">Root-Node-01</span>
+<span class="font-mono-code text-on-surface-variant text-[11px] opacity-70">192.168.1.105</span>
+</div>
+</div>
+<div class="flex-1 px-4 space-y-1 overflow-y-auto custom-scrollbar">
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant opacity-70 hover:opacity-100 hover:bg-surface-container-high transition-all group" href="/dashboard">
+<span class="material-symbols-outlined group-hover:text-primary">dashboard</span>
+<span class="font-mono-code text-mono-code">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant opacity-70 hover:opacity-100 hover:bg-surface-container-high transition-all group" href="/processes">
+<span class="material-symbols-outlined group-hover:text-primary">memory</span>
+<span class="font-mono-code text-mono-code">Processes</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg bg-secondary-container/20 text-secondary border-l-4 border-secondary font-bold group" href="/users">
+<span class="material-symbols-outlined">group</span>
+<span class="font-mono-code text-mono-code">Users</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant opacity-70 hover:opacity-100 hover:bg-surface-container-high transition-all group" href="/alert">
+<span class="material-symbols-outlined group-hover:text-primary">warning</span>
+<span class="font-mono-code text-mono-code">Alerts</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant opacity-70 hover:opacity-100 hover:bg-surface-container-high transition-all group" href="/reports">
+<span class="material-symbols-outlined group-hover:text-primary">analytics</span>
+<span class="font-mono-code text-mono-code">Reports</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant opacity-70 hover:opacity-100 hover:bg-surface-container-high transition-all group" href="/settings">
+<span class="material-symbols-outlined group-hover:text-primary">settings</span>
+<span class="font-mono-code text-mono-code">Settings</span>
+</a>
+</div>
+<div class="p-6 mt-auto">
+<div class="p-4 rounded-xl bg-surface-container-high/50 border border-outline-variant/30">
+<div class="flex items-center justify-between mb-2">
+<span class="text-[10px] font-bold uppercase text-outline">System Load</span>
+<span class="text-[10px] font-mono-data text-secondary">24%</span>
+</div>
+<div class="w-full bg-surface-container h-1 rounded-full overflow-hidden">
+<div class="bg-secondary h-full w-[24%]"></div>
+</div>
+</div>
+</div>
+</nav>
+<!-- Main Content Area -->
+<main class="md:ml-[280px] pt-24 px-gutter pb-gutter min-h-screen">
+<header class="mb-8 flex flex-col md:flex-row md:items-end justify-between gap-4">
 <div>
-<div class="flex items-center text-[10px] text-slate-500 uppercase tracking-widest space-x-2 mb-1">
-<span>Identity</span>
-<svg class="w-2.5 h-2.5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-<span class="text-slate-400">User Management</span>
+<nav class="flex items-center gap-2 text-body-sm text-outline mb-2">
+<span class="">Identity</span>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+<span class="text-on-surface">User Management</span>
+</nav>
+<h1 class="font-headline-lg text-headline-lg text-on-surface">Access Control Center</h1>
 </div>
-<h1 class="text-3xl font-bold text-white tracking-tight">Access Control Center</h1>
+<div class="flex items-center gap-3">
+<button class="px-4 py-2 bg-surface-container-high text-on-surface border border-outline-variant rounded-lg font-medium text-body-sm flex items-center gap-2 hover:bg-surface-variant transition-colors">
+<span class="material-symbols-outlined text-[18px]">download</span> Export CSV
+                </button>
+<button class="px-6 py-2 bg-primary text-on-primary rounded-lg font-bold text-body-sm flex items-center gap-2 hover:brightness-110 active:scale-95 transition-all" onclick="document.getElementById('add-user-form').scrollIntoView({behavior: 'smooth'})">
+<span class="material-symbols-outlined text-[18px]">person_add</span> Create New Identity
+                </button>
 </div>
-<div class="flex space-x-3">
-<button class="flex items-center px-4 py-2 bg-slate-800 text-slate-200 text-sm font-medium rounded border border-slate-700 hover:bg-slate-700 transition-colors">
-<svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-              Export CSV
-            </button>
-<button class="flex items-center px-4 py-2 bg-brand-cyan text-slate-950 text-sm font-bold rounded shadow-lg shadow-brand-cyan/20 hover:bg-cyan-300 transition-all glow-cyan">
-<svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M12 6v6m0 0v6m0-6h6m-6 0H6" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-              Create New Identity
-            </button>
+</header>
+<!-- Tabs Container -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+<!-- Linux Users List (8 Columns) -->
+<section class="lg:col-span-8 flex flex-col gap-gutter">
+<div class="glass-panel rounded-xl overflow-hidden shadow-2xl flex flex-col h-full min-h-[600px]">
+<div class="px-6 py-4 border-b border-outline-variant flex items-center justify-between bg-surface-container-lowest/50">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-secondary">list_alt</span>
+<h2 class="font-headline-md text-[18px] text-on-surface">Linux System Users</h2>
 </div>
-</div>
-<!-- Table Container -->
-<div class="bg-slate-900/40 rounded-xl border border-slate-800 overflow-hidden backdrop-blur-sm">
-<div class="p-5 border-b border-slate-800 flex justify-between items-center">
-<div class="flex items-center space-x-3">
-<div class="p-1.5 bg-brand-teal/20 text-brand-teal rounded">
-<svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-</div>
-<h3 class="font-semibold text-white">Linux System Users</h3>
-</div>
-<div class="flex items-center space-x-4">
-<span class="text-xs text-slate-500">Filter by status:</span>
-<select class="bg-slate-800 border-none text-xs rounded text-white py-1 px-3 focus:ring-1 focus:ring-brand-teal">
+<div class="flex items-center gap-2">
+<span class="text-body-sm text-outline">Filter by status:</span>
+<select class="bg-surface-container border-none text-body-sm rounded-lg focus:ring-1 focus:ring-primary py-1">
 <option>All Users</option>
-<option>Active</option>
-<option>Inactive</option>
+<option>Active Only</option>
+<option>Inactive Only</option>
 </select>
 </div>
 </div>
+<div class="flex-1 overflow-x-auto">
 <table class="w-full text-left border-collapse">
 <thead>
-<tr class="text-[10px] text-slate-500 uppercase tracking-widest border-b border-slate-800">
-<th class="px-6 py-4 font-bold">User Entity</th>
-<th class="px-6 py-4 font-bold">UID/GID</th>
-<th class="px-6 py-4 font-bold">Last Authentication</th>
-<th class="px-6 py-4 font-bold">Status</th>
+<tr class="bg-surface-container-low/50">
+<th class="px-6 py-4 font-mono-code text-[11px] uppercase tracking-wider text-outline">User Entity</th>
+<th class="px-6 py-4 font-mono-code text-[11px] uppercase tracking-wider text-outline text-center">UID/GID</th>
+<th class="px-6 py-4 font-mono-code text-[11px] uppercase tracking-wider text-outline">Last Authentication</th>
+<th class="px-6 py-4 font-mono-code text-[11px] uppercase tracking-wider text-outline text-center">Status</th>
+<th class="px-6 py-4 font-mono-code text-[11px] uppercase tracking-wider text-outline text-right">Operations</th>
 </tr>
 </thead>
-<tbody class="divide-y divide-slate-800/50">
-<!-- User 1 -->
-<tr class="hover:bg-slate-800/30 transition-colors">
+<tbody class="divide-y divide-outline-variant/30">
+<!-- User Row: Active -->
+<tr class="hover:bg-white/[0.02] transition-colors group">
 <td class="px-6 py-4">
-<div class="flex items-center space-x-4">
-<div class="w-9 h-9 bg-slate-800 rounded flex items-center justify-center text-brand-teal">
-<svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-secondary/10 flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined">person</span>
 </div>
 <div>
-<div class="text-sm font-semibold text-white">admin_user</div>
-<div class="text-xs text-slate-500">/home/admin_user</div>
+<div class="font-bold text-on-surface text-body-sm">admin_user</div>
+<div class="text-[12px] text-outline">/home/admin_user</div>
 </div>
 </div>
 </td>
-<td class="px-6 py-4">
-<div class="text-sm font-mono"><span class="text-active-green">1001</span> <span class="text-slate-600">/</span> <span class="text-active-green">1001</span></div>
+<td class="px-6 py-4 text-center">
+<div class="font-mono-data text-body-sm text-secondary">1001 <span class="text-outline">/</span> 1001</div>
 </td>
 <td class="px-6 py-4">
-<div class="text-sm text-slate-300">Today, 09:42 AM</div>
-<div class="text-[10px] text-slate-500">IP: 192.168.1.12</div>
+<div class="text-body-sm text-on-surface">Today, 09:42 AM</div>
+<div class="text-[11px] text-outline">IP: 192.168.1.12</div>
 </td>
-<td class="px-6 py-4">
-<span class="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest bg-active-green/10 text-active-green border border-active-green/20">Active</span>
+<td class="px-6 py-4 text-center">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-secondary-container/10 text-secondary border border-secondary/20">
+                                            ACTIVE
+                                        </span>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex items-center justify-end gap-2">
+<button class="p-2 hover:text-primary transition-colors" title="Reset Password"><span class="material-symbols-outlined text-[20px]">lock_reset</span></button>
+<button class="p-2 hover:text-primary transition-colors" title="View Log"><span class="material-symbols-outlined text-[20px]">history</span></button>
+<button class="p-2 hover:text-error transition-colors" title="Deactivate"><span class="material-symbols-outlined text-[20px]">block</span></button>
+</div>
 </td>
 </tr>
-<!-- User 2 -->
-<tr class="bg-amber-900/5 hover:bg-amber-900/10 transition-colors">
+<!-- User Row: Warning (>30 days) -->
+<tr class="bg-tertiary-container/5 hover:bg-tertiary-container/10 transition-colors group">
 <td class="px-6 py-4">
-<div class="flex items-center space-x-4">
-<div class="w-9 h-9 bg-slate-800 rounded flex items-center justify-center text-amber-500">
-<svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-tertiary/10 flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined">person</span>
 </div>
 <div>
-<div class="text-sm font-semibold text-white">j_doe_temp</div>
-<div class="text-xs text-slate-500">/home/j_doe_temp</div>
+<div class="font-bold text-on-surface text-body-sm">j_doe_temp</div>
+<div class="text-[12px] text-outline">/home/j_doe_temp</div>
 </div>
 </div>
 </td>
-<td class="px-6 py-4">
-<div class="text-sm font-mono text-slate-300">1042 / 1000</div>
+<td class="px-6 py-4 text-center">
+<div class="font-mono-data text-body-sm text-on-surface">1042 <span class="text-outline">/</span> 1000</div>
 </td>
 <td class="px-6 py-4">
-<div class="flex items-start space-x-2">
-<svg class="w-4 h-4 text-amber-500 mt-0.5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-<div>
-<div class="text-sm text-amber-500 font-medium">42 days ago</div>
-<div class="text-[10px] italic text-slate-500">Security policy violation risk</div>
+<div class="flex items-center gap-2 text-tertiary font-bold text-body-sm">
+<span class="material-symbols-outlined text-[18px]">warning</span>
+<span class="">42 days ago</span>
 </div>
-</div>
+<div class="text-[11px] text-outline italic">Security policy violation risk</div>
 </td>
-<td class="px-6 py-4">
-<span class="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest bg-active-green/10 text-active-green border border-active-green/20">Active</span>
+<td class="px-6 py-4 text-center">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-secondary-container/10 text-secondary border border-secondary/20">
+                                            ACTIVE
+                                        </span>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex items-center justify-end gap-2">
+<button class="p-2 hover:text-primary transition-colors" title="Reset Password"><span class="material-symbols-outlined text-[20px]">lock_reset</span></button>
+<button class="p-2 hover:text-primary transition-colors" title="View Log"><span class="material-symbols-outlined text-[20px]">history</span></button>
+<button class="p-2 hover:text-error transition-colors" title="Deactivate"><span class="material-symbols-outlined text-[20px]">block</span></button>
+</div>
 </td>
 </tr>
-<!-- User 3 -->
-<tr class="hover:bg-slate-800/30 transition-colors">
+<!-- User Row: Inactive -->
+<tr class="hover:bg-white/[0.02] transition-colors group opacity-60">
 <td class="px-6 py-4">
-<div class="flex items-center space-x-4 opacity-50">
-<div class="w-9 h-9 bg-slate-800 rounded flex items-center justify-center text-slate-400">
-<svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-variant flex items-center justify-center text-outline">
+<span class="material-symbols-outlined">person_off</span>
 </div>
 <div>
-<div class="text-sm font-semibold text-white">legacy_service</div>
-<div class="text-xs text-slate-500">/var/lib/legacy</div>
+<div class="font-bold text-on-surface text-body-sm">legacy_service</div>
+<div class="text-[12px] text-outline">/var/lib/legacy</div>
 </div>
 </div>
 </td>
-<td class="px-6 py-4 opacity-50">
-<div class="text-sm font-mono text-slate-300">998 / 998</div>
-</td>
-<td class="px-6 py-4 opacity-50">
-<div class="text-sm text-slate-300">Never logged in</div>
+<td class="px-6 py-4 text-center">
+<div class="font-mono-data text-body-sm text-on-surface">998 <span class="text-outline">/</span> 998</div>
 </td>
 <td class="px-6 py-4">
-<span class="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest bg-slate-800 text-slate-500 border border-slate-700">Inactive</span>
+<div class="text-body-sm text-outline">Never logged in</div>
+</td>
+<td class="px-6 py-4 text-center">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-outline-variant/20 text-outline border border-outline-variant/40">
+                                            INACTIVE
+                                        </span>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex items-center justify-end gap-2">
+<button class="p-2 hover:text-primary transition-colors" title="Reset Password"><span class="material-symbols-outlined text-[20px]">lock_reset</span></button>
+<button class="p-2 hover:text-primary transition-colors" title="View Log"><span class="material-symbols-outlined text-[20px]">history</span></button>
+<button class="p-2 text-primary hover:text-secondary transition-colors" title="Deactivate"><span class="material-symbols-outlined text-[20px]">settings_backup_restore</span></button>
+</div>
 </td>
 </tr>
-<!-- User 4 -->
-<tr class="hover:bg-slate-800/30 transition-colors">
+<!-- User Row: Normal -->
+<tr class="hover:bg-white/[0.02] transition-colors group">
 <td class="px-6 py-4">
-<div class="flex items-center space-x-4">
-<div class="w-9 h-9 bg-slate-800 rounded flex items-center justify-center text-brand-teal">
-<svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">person</span>
 </div>
 <div>
-<div class="text-sm font-semibold text-white">dev_m_smith</div>
-<div class="text-xs text-slate-500">/home/dev_m_smith</div>
+<div class="font-bold text-on-surface text-body-sm">dev_m_smith</div>
+<div class="text-[12px] text-outline">/home/dev_m_smith</div>
 </div>
 </div>
 </td>
-<td class="px-6 py-4">
-<div class="text-sm font-mono text-slate-300">1005 / 1005</div>
+<td class="px-6 py-4 text-center">
+<div class="font-mono-data text-body-sm text-on-surface">1005 <span class="text-outline">/</span> 1005</div>
 </td>
 <td class="px-6 py-4">
-<div class="text-sm text-slate-300">3 days ago</div>
-<div class="text-[10px] text-slate-500">IP: 10.0.0.155</div>
+<div class="text-body-sm text-on-surface">3 days ago</div>
+<div class="text-[11px] text-outline">IP: 10.0.0.155</div>
 </td>
-<td class="px-6 py-4">
-<span class="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest bg-active-green/10 text-active-green border border-active-green/20">Active</span>
+<td class="px-6 py-4 text-center">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-secondary-container/10 text-secondary border border-secondary/20">
+                                            ACTIVE
+                                        </span>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex items-center justify-end gap-2">
+<button class="p-2 hover:text-primary transition-colors" title="Reset Password"><span class="material-symbols-outlined text-[20px]">lock_reset</span></button>
+<button class="p-2 hover:text-primary transition-colors" title="View Log"><span class="material-symbols-outlined text-[20px]">history</span></button>
+<button class="p-2 hover:text-error transition-colors" title="Deactivate"><span class="material-symbols-outlined text-[20px]">block</span></button>
+</div>
 </td>
 </tr>
 </tbody>
 </table>
-<div class="p-4 border-t border-slate-800 flex justify-between items-center text-xs text-slate-500 bg-slate-900/20">
-<div>Showing 4 of 128 registered identities</div>
-<div class="flex space-x-1">
-<button class="p-1 rounded bg-slate-800 text-slate-400 hover:text-white transition-colors"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M15 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg></button>
-<button class="px-3 py-1 rounded bg-brand-teal/20 text-brand-teal font-bold border border-brand-teal/30">1</button>
-<button class="px-3 py-1 rounded bg-slate-800 text-slate-400 hover:bg-slate-700 transition-colors">2</button>
-<button class="p-1 rounded bg-slate-800 text-slate-400 hover:text-white transition-colors"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg></button>
+</div>
+<div class="px-6 py-4 border-t border-outline-variant bg-surface-container-lowest/30 flex items-center justify-between">
+<span class="text-body-sm text-outline">Showing 4 of 128 registered identities</span>
+<div class="flex items-center gap-2">
+<button class="p-2 rounded-lg border border-outline-variant hover:bg-surface-container-high transition-colors disabled:opacity-30" disabled="">
+<span class="material-symbols-outlined text-[20px]">chevron_left</span>
+</button>
+<button class="p-2 rounded-lg border border-outline-variant bg-primary/20 text-primary font-bold text-body-sm min-w-[40px]">1</button>
+<button class="p-2 rounded-lg border border-outline-variant hover:bg-surface-container-high transition-colors text-body-sm min-w-[40px]">2</button>
+<button class="p-2 rounded-lg border border-outline-variant hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-[20px]">chevron_right</span>
+</button>
 </div>
 </div>
 </div>
 </section>
-<!-- BEGIN: Provision Side Panel -->
-<aside class="w-[380px] space-y-6" data-purpose="provision-side-panel">
-<!-- Provision Form Card -->
-<div class="bg-slate-900 border-l-4 border-brand-cyan rounded-r-xl p-6 shadow-2xl relative overflow-hidden">
-<div class="absolute top-0 right-0 w-32 h-32 bg-brand-cyan/5 rounded-full -mr-16 -mt-16 blur-3xl"></div>
-<div class="flex items-start space-x-4 mb-8">
-<div class="p-3 bg-slate-800 rounded-lg text-brand-cyan border border-slate-700">
-<svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<!-- Add New User Form (4 Columns) -->
+<aside class="lg:col-span-4 flex flex-col gap-gutter">
+<div class="glass-panel rounded-xl shadow-2xl p-6 border-l-4 border-l-primary flex flex-col sticky top-24" id="add-user-form">
+<div class="flex items-center gap-3 mb-6">
+<div class="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-[28px]">person_add</span>
 </div>
 <div>
-<h3 class="text-lg font-bold text-white">Provision User</h3>
-<p class="text-sm text-slate-400">Create a new local system account</p>
+<h3 class="font-headline-md text-[20px] text-on-surface">Provision User</h3>
+<p class="text-body-sm text-outline">Create a new local system account</p>
 </div>
 </div>
-<form class="space-y-5">
-<div>
-<label class="block text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1.5">Account Username</label>
+<form class="space-y-5" onsubmit="event.preventDefault(); alert('Identity provisioning initiated...')">
+<div class="space-y-2">
+<label class="font-mono-code text-[11px] uppercase tracking-wider text-outline block">Account Username</label>
 <div class="relative">
-<input class="w-full bg-slate-800 border-slate-700 rounded-md text-sm text-white focus:ring-brand-cyan focus:border-brand-cyan py-2.5" placeholder="e.g. dev_ops_lead" type="text"/>
-<svg class="w-4 h-4 absolute right-3 top-3 text-slate-600" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<input class="w-full bg-surface-container-low border border-outline-variant rounded-lg px-4 py-3 text-body-sm focus:ring-1 focus:ring-primary focus:border-primary outline-none transition-all placeholder:text-outline/50" placeholder="e.g. dev_ops_lead" required="" type="text">
+<span class="absolute right-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-outline text-[18px]">badge</span>
 </div>
-<p class="mt-1.5 text-[10px] italic text-slate-500">Must match standard Linux naming conventions (no spaces).</p>
+<p class="text-[10px] text-outline/60 italic">Must match standard Linux naming conventions (no spaces).</p>
 </div>
-<div>
-<label class="block text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1.5">Login Shell Path</label>
-<select class="w-full bg-slate-800 border-slate-700 rounded-md text-sm text-white focus:ring-brand-cyan focus:border-brand-cyan py-2.5">
-<option>/bin/bash (Default)</option>
-<option>/bin/sh</option>
-<option>/bin/zsh</option>
+<div class="space-y-2">
+<label class="font-mono-code text-[11px] uppercase tracking-wider text-outline block">Login Shell Path</label>
+<select class="w-full bg-surface-container-low border border-outline-variant rounded-lg px-4 py-3 text-body-sm focus:ring-1 focus:ring-primary focus:border-primary outline-none transition-all appearance-none">
+<option value="/bin/bash">/bin/bash (Default)</option>
+<option value="/bin/zsh">/bin/zsh</option>
+<option value="/bin/sh">/bin/sh</option>
+<option value="/sbin/nologin">/sbin/nologin (Service Account)</option>
 </select>
 </div>
-<div>
-<label class="block text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1.5">Home Directory Path</label>
+<div class="space-y-2">
+<label class="font-mono-code text-[11px] uppercase tracking-wider text-outline block">Home Directory Path</label>
 <div class="relative">
-<input class="w-full bg-slate-800 border-slate-700 rounded-md text-sm text-slate-400 focus:ring-brand-cyan focus:border-brand-cyan py-2.5" type="text" value="/home/username"/>
-<svg class="w-4 h-4 absolute right-3 top-3 text-slate-600" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<input class="w-full bg-surface-container-low border border-outline-variant rounded-lg px-4 py-3 text-body-sm focus:ring-1 focus:ring-primary focus:border-primary outline-none transition-all placeholder:text-outline/50" placeholder="/home/username" required="" type="text">
+<span class="absolute right-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-outline text-[18px]">folder_shared</span>
 </div>
 </div>
-<div class="flex items-start py-2">
-<input class="mt-1 rounded border-slate-700 bg-slate-800 text-brand-cyan focus:ring-brand-cyan" id="temp_pass" type="checkbox"/>
-<label class="ml-3 text-xs text-slate-400 leading-relaxed" for="temp_pass">
-                Generate temporary password and force rotation on first login
-              </label>
+<div class="pt-4 space-y-4">
+<label class="flex items-start gap-3 cursor-pointer group">
+<div class="mt-1 relative flex items-center justify-center">
+<input class="peer h-5 w-5 bg-surface-container-low border-outline-variant rounded focus:ring-primary text-primary transition-all" type="checkbox">
 </div>
-<button class="w-full py-3 bg-brand-cyan text-slate-950 font-bold rounded shadow-lg shadow-brand-cyan/20 hover:brightness-110 transition-all flex items-center justify-center glow-cyan" type="button">
-<svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-              Create Linux Identity
-            </button>
+<span class="text-body-sm text-on-surface-variant group-hover:text-on-surface transition-colors">Generate temporary password and force rotation on first login</span>
+</label>
+<button class="w-full py-4 bg-primary text-on-primary font-bold rounded-lg shadow-lg shadow-primary/20 hover:brightness-110 active:scale-[0.98] transition-all flex items-center justify-center gap-2" type="submit">
+<span class="material-symbols-outlined">security</span>
+                                Create Linux Identity
+                            </button>
+</div>
 </form>
-<div class="mt-8 pt-6 border-t border-slate-800">
-<div class="flex items-center space-x-2 text-amber-500 mb-2">
-<svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-<span class="text-[10px] font-bold uppercase tracking-widest">Quick Guide</span>
+<div class="mt-8 pt-6 border-t border-outline-variant/30">
+<div class="flex items-center gap-2 mb-3">
+<span class="material-symbols-outlined text-tertiary text-[18px]">info</span>
+<h4 class="font-mono-code text-[11px] uppercase tracking-wider text-tertiary">Quick Guide</h4>
 </div>
-<p class="text-[10px] leading-relaxed text-slate-500">
-              System will automatically assign the next available UID/GID starting from <span class="text-slate-300">1000</span>. Default permissions set to 0755 for home directories.
-            </p>
-</div>
-</div>
-<!-- Security Insights -->
-<div class="bg-slate-900 border border-slate-800 rounded-xl p-6" data-purpose="security-insights">
-<h4 class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-4">Security Insights</h4>
-<div class="space-y-4">
-<div class="flex items-start space-x-3">
-<div class="p-2 bg-red-500/10 text-red-500 rounded">
-<svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 00-2 2zm10-10V7a4 4 0 00-8 0v4h8z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-</div>
-<div>
-<p class="text-sm font-semibold text-white">3 Orphaned Accounts</p>
-<p class="text-[10px] text-slate-500">Detected accounts with no valid home directory or shell access.</p>
+<p class="text-[12px] text-outline leading-relaxed">
+                            System will automatically assign the next available UID/GID starting from <span class="text-primary font-bold">1000</span>. Default permissions set to 0755 for home directories.
+                        </p>
 </div>
 </div>
-<div class="flex items-start space-x-3">
-<div class="p-2 bg-active-green/10 text-active-green rounded">
-<svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<!-- Secondary Info Card -->
+<div class="glass-panel rounded-xl p-6 border border-outline-variant/20 bg-gradient-to-br from-surface-container-low to-surface-container-lowest">
+<h4 class="font-headline-md text-[16px] text-on-surface mb-4">Security Insights</h4>
+<ul class="space-y-4">
+<li class="flex gap-3">
+<div class="w-8 h-8 rounded-full bg-error/10 flex items-center justify-center text-error shrink-0">
+<span class="material-symbols-outlined text-[18px]">lock_open</span>
 </div>
 <div>
-<p class="text-sm font-semibold text-white">MFA Enforcement</p>
-<p class="text-[10px] text-slate-500">Active on 84% of user accounts. 12 users still require enrollment.</p>
+<p class="text-body-sm font-bold text-on-surface">3 Orphaned Accounts</p>
+<p class="text-[11px] text-outline">Detected accounts with no valid home directory or shell access.</p>
 </div>
+</li>
+<li class="flex gap-3">
+<div class="w-8 h-8 rounded-full bg-secondary/10 flex items-center justify-center text-secondary shrink-0">
+<span class="material-symbols-outlined text-[18px]">check_circle</span>
 </div>
+<div>
+<p class="text-body-sm font-bold text-on-surface">MFA Enforcement</p>
+<p class="text-[11px] text-outline">Active on 84% of user accounts. 12 users still require enrollment.</p>
 </div>
+</li>
+</ul>
 </div>
 </aside>
-<!-- END: Provision Side Panel -->
-</main>
-<!-- END: Main Content Area -->
 </div>
-</body>
-</html>
+</main>
+<!-- Success Feedback Overlay (Hidden by default) -->
+<div class="fixed bottom-gutter right-gutter translate-y-20 opacity-0 transition-all duration-300 z-50" id="toast">
+<div class="bg-secondary text-on-secondary px-6 py-4 rounded-xl shadow-2xl flex items-center gap-4">
+<span class="material-symbols-outlined">check_circle</span>
+<div class="flex flex-col">
+<span class="font-bold text-body-base">Identity Created Successfully</span>
+<span class="text-[12px] opacity-80">Syncing with Active Directory...</span>
+</div>
+</div>
+</div>
+<script>
+        // Simple micro-interactions for the "Deactivate" button and form submission simulation
+        document.querySelectorAll('button[title="Deactivate"]').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const row = this.closest('tr');
+                if (confirm('Are you sure you want to suspend this user identity? Access will be revoked immediately.')) {
+                    row.style.opacity = '0.5';
+                    row.classList.add('grayscale');
+                }
+            });
+        });
+
+        // Search highlight simulation
+        const searchInput = document.querySelector('input[placeholder="Global search..."]');
+        searchInput.addEventListener('input', (e) => {
+            const term = e.target.value.toLowerCase();
+            document.querySelectorAll('tbody tr').forEach(row => {
+                const text = row.innerText.toLowerCase();
+                row.style.display = text.includes(term) ? '' : 'none';
+            });
+        });
+
+        // Form feedback simulation
+        const provisionBtn = document.querySelector('button[type="submit"]');
+        const toast = document.getElementById('toast');
+        if (provisionBtn) {
+            provisionBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                toast.classList.remove('translate-y-20', 'opacity-0');
+                setTimeout(() => {
+                    toast.classList.add('translate-y-20', 'opacity-0');
+                }, 4000);
+            });
+        }
+    </script>
+
+
+</body></html>

@@ -1,417 +1,442 @@
-<!DOCTYPE html>
-
-<html class="dark" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Analytics &amp; Reports - Enterprise Suite</title>
-<!-- Tailwind CSS v3 CDN -->
+<!DOCTYPE html><html class="dark" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>TEC SERVER - Reports &amp; Analytics</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<!-- Google Fonts: Inter -->
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
-<script>
-    tailwind.config = {
-      darkMode: 'class',
-      theme: {
-        extend: {
-          colors: {
-            'enterprise-bg': '#0a0f12',
-            'enterprise-surface': '#11181d',
-            'enterprise-card': '#161f26',
-            'enterprise-border': '#232d36',
-            'enterprise-teal': '#4fd1c5',
-            'enterprise-cyan': '#22d3ee',
-            'enterprise-green': '#10b981',
-            'enterprise-amber': '#f59e0b',
-            'enterprise-red': '#ef4444',
-            'enterprise-text-muted': '#94a3b8',
-          },
-          fontFamily: {
-            sans: ['Inter', 'sans-serif'],
-          }
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Geist:wght@400;500&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
         }
-      }
-    }
-  </script>
-<style data-purpose="layout-grid-background">
-    body {
-      background-color: #0a0f12;
-      background-image: 
-        linear-gradient(rgba(35, 45, 54, 0.1) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(35, 45, 54, 0.1) 1px, transparent 1px);
-      background-size: 40px 40px;
-    }
-    
-    .custom-scrollbar::-webkit-scrollbar {
-      width: 4px;
-    }
-    .custom-scrollbar::-webkit-scrollbar-track {
-      background: #11181d;
-    }
-    .custom-scrollbar::-webkit-scrollbar-thumb {
-      background: #232d36;
-      border-radius: 10px;
-    }
-
-    /* Glow effects for active state */
-    .nav-active-glow {
-      box-shadow: inset 4px 0 0 #4fd1c5;
-      background: linear-gradient(90deg, rgba(79, 209, 197, 0.1) 0%, transparent 100%);
-    }
-  </style>
-<style data-purpose="chart-visuals">
-    .wave-path-cpu {
-      stroke-dasharray: 1000;
-      stroke-dashoffset: 1000;
-      animation: draw 3s ease-out forwards;
-    }
-    
-    @keyframes draw {
-      to { stroke-dashoffset: 0; }
-    }
-
-    .table-row-hover:hover {
-      background-color: rgba(79, 209, 197, 0.03);
-    }
-  </style>
+        .glass-panel {
+            background: rgba(22, 24, 29, 0.7);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .chart-gradient {
+            background: linear-gradient(to bottom, rgba(164, 230, 255, 0.15), transparent);
+        }
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0e1417;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #2f3639;
+            border-radius: 10px;
+        }
+        .active-glow {
+            box-shadow: 0 0 12px 2px rgba(164, 230, 255, 0.15);
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-error": "#690005",
+                      "on-secondary-container": "#00311f",
+                      "on-primary": "#003543",
+                      "on-primary-fixed-variant": "#004e60",
+                      "surface-bright": "#333a3d",
+                      "error": "#ffb4ab",
+                      "surface-container-lowest": "#090f12",
+                      "on-secondary-fixed": "#002113",
+                      "surface-variant": "#2f3639",
+                      "on-primary-fixed": "#001f28",
+                      "tertiary-fixed-dim": "#ffba49",
+                      "background": "#0e1417",
+                      "tertiary-container": "#feb127",
+                      "surface-dim": "#0e1417",
+                      "primary-fixed": "#b7eaff",
+                      "inverse-primary": "#00677f",
+                      "error-container": "#93000a",
+                      "on-tertiary": "#442b00",
+                      "on-surface": "#dde3e7",
+                      "surface-container-low": "#161d1f",
+                      "secondary-container": "#00a572",
+                      "primary": "#a4e6ff",
+                      "outline-variant": "#3c494e",
+                      "on-error-container": "#ffdad6",
+                      "outline": "#859399",
+                      "on-primary-container": "#00566a",
+                      "on-secondary-fixed-variant": "#005236",
+                      "surface-container": "#1a2123",
+                      "on-tertiary-container": "#6b4700",
+                      "tertiary-fixed": "#ffddb1",
+                      "on-background": "#dde3e7",
+                      "on-secondary": "#003824",
+                      "secondary": "#4edea3",
+                      "surface": "#0e1417",
+                      "on-surface-variant": "#bbc9cf",
+                      "inverse-surface": "#dde3e7",
+                      "inverse-on-surface": "#2b3134",
+                      "surface-container-high": "#242b2e",
+                      "surface-tint": "#4cd6ff",
+                      "surface-container-highest": "#2f3639",
+                      "on-tertiary-fixed-variant": "#624000",
+                      "primary-fixed-dim": "#4cd6ff",
+                      "on-tertiary-fixed": "#291800",
+                      "secondary-fixed-dim": "#4edea3",
+                      "secondary-fixed": "#6ffbbe",
+                      "primary-container": "#00d1ff",
+                      "tertiary": "#ffd59c"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "widget-gap": "16px",
+                      "gutter": "24px",
+                      "margin-desktop": "32px",
+                      "margin-mobile": "16px",
+                      "unit": "4px"
+              },
+              "fontFamily": {
+                      "body-sm": ["Inter"],
+                      "mono-data": ["Geist"],
+                      "body-base": ["Inter"],
+                      "mono-code": ["Geist"],
+                      "headline-md": ["Inter"],
+                      "headline-lg": ["Inter"]
+              },
+              "fontSize": {
+                      "body-sm": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                      "mono-data": ["13px", {"lineHeight": "1.4", "fontWeight": "500"}],
+                      "body-base": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                      "mono-code": ["12px", {"lineHeight": "1.6", "letterSpacing": "0.02em", "fontWeight": "400"}],
+                      "headline-md": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                      "headline-lg": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+              }
+            },
+          },
+        }
+    </script>
 </head>
-<body class="text-slate-200 font-sans min-h-screen flex">
-<!-- BEGIN: Sidebar -->
-<aside class="w-64 border-r border-enterprise-border flex flex-col bg-enterprise-surface/80 backdrop-blur-md sticky top-0 h-screen">
-<div class="p-6 border-b border-enterprise-border">
-<div class="flex items-center gap-2">
-<div class="w-8 h-8 bg-enterprise-teal rounded flex items-center justify-center">
-<span class="text-enterprise-bg font-bold">TS</span>
-</div>
-<span class="font-bold tracking-tight text-xl">TEC SERVER</span>
-</div>
-</div>
-<div class="p-4">
-<div class="bg-enterprise-card border border-enterprise-border rounded-lg p-3 flex items-center gap-3">
-<div class="relative">
-<div class="w-8 h-8 bg-enterprise-teal/20 rounded-md flex items-center justify-center text-enterprise-teal">
-<svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-</div>
-<div class="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 bg-enterprise-green border-2 border-enterprise-card rounded-full"></div>
-</div>
-<div class="overflow-hidden">
-<p class="text-[10px] text-enterprise-teal font-bold uppercase tracking-wider">Active</p>
-<p class="text-sm font-semibold truncate">Root-Node-01</p>
+<body class="bg-background text-on-background font-body-base">
+<!-- Top Navigation -->
+<header class="fixed top-0 right-0 left-0 z-50 flex justify-between items-center px-gutter h-16 bg-surface-dim/80 backdrop-blur-xl border-b border-outline-variant">
+<div class="flex items-center gap-8">
+<span class="text-headline-md font-headline-md font-bold text-primary tracking-tight">TEC SERVER</span>
+<div class="hidden md:flex gap-6 items-center">
+<nav class="flex gap-6">
+<a class="text-on-surface-variant font-medium hover:text-primary transition-colors" href="#">Dashboard</a>
+<a class="text-primary font-bold border-b-2 border-primary py-4" href="#">Reports</a>
+<a class="text-on-surface-variant font-medium hover:text-primary transition-colors" href="#">Alerts</a>
+</nav>
 </div>
 </div>
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors" data-icon="notifications">notifications</button>
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors" data-icon="settings">settings</button>
+<img alt="Administrator Profile" class="w-8 h-8 rounded-full border border-outline-variant object-cover" data-alt="A professional portrait of a senior system administrator in a high-tech environment. The lighting is moody with subtle blue rim light, creating a cinematic and authoritative atmosphere. The composition is a close-up, emphasizing a focused and expert demeanor, perfectly aligned with the dark mode DevOps cockpit aesthetic. High-contrast blacks and metallic textures define the background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCzFq6WsMijwDeqF4ZoB5fuBsBHtK04UCnRlpNllPsMfaKS0kbvM8ezg2byl13C2WHsD8w1JKK2GrbUyn-xjsyTZGciRUjK9u0O35vNBbOtF9GnTReFUa2AvWaWCNwYRIL7aJV9xvk0-25YvmUawbyZPDe8xchPcrfEycabpvemT_MzJDgnhLUVlVQ1Fm_odAqkFr6nK1Tf95PxY8am-9SJ8TTbrbsS7V8IyYGleo1mpjJhUPFG3x1k7_FN4pW8w2sQ9M-QG2aSlQ">
 </div>
-<nav class="flex-1 px-4 space-y-1">
-<a class="flex items-center gap-3 px-3 py-2 text-enterprise-text-muted hover:text-white transition-colors" href="/dashboard">
-<svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-<span class="text-sm">Dashboard</span>
+</header>
+<!-- Sidebar -->
+<aside class="fixed left-0 top-0 bottom-0 w-[280px] z-40 flex flex-col pt-20 bg-surface-container-lowest border-r border-outline-variant hidden md:flex">
+<div class="px-6 mb-8">
+<div class="flex items-center gap-3 p-3 bg-surface-container rounded-lg border border-outline-variant">
+<span class="material-symbols-outlined text-secondary" data-icon="dns">dns</span>
+<div>
+<p class="font-mono-code text-mono-code text-primary uppercase text-[10px]">Active Node</p>
+<p class="font-mono-code text-mono-code text-on-surface">Root-Node-01</p>
+</div>
+</div>
+</div>
+<nav class="flex flex-col flex-1">
+<a class="flex items-center gap-4 px-6 py-3 text-on-surface-variant opacity-70 hover:opacity-100 hover:bg-surface-container-high transition-all active:translate-x-1 duration-150" href="/dashboard">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-mono-code text-mono-code">Dashboard</span>
 </a>
-<a class="flex items-center gap-3 px-3 py-2 text-enterprise-text-muted hover:text-white transition-colors" href="/processes">
-<svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-<span class="text-sm">Processes</span>
+<a class="flex items-center gap-4 px-6 py-3 text-on-surface-variant opacity-70 hover:opacity-100 hover:bg-surface-container-high transition-all active:translate-x-1 duration-150" href="/processes">
+<span class="material-symbols-outlined" data-icon="memory">memory</span>
+<span class="font-mono-code text-mono-code">Processes</span>
 </a>
-<a class="flex items-center gap-3 px-3 py-2 text-enterprise-text-muted hover:text-white transition-colors" href="/users">
-<svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-<span class="text-sm">Users</span>
+<a class="flex items-center gap-4 px-6 py-3 text-on-surface-variant opacity-70 hover:opacity-100 hover:bg-surface-container-high transition-all active:translate-x-1 duration-150" href="/users">
+<span class="material-symbols-outlined" data-icon="group">group</span>
+<span class="font-mono-code text-mono-code">Users</span>
 </a>
-<a class="flex items-center gap-3 px-3 py-2 text-enterprise-text-muted hover:text-white transition-colors" href="/alert">
-<svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-<span class="text-sm">Alerts</span>
+<a class="flex items-center gap-4 px-6 py-3 text-on-surface-variant opacity-70 hover:opacity-100 hover:bg-surface-container-high transition-all active:translate-x-1 duration-150" href="/alert">
+<span class="material-symbols-outlined" data-icon="warning">warning</span>
+<span class="font-mono-code text-mono-code">Alerts</span>
 </a>
-<a class="flex items-center gap-3 px-3 py-2 text-enterprise-teal nav-active-glow" href="/reports">
-<svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-<span class="text-sm font-semibold">Reports</span>
+<a class="flex items-center gap-4 px-6 py-3 bg-secondary-container/20 text-secondary border-l-4 border-secondary font-bold transition-all active:translate-x-1 duration-150" href="/reports">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+<span class="font-mono-code text-mono-code">Reports</span>
 </a>
-<a class="flex items-center gap-3 px-3 py-2 text-enterprise-text-muted hover:text-white transition-colors" href="/settings">
-<svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-<span class="text-sm">Settings</span>
+<a class="flex items-center gap-4 px-6 py-3 text-on-surface-variant opacity-70 hover:opacity-100 hover:bg-surface-container-high transition-all active:translate-x-1 duration-150" href="/settings">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-mono-code text-mono-code">Settings</span>
 </a>
 </nav>
-<div class="mt-auto p-4 border-t border-enterprise-border">
-<div class="flex items-center justify-between text-[10px] text-enterprise-text-muted">
-<span>System Status: Optimal</span>
-<div class="w-1.5 h-1.5 bg-enterprise-green rounded-full shadow-[0_0_8px_#10b981]"></div>
+<div class="p-6 border-t border-outline-variant">
+<div class="flex items-center gap-2 text-on-surface-variant">
+<div class="w-2 h-2 rounded-full bg-secondary animate-pulse"></div>
+<span class="font-mono-code text-mono-code text-[11px]">System Status: Optimal</span>
 </div>
 </div>
 </aside>
-<!-- END: Sidebar -->
-<!-- BEGIN: Main Content -->
-<main class="flex-1 flex flex-col h-screen overflow-y-auto custom-scrollbar">
-<!-- BEGIN: Top Navigation Bar -->
-<header class="h-16 border-b border-enterprise-border bg-enterprise-bg/60 backdrop-blur-xl flex items-center justify-between px-8 sticky top-0 z-10">
-<div class="flex items-center gap-8">
-<a class="text-sm font-medium text-enterprise-text-muted hover:text-white transition-colors" href="#">Dashboard</a>
-<a class="text-sm font-medium text-enterprise-teal border-b-2 border-enterprise-teal h-16 flex items-center" href="#">Reports</a>
-<a class="text-sm font-medium text-enterprise-text-muted hover:text-white transition-colors" href="#">Alerts</a>
+<!-- Main Content -->
+<main class="md:ml-[280px] pt-16 min-h-screen">
+<div class="p-gutter max-w-[1600px] mx-auto space-y-gutter">
+<!-- Page Header & Controls -->
+<section class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+<div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface mb-2">Reports &amp; Analytics</h1>
+<p class="text-on-surface-variant font-body-base">Comprehensive performance audits for Root-Node-01 cluster.</p>
 </div>
-<div class="flex items-center gap-5">
-<button class="text-enterprise-text-muted hover:text-white transition-colors">
-<svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<div class="flex flex-wrap items-center gap-4">
+<!-- Date Picker Simulation -->
+<div class="flex items-center bg-surface-container border border-outline-variant rounded-lg px-4 py-2 gap-3 cursor-pointer hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-primary" data-icon="calendar_today">calendar_today</span>
+<span class="font-mono-code text-mono-code text-on-surface">Oct 12, 2023 - Oct 19, 2023</span>
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="expand_more">expand_more</span>
+</div>
+<!-- Export Actions -->
+<div class="flex items-center gap-2">
+<button class="flex items-center gap-2 bg-surface-container-high hover:bg-surface-variant text-on-surface px-4 py-2 rounded-lg border border-outline-variant transition-colors active:scale-95">
+<span class="material-symbols-outlined text-[20px]" data-icon="picture_as_pdf">picture_as_pdf</span>
+<span class="font-body-sm">PDF</span>
 </button>
-<button class="text-enterprise-text-muted hover:text-white transition-colors">
-<svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<button class="flex items-center gap-2 bg-primary text-on-primary px-4 py-2 rounded-lg font-bold transition-colors active:scale-95 active-glow">
+<span class="material-symbols-outlined text-[20px]" data-icon="csv">csv</span>
+<span class="font-body-sm uppercase">Export CSV</span>
 </button>
-<div class="w-8 h-8 rounded-full border border-enterprise-border overflow-hidden ring-2 ring-enterprise-teal/20">
-<img alt="Profile" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCbdZqlA6oS6Ez8nKAMWNAhKuJrWll3uKWIvVKApMgOm1aJhTxem3Lyv5VND1zxfjfZpps9EthzBVLKsTKD2eh74RcfKSJbNAW0MrW3eWJJi3Bl56jtZsgB1n2EiRcFdxmQpvMyJFSHqBHrzuoKCgN4-jUdcKLulSXcK1rK6tFxOGsNveZ-Z3AH7cFMyRHCkXoqw2QU7oJHyR-Uh3Iie4dpTKyXma1JMC6D6Fnrlq3vD6BJsEWc6uP4xwp1PRJ2MLx4znO1sqDCQOHD"/>
 </div>
-</div>
-</header>
-<!-- END: Top Navigation Bar -->
-<div class="p-8 space-y-8">
-<!-- BEGIN: Header Section -->
-<section class="flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
-<div data-purpose="title-block">
-<h1 class="text-3xl font-bold tracking-tight">Reports &amp; Analytics</h1>
-<p class="text-enterprise-text-muted mt-1">Comprehensive performance audits for <span class="text-enterprise-teal font-medium italic">Root-Node-01</span> cluster.</p>
-</div>
-<div class="flex flex-wrap gap-3" data-purpose="report-actions">
-<div class="flex items-center gap-3 bg-enterprise-card border border-enterprise-border rounded-lg px-4 py-2 text-sm">
-<svg class="w-4 h-4 text-enterprise-teal" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-<span class="font-medium">Oct 12, 2023 - Oct 19, 2023</span>
-<svg class="w-4 h-4 text-enterprise-text-muted" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-</div>
-<button class="flex items-center gap-2 bg-enterprise-card hover:bg-enterprise-border border border-enterprise-border rounded-lg px-5 py-2 text-sm font-semibold transition-all">
-<svg class="w-4 h-4" fill="currentColor" viewbox="0 0 20 20"><path d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z"></path></svg>
-            PDF
-          </button>
-<button class="flex items-center gap-2 bg-enterprise-teal hover:bg-enterprise-cyan text-enterprise-bg rounded-lg px-5 py-2 text-sm font-bold uppercase tracking-wide transition-all shadow-[0_0_15px_rgba(79,209,197,0.3)]">
-<svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-            Export CSV
-          </button>
 </div>
 </section>
-<!-- END: Header Section -->
-<!-- BEGIN: Metrics Cards -->
+<!-- Summary Stats Bento Grid -->
 <section class="grid grid-cols-1 md:grid-cols-3 gap-6">
-<!-- Avg CPU Load -->
-<div class="bg-enterprise-card border border-enterprise-border rounded-xl p-6 relative overflow-hidden group">
+<!-- Stat 1 -->
+<div class="bg-surface-container-low border border-outline-variant p-6 rounded-xl relative overflow-hidden group">
 <div class="flex justify-between items-start mb-4">
-<div>
-<p class="text-[10px] font-bold text-enterprise-text-muted uppercase tracking-[0.1em]">Avg CPU Load</p>
-<h3 class="text-4xl font-bold mt-1 tracking-tight">42.8%</h3>
+<span class="font-mono-code text-mono-code text-secondary text-[11px] tracking-widest uppercase">Avg CPU Load</span>
+<span class="material-symbols-outlined text-secondary opacity-50" data-icon="bolt">bolt</span>
 </div>
-<div class="text-enterprise-teal">
-<svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<div class="flex items-baseline gap-2">
+<span class="font-headline-lg text-headline-lg text-on-surface">42.8%</span>
+<span class="text-secondary text-body-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]" data-icon="trending_down">trending_down</span> 4.2%
+                        </span>
 </div>
+<div class="absolute bottom-0 left-0 right-0 h-1 bg-secondary/10 group-hover:bg-secondary/20 transition-colors"></div>
 </div>
-<div class="flex items-center gap-2 text-xs">
-<span class="text-enterprise-green flex items-center">
-<svg class="w-3 h-3 rotate-180 mr-1" fill="currentColor" viewbox="0 0 20 20"><path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"></path></svg>
-              4.2%
-            </span>
-<span class="text-enterprise-text-muted">vs last period</span>
-</div>
-<div class="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-enterprise-teal/50 to-transparent"></div>
-</div>
-<!-- Max RAM Spike -->
-<div class="bg-enterprise-card border border-enterprise-border rounded-xl p-6 relative overflow-hidden group">
+<!-- Stat 2 -->
+<div class="bg-surface-container-low border border-outline-variant p-6 rounded-xl relative overflow-hidden group">
 <div class="flex justify-between items-start mb-4">
-<div>
-<p class="text-[10px] font-bold text-enterprise-text-muted uppercase tracking-[0.1em]">Max RAM Spike</p>
-<h3 class="text-4xl font-bold mt-1 tracking-tight">14.2 GB</h3>
+<span class="font-mono-code text-mono-code text-tertiary text-[11px] tracking-widest uppercase">Max RAM Spike</span>
+<span class="material-symbols-outlined text-tertiary opacity-50" data-icon="memory">memory</span>
 </div>
-<div class="text-enterprise-amber">
-<svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<div class="flex items-baseline gap-2">
+<span class="font-headline-lg text-headline-lg text-on-surface">14.2 GB</span>
+<span class="text-tertiary text-body-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]" data-icon="trending_up">trending_up</span> 1.8%
+                        </span>
 </div>
+<div class="absolute bottom-0 left-0 right-0 h-1 bg-tertiary/10 group-hover:bg-tertiary/20 transition-colors"></div>
 </div>
-<div class="flex items-center gap-2 text-xs">
-<span class="text-enterprise-amber flex items-center">
-<svg class="w-3 h-3 mr-1" fill="currentColor" viewbox="0 0 20 20"><path d="M14.707 12.707a1 1 0 01-1.414 0L10 9.414l-3.293 3.293a1 1 0 01-1.414-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 010 1.414z"></path></svg>
-              1.8%
-            </span>
-<span class="text-enterprise-text-muted">since 08:00 AM</span>
-</div>
-<div class="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-enterprise-amber/50 to-transparent"></div>
-</div>
-<!-- Disk Growth -->
-<div class="bg-enterprise-card border border-enterprise-border rounded-xl p-6 relative overflow-hidden group">
+<!-- Stat 3 -->
+<div class="bg-surface-container-low border border-outline-variant p-6 rounded-xl relative overflow-hidden group">
 <div class="flex justify-between items-start mb-4">
-<div>
-<p class="text-[10px] font-bold text-enterprise-text-muted uppercase tracking-[0.1em]">Disk Growth</p>
-<h3 class="text-4xl font-bold mt-1 tracking-tight text-white">+840 MB</h3>
+<span class="font-mono-code text-mono-code text-primary text-[11px] tracking-widest uppercase">Disk Growth</span>
+<span class="material-symbols-outlined text-primary opacity-50" data-icon="database">database</span>
 </div>
-<div class="text-enterprise-cyan">
-<svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<div class="flex items-baseline gap-2">
+<span class="font-headline-lg text-headline-lg text-on-surface">+840 MB</span>
+<span class="text-on-surface-variant text-body-sm">Last 7 Days</span>
 </div>
-</div>
-<div class="flex items-center gap-2 text-xs">
-<span class="text-enterprise-text-muted">Last 7 Days</span>
-</div>
-<div class="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-enterprise-cyan/50 to-transparent"></div>
+<div class="absolute bottom-0 left-0 right-0 h-1 bg-primary/10 group-hover:bg-primary/20 transition-colors"></div>
 </div>
 </section>
-<!-- END: Metrics Cards -->
-<!-- BEGIN: Resource Chart Section -->
-<section class="bg-enterprise-card border border-enterprise-border rounded-2xl p-8">
-<div class="flex justify-between items-center mb-8">
+<!-- Main Utilization Chart Section -->
+<section class="bg-surface-container-low border border-outline-variant rounded-xl p-6">
+<div class="flex items-center justify-between mb-8">
 <div class="flex items-center gap-3">
-<div class="w-1 h-6 bg-enterprise-teal rounded-full"></div>
-<h2 class="text-xl font-bold">Resource Utilization Over Time</h2>
+<div class="w-1 h-6 bg-primary rounded-full"></div>
+<h2 class="font-headline-md text-headline-md text-on-surface">Resource Utilization Over Time</h2>
 </div>
-<div class="flex items-center gap-6">
+<div class="flex items-center gap-4 font-mono-code text-[11px]">
 <div class="flex items-center gap-2">
-<div class="w-3 h-3 rounded-full bg-enterprise-teal"></div>
-<span class="text-xs font-semibold text-enterprise-text-muted uppercase tracking-wider">CPU</span>
+<div class="w-3 h-3 rounded-full bg-primary"></div>
+<span class="">CPU</span>
 </div>
 <div class="flex items-center gap-2">
-<div class="w-3 h-3 rounded-full border-2 border-enterprise-green bg-transparent"></div>
-<span class="text-xs font-semibold text-enterprise-text-muted uppercase tracking-wider">RAM</span>
+<div class="w-3 h-3 rounded-full bg-secondary"></div>
+<span class="">RAM</span>
 </div>
 </div>
 </div>
-<div class="relative h-[300px] w-full" data-purpose="main-chart">
-<!-- Simplified Visual Representation of the wavy chart -->
-<svg class="w-full h-full overflow-visible" preserveaspectratio="none" viewbox="0 0 800 200">
-<!-- Grid Lines (Horizontal) -->
-<line stroke="#232d36" stroke-dasharray="4" stroke-width="1" x1="0" x2="800" y1="0" y2="0"></line>
-<line stroke="#232d36" stroke-dasharray="4" stroke-width="1" x1="0" x2="800" y1="50" y2="50"></line>
-<line stroke="#232d36" stroke-dasharray="4" stroke-width="1" x1="0" x2="800" y1="100" y2="100"></line>
-<line stroke="#232d36" stroke-dasharray="4" stroke-width="1" x1="0" x2="800" y1="150" y2="150"></line>
-<line stroke="#232d36" stroke-width="1" x1="0" x2="800" y1="200" y2="200"></line>
-<!-- Wave Paths (CPU) -->
-<path class="wave-path-cpu" d="M0,160 Q50,165 100,120 T200,130 T300,150 T400,90 T500,120 T600,80 T700,50 T800,110" fill="none" stroke="#4fd1c5" stroke-width="3"></path>
-<!-- Wave Paths (RAM - Dotted) -->
-<path d="M0,180 Q50,185 100,150 T200,160 T300,180 T400,130 T500,150 T600,110 T700,90 T800,140" fill="none" stroke="#10b981" stroke-dasharray="6" stroke-width="2"></path>
-<!-- Area Glow for CPU -->
-<path d="M0,160 Q50,165 100,120 T200,130 T300,150 T400,90 T500,120 T600,80 T700,50 T800,110 V200 H0 Z" fill="url(#glow-gradient)"></path>
-<defs>
-<lineargradient id="glow-gradient" x1="0%" x2="0%" y1="0%" y2="100%">
-<stop offset="0%" style="stop-color:#4fd1c5;stop-opacity:0.1"></stop>
-<stop offset="100%" style="stop-color:#4fd1c5;stop-opacity:0"></stop>
-</lineargradient>
-</defs>
+<!-- Mock Chart Visualization -->
+<div class="h-[400px] w-full flex flex-col justify-between relative pt-4">
+<div class="absolute inset-0 flex items-end justify-between px-2 pb-8">
+<!-- Chart Lines (Stylized with div paths) -->
+<div class="absolute inset-0 chart-gradient opacity-40"></div>
+<svg class="absolute inset-0 w-full h-full" preserveAspectRatio="none">
+<path d="M0,350 Q50,300 100,320 T200,280 T300,310 T400,240 T500,260 T600,200 T700,220 T800,180 T900,190 T1000,150 T1100,170 T1200,100 T1300,120 T1400,80 T1500,100" fill="none" stroke="#a4e6ff" stroke-width="2.5"></path>
+<path d="M0,380 Q50,340 100,360 T200,320 T300,340 T400,280 T500,300 T600,240 T700,260 T800,220 T900,230 T1000,190 T1100,210 T1200,140 T1300,160 T1400,120 T1500,140" fill="none" stroke="#4edea3" stroke-dasharray="4 4" stroke-width="2"></path>
 </svg>
-<!-- Chart Labels -->
-<div class="flex justify-between mt-6 text-[10px] text-enterprise-text-muted font-bold uppercase tracking-[0.2em]">
-<span>12 Oct</span>
-<span>13 Oct</span>
-<span>14 Oct</span>
-<span>15 Oct</span>
-<span>16 Oct</span>
-<span>17 Oct</span>
-<span>18 Oct</span>
-<span>19 Oct</span>
+</div>
+<!-- Grid Lines -->
+<div class="border-b border-outline-variant/30 h-1/4 w-full"></div>
+<div class="border-b border-outline-variant/30 h-1/4 w-full"></div>
+<div class="border-b border-outline-variant/30 h-1/4 w-full"></div>
+<div class="border-b border-outline-variant h-1/4 w-full flex items-end">
+<div class="flex justify-between w-full font-mono-code text-[11px] text-on-surface-variant pb-2 px-1">
+<span class="">12 Oct</span>
+<span class="">13 Oct</span>
+<span class="">14 Oct</span>
+<span class="">15 Oct</span>
+<span class="">16 Oct</span>
+<span class="">17 Oct</span>
+<span class="">18 Oct</span>
+<span class="">19 Oct</span>
+</div>
 </div>
 </div>
 </section>
-<!-- END: Resource Chart Section -->
-<!-- BEGIN: Monitoring History Table -->
-<section class="bg-enterprise-card border border-enterprise-border rounded-2xl overflow-hidden shadow-2xl">
-<div class="p-6 border-b border-enterprise-border flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-<h2 class="text-xl font-bold">Monitoring History</h2>
-<div class="relative w-full sm:w-80">
-<span class="absolute inset-y-0 left-0 pl-3 flex items-center text-enterprise-text-muted">
-<svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-</span>
-<input class="w-full bg-enterprise-surface/50 border-enterprise-border text-sm rounded-lg pl-10 focus:ring-enterprise-teal focus:border-enterprise-teal" placeholder="Search logs..." type="text"/>
+<!-- Monitoring History Table -->
+<section class="bg-surface-container-low border border-outline-variant rounded-xl overflow-hidden">
+<div class="p-6 border-b border-outline-variant flex flex-col md:flex-row md:items-center justify-between gap-4">
+<h2 class="font-headline-md text-headline-md text-on-surface">Monitoring History</h2>
+<div class="relative max-w-sm w-full">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant" data-icon="search">search</span>
+<input class="w-full bg-surface-container border border-outline-variant rounded-lg pl-10 pr-4 py-2 focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all text-body-sm font-mono-code" placeholder="Search logs..." type="text">
 </div>
 </div>
 <div class="overflow-x-auto">
 <table class="w-full text-left">
-<thead>
-<tr class="text-[11px] font-bold text-enterprise-text-muted uppercase tracking-widest bg-enterprise-surface/30">
-<th class="px-6 py-4">
-<div class="flex items-center gap-2">
-                    Timestamp
-                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M19 14l-7 7m0 0l-7-7m7 7V3" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<thead class="bg-surface-container-high border-b border-outline-variant">
+<tr>
+<th class="px-6 py-4 font-mono-code text-[11px] text-on-surface-variant uppercase tracking-widest">
+<div class="flex items-center gap-2 cursor-pointer hover:text-primary">
+                                        Timestamp <span class="material-symbols-outlined text-[14px]" data-icon="arrow_downward">arrow_downward</span>
 </div>
 </th>
-<th class="px-6 py-4">Event Source</th>
-<th class="px-6 py-4">Status</th>
-<th class="px-6 py-4">CPU Load</th>
-<th class="px-6 py-4">Memory</th>
-<th class="px-6 py-4 text-right">Actions</th>
+<th class="px-6 py-4 font-mono-code text-[11px] text-on-surface-variant uppercase tracking-widest">Event Source</th>
+<th class="px-6 py-4 font-mono-code text-[11px] text-on-surface-variant uppercase tracking-widest">Status</th>
+<th class="px-6 py-4 font-mono-code text-[11px] text-on-surface-variant uppercase tracking-widest text-right">CPU Load</th>
+<th class="px-6 py-4 font-mono-code text-[11px] text-on-surface-variant uppercase tracking-widest text-right">Memory</th>
+<th class="px-6 py-4 font-mono-code text-[11px] text-on-surface-variant uppercase tracking-widest text-center">Actions</th>
 </tr>
 </thead>
-<tbody class="divide-y divide-enterprise-border">
+<tbody class="divide-y divide-outline-variant">
 <!-- Row 1 -->
-<tr class="table-row-hover transition-colors">
-<td class="px-6 py-4 text-xs font-mono">2023-10-19 14:32:05</td>
-<td class="px-6 py-4 text-sm font-medium">Worker-Node-04</td>
+<tr class="hover:bg-white/[0.02] transition-colors group">
+<td class="px-6 py-4 font-mono-data text-mono-data text-on-surface">2023-10-19 14:32:05</td>
+<td class="px-6 py-4 font-mono-data text-mono-data text-on-surface-variant">Worker-Node-04</td>
 <td class="px-6 py-4">
-<span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold bg-enterprise-green/10 text-enterprise-green border border-enterprise-green/20">
-<span class="w-1 h-1 bg-enterprise-green rounded-full mr-1.5"></span> Healthy
-                  </span>
+<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-secondary/15 text-secondary text-[11px] font-bold">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span> Healthy
+                                    </span>
 </td>
-<td class="px-6 py-4 text-sm">24.5%</td>
-<td class="px-6 py-4 text-sm font-medium">4.8 GB</td>
-<td class="px-6 py-4 text-right">
-<button class="p-1 hover:text-enterprise-teal transition-colors" title="View Details">
-<svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path><path d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-</button>
+<td class="px-6 py-4 font-mono-data text-mono-data text-on-surface text-right">24.5%</td>
+<td class="px-6 py-4 font-mono-data text-mono-data text-on-surface text-right">4.8 GB</td>
+<td class="px-6 py-4 text-center">
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors" data-icon="visibility">visibility</button>
 </td>
 </tr>
 <!-- Row 2 -->
-<tr class="table-row-hover transition-colors">
-<td class="px-6 py-4 text-xs font-mono">2023-10-19 14:15:12</td>
-<td class="px-6 py-4 text-sm font-medium">Database-Cluster-01</td>
+<tr class="hover:bg-white/[0.02] transition-colors group">
+<td class="px-6 py-4 font-mono-data text-mono-data text-on-surface">2023-10-19 14:15:12</td>
+<td class="px-6 py-4 font-mono-data text-mono-data text-on-surface-variant">Database-Cluster-01</td>
 <td class="px-6 py-4">
-<span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold bg-enterprise-amber/10 text-enterprise-amber border border-enterprise-amber/20">
-<span class="w-1 h-1 bg-enterprise-amber rounded-full mr-1.5"></span> Warning
-                  </span>
+<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-tertiary/15 text-tertiary text-[11px] font-bold">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span> Warning
+                                    </span>
 </td>
-<td class="px-6 py-4 text-sm">88.2%</td>
-<td class="px-6 py-4 text-sm font-medium">31.4 GB</td>
-<td class="px-6 py-4 text-right">
-<button class="p-1 hover:text-enterprise-teal transition-colors">
-<svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path><path d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-</button>
+<td class="px-6 py-4 font-mono-data text-mono-data text-on-surface text-right">88.2%</td>
+<td class="px-6 py-4 font-mono-data text-mono-data text-on-surface text-right">31.4 GB</td>
+<td class="px-6 py-4 text-center">
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors" data-icon="visibility">visibility</button>
 </td>
 </tr>
 <!-- Row 3 -->
-<tr class="table-row-hover transition-colors">
-<td class="px-6 py-4 text-xs font-mono">2023-10-19 13:45:00</td>
-<td class="px-6 py-4 text-sm font-medium">Auth-Service-A</td>
+<tr class="hover:bg-white/[0.02] transition-colors group">
+<td class="px-6 py-4 font-mono-data text-mono-data text-on-surface">2023-10-19 13:45:00</td>
+<td class="px-6 py-4 font-mono-data text-mono-data text-on-surface-variant">Auth-Service-A</td>
 <td class="px-6 py-4">
-<span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold bg-enterprise-green/10 text-enterprise-green border border-enterprise-green/20">
-<span class="w-1 h-1 bg-enterprise-green rounded-full mr-1.5"></span> Healthy
-                  </span>
+<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-secondary/15 text-secondary text-[11px] font-bold">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span> Healthy
+                                    </span>
 </td>
-<td class="px-6 py-4 text-sm">12.1%</td>
-<td class="px-6 py-4 text-sm font-medium">2.1 GB</td>
-<td class="px-6 py-4 text-right">
-<button class="p-1 hover:text-enterprise-teal transition-colors">
-<svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path><path d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-</button>
+<td class="px-6 py-4 font-mono-data text-mono-data text-on-surface text-right">12.1%</td>
+<td class="px-6 py-4 font-mono-data text-mono-data text-on-surface text-right">2.1 GB</td>
+<td class="px-6 py-4 text-center">
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors" data-icon="visibility">visibility</button>
 </td>
 </tr>
 <!-- Row 4 -->
-<tr class="table-row-hover transition-colors">
-<td class="px-6 py-4 text-xs font-mono">2023-10-19 13:22:44</td>
-<td class="px-6 py-4 text-sm font-medium">Log-Processor-02</td>
+<tr class="hover:bg-white/[0.02] transition-colors group">
+<td class="px-6 py-4 font-mono-data text-mono-data text-on-surface">2023-10-19 13:22:44</td>
+<td class="px-6 py-4 font-mono-data text-mono-data text-on-surface-variant">Log-Processor-02</td>
 <td class="px-6 py-4">
-<span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold bg-enterprise-red/10 text-enterprise-red border border-enterprise-red/20">
-<span class="w-1 h-1 bg-enterprise-red rounded-full mr-1.5"></span> Critical
-                  </span>
+<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-error/15 text-error text-[11px] font-bold">
+<span class="w-1.5 h-1.5 rounded-full bg-error"></span> Critical
+                                    </span>
 </td>
-<td class="px-6 py-4 text-sm">99.9%</td>
-<td class="px-6 py-4 text-sm font-medium">15.9 GB</td>
-<td class="px-6 py-4 text-right">
-<button class="p-1 hover:text-enterprise-teal transition-colors">
-<svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path><path d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-</button>
+<td class="px-6 py-4 font-mono-data text-mono-data text-on-surface text-right">99.9%</td>
+<td class="px-6 py-4 font-mono-data text-mono-data text-on-surface text-right">15.9 GB</td>
+<td class="px-6 py-4 text-center">
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors" data-icon="visibility">visibility</button>
 </td>
 </tr>
 </tbody>
 </table>
 </div>
 <!-- Pagination -->
-<div class="px-6 py-4 border-t border-enterprise-border flex items-center justify-between">
-<p class="text-xs text-enterprise-text-muted">Showing <span class="font-bold text-white">1-4</span> of <span class="font-bold text-white">128</span> entries</p>
+<div class="px-6 py-4 border-t border-outline-variant flex items-center justify-between">
+<span class="font-mono-code text-[11px] text-on-surface-variant">Showing 1-4 of 128 entries</span>
 <div class="flex items-center gap-1">
-<button class="p-2 text-enterprise-text-muted hover:text-white transition-colors cursor-not-allowed" disabled="">
-<svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M15 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<button class="p-1 rounded hover:bg-surface-container-high text-on-surface-variant disabled:opacity-30" disabled="">
+<span class="material-symbols-outlined text-[20px]" data-icon="chevron_left">chevron_left</span>
 </button>
-<button class="w-8 h-8 rounded-md bg-enterprise-teal text-enterprise-bg text-xs font-bold">1</button>
-<button class="w-8 h-8 rounded-md hover:bg-enterprise-surface text-xs font-bold transition-colors">2</button>
-<button class="w-8 h-8 rounded-md hover:bg-enterprise-surface text-xs font-bold transition-colors">3</button>
-<button class="p-2 text-enterprise-text-muted hover:text-white transition-colors">
-<svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<button class="w-8 h-8 flex items-center justify-center rounded bg-primary text-on-primary font-bold text-body-sm">1</button>
+<button class="w-8 h-8 flex items-center justify-center rounded hover:bg-surface-container-high text-on-surface-variant text-body-sm">2</button>
+<button class="w-8 h-8 flex items-center justify-center rounded hover:bg-surface-container-high text-on-surface-variant text-body-sm">3</button>
+<button class="p-1 rounded hover:bg-surface-container-high text-on-surface-variant">
+<span class="material-symbols-outlined text-[20px]" data-icon="chevron_right">chevron_right</span>
 </button>
 </div>
 </div>
 </section>
-<!-- END: Monitoring History Table -->
 </div>
 </main>
-<!-- END: Main Content -->
-</body>
-</html>
+<!-- Micro-interaction Scripts -->
+<script>
+        // Simple hover effect for stat cards to animate the bottom border
+        document.querySelectorAll('section.grid > div').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.querySelector('div[class*="absolute bottom-0"]').classList.add('h-2');
+            });
+            card.addEventListener('mouseleave', () => {
+                card.querySelector('div[class*="absolute bottom-0"]').classList.remove('h-2');
+            });
+        });
+
+        // Simulating loading states for export buttons
+        document.querySelectorAll('button').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const label = this.querySelector('span:not(.material-symbols-outlined)');
+                if (label && (label.innerText.includes('CSV') || label.innerText.includes('PDF'))) {
+                    const originalText = label.innerText;
+                    label.innerText = 'PROCESING...';
+                    this.style.opacity = '0.7';
+                    setTimeout(() => {
+                        label.innerText = originalText;
+                        this.style.opacity = '1';
+                    }, 1500);
+                }
+            });
+        });
+    </script>
+
+
+
+
+</body></html>
