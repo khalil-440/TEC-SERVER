@@ -2,25 +2,25 @@ from flask import *
 from config import get_db
 
 alerts_bp = Blueprint(
-    "alerts",
+    "alert",
     __name__
 )
 
-@alerts_bp.route("/alerts")
-def alerts():
+@alert_bp.route("/alert")
+def alert():
 
     db = get_db()
     cur = db.cursor()
 
     cur.execute("""
     SELECT *
-    FROM alerts
+    FROM alert
     ORDER BY id DESC
     """)
 
     data = cur.fetchall()
 
     return render_template(
-        "alerts.html",
-        alerts=data
+        "alert.html",
+        alert=data
     )
