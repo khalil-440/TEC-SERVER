@@ -1,263 +1,398 @@
-<!DOCTYPE html>
-
-<html class="h-full" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>System Processes Dashboard</title>
-<!-- Tailwind CSS v3 CDN -->
+<!DOCTYPE html><html class="dark" lang="en" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title class="">TEC SERVER - Process Management</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            'panel-dark': '#0d1117',
-            'sidebar-dark': '#0d141b',
-            'border-gray': '#21262d',
-            'accent-green': '#4ade80',
-            'text-muted': '#8b949e',
-            'row-hover': '#161b22',
-          }
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Geist:wght@400;500&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
         }
-      }
-    }
-  </script>
-<style data-purpose="custom-styles">
-    /* Custom scrollbar for a cleaner dark theme look */
-    ::-webkit-scrollbar {
-      width: 8px;
-    }
-    ::-webkit-scrollbar-track {
-      background: #0d1117;
-    }
-    ::-webkit-scrollbar-thumb {
-      background: #30363d;
-      border-radius: 4px;
-    }
-    ::-webkit-scrollbar-thumb:hover {
-      background: #484f58;
-    }
-    
-    .status-pulse {
-      animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-    }
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: .5; }
-    }
-  </style>
+        .glass-panel {
+            background: rgba(22, 24, 29, 0.7);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .status-pill {
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0e1417;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #2f3639;
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #859399;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-error": "#690005",
+                      "on-secondary-container": "#00311f",
+                      "on-primary": "#003543",
+                      "on-primary-fixed-variant": "#004e60",
+                      "surface-bright": "#333a3d",
+                      "error": "#ffb4ab",
+                      "surface-container-lowest": "#090f12",
+                      "on-secondary-fixed": "#002113",
+                      "surface-variant": "#2f3639",
+                      "on-primary-fixed": "#001f28",
+                      "tertiary-fixed-dim": "#ffba49",
+                      "background": "#0e1417",
+                      "tertiary-container": "#feb127",
+                      "surface-dim": "#0e1417",
+                      "primary-fixed": "#b7eaff",
+                      "inverse-primary": "#00677f",
+                      "error-container": "#93000a",
+                      "on-tertiary": "#442b00",
+                      "on-surface": "#dde3e7",
+                      "surface-container-low": "#161d1f",
+                      "secondary-container": "#00a572",
+                      "primary": "#a4e6ff",
+                      "outline-variant": "#3c494e",
+                      "on-error-container": "#ffdad6",
+                      "outline": "#859399",
+                      "on-primary-container": "#00566a",
+                      "on-secondary-fixed-variant": "#005236",
+                      "surface-container": "#1a2123",
+                      "on-tertiary-container": "#6b4700",
+                      "tertiary-fixed": "#ffddb1",
+                      "on-background": "#dde3e7",
+                      "on-secondary": "#003824",
+                      "secondary": "#4edea3",
+                      "surface": "#0e1417",
+                      "on-surface-variant": "#bbc9cf",
+                      "inverse-surface": "#dde3e7",
+                      "inverse-on-surface": "#2b3134",
+                      "surface-container-high": "#242b2e",
+                      "surface-tint": "#4cd6ff",
+                      "surface-container-highest": "#2f3639",
+                      "on-tertiary-fixed-variant": "#624000",
+                      "primary-fixed-dim": "#4cd6ff",
+                      "on-tertiary-fixed": "#291800",
+                      "secondary-fixed-dim": "#4edea3",
+                      "secondary-fixed": "#6ffbbe",
+                      "primary-container": "#00d1ff",
+                      "tertiary": "#ffd59c"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "widget-gap": "16px",
+                      "gutter": "24px",
+                      "margin-desktop": "32px",
+                      "margin-mobile": "16px",
+                      "unit": "4px"
+              },
+              "fontFamily": {
+                      "body-sm": ["Inter"],
+                      "mono-data": ["Geist"],
+                      "body-base": ["Inter"],
+                      "mono-code": ["Geist"],
+                      "headline-md": ["Inter"],
+                      "headline-lg": ["Inter"]
+              },
+              "fontSize": {
+                      "body-sm": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                      "mono-data": ["13px", {"lineHeight": "1.4", "fontWeight": "500"}],
+                      "body-base": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                      "mono-code": ["12px", {"lineHeight": "1.6", "letterSpacing": "0.02em", "fontWeight": "400"}],
+                      "headline-md": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                      "headline-lg": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+              }
+            },
+          },
+        }
+      </script>
 </head>
-<body class="bg-panel-dark text-gray-200 h-full font-sans flex overflow-hidden">
-<!-- BEGIN: Sidebar Navigation -->
-<aside class="w-64 bg-sidebar-dark border-r border-border-gray flex flex-col flex-shrink-0" data-purpose="sidebar">
-<div class="p-6">
-<!-- Node Status Card -->
-<div class="bg-[#161b22] border border-border-gray rounded-lg p-3 flex items-center space-x-3">
-<div class="w-8 h-8 bg-blue-500/20 flex items-center justify-center rounded text-blue-400">
-<svg class="h-5 w-5" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-<path d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-</svg>
+<body class="bg-background text-on-surface font-body-base selection:bg-primary selection:text-on-primary">
+<!-- TopNavBar -->
+<nav class="fixed top-0 right-0 left-0 z-50 flex justify-between items-center px-gutter h-16 bg-surface-dim/80 backdrop-blur-xl border-b border-outline-variant">
+<div class="flex items-center gap-4">
+<span class="text-headline-md font-headline-md font-bold text-primary">TEC SERVER</span>
+<div class="hidden md:flex ml-8 items-center bg-surface-container-high rounded-lg px-3 py-1.5 border border-outline-variant">
+<span class="material-symbols-outlined text-outline mr-2 text-sm">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-body-sm text-on-surface w-64" placeholder="Global search..." type="text">
+</div>
+</div>
+<div class="flex items-center gap-gutter">
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors">notifications</button>
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors">settings</button>
+<div class="w-8 h-8 rounded-full overflow-hidden border border-primary">
+<img alt="Administrator Profile" class="w-full h-full object-cover" data-alt="A professional headshot of a male IT administrator with a focused expression, set against a blurred background of a modern data center with glowing blue server racks. The image is clean and high-contrast, fitting a modern corporate tech aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA9fF_w_0MXUIWhI0OMX8NXaIek-Lvoy-BXoPFfd3FqhZIt21IGZSYe6IW5x51J5Uuv5l7gvGg9BHWmTQtR9pEkjL8YfzWS1pMLUpHBy3foBQmAUnY3kXH7Rkhp4XWqofwFmJnOGB530bDp52qv4Uj4KEXujLS-nTLQ56JGNO13sVN690HsZayd785PA2e_9emJ8ZoY2fn-ho4IMl_6B34IWsBY4YDFgSKkorvsBB0eLwQTVu1eYGAzdOy5Ca8CmSfAsRRFXP2r8g">
+</div>
+</div>
+</nav>
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-0 bottom-0 w-[280px] z-40 flex flex-col pt-20 bg-surface-container-lowest border-r border-outline-variant">
+<div class="px-6 mb-8">
+<div class="flex items-center gap-3 p-3 bg-surface-container rounded-lg border border-outline-variant">
+<div class="w-10 h-10 flex items-center justify-center bg-primary/10 rounded-md">
+<span class="material-symbols-outlined text-primary">memory</span>
 </div>
 <div>
-<p class="text-xs font-bold text-white">Root-Node-01</p>
-<p class="text-[10px] text-text-muted">192.168.1.105</p>
+<p class="text-mono-code font-mono-code text-on-surface font-bold">Root-Node-01</p>
+<p class="text-mono-code font-mono-code text-outline text-[10px]">192.168.1.105</p>
 </div>
 </div>
 </div>
-<!-- Navigation Links -->
-<nav class="flex-1 px-4 space-y-1">
-<a class="flex items-center space-x-3 px-3 py-2.5 text-text-muted hover:bg-gray-800 rounded-md transition-colors text-sm" href="/dashboard">
-<svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
-<span>Dashboard</span>
+<nav class="flex flex-col flex-1">
+<a class="flex items-center gap-3 px-8 py-4 text-on-surface-variant opacity-70 hover:opacity-100 hover:bg-surface-container-high transition-all active:translate-x-1 duration-150" href="/dashboard">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-mono-code text-mono-code">Dashboard</span>
 </a>
-<a class="flex items-center space-x-3 px-3 py-2.5 bg-emerald-500/10 text-accent-green border-l-2 border-emerald-500 rounded-r-md text-sm" href="/processes">
-<svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"></path></svg>
-<span>Processes</span>
+<a class="flex items-center gap-3 px-8 py-4 bg-secondary-container/20 text-secondary border-l-4 border-secondary font-bold active:translate-x-1 duration-150" href="/processes">
+<span class="material-symbols-outlined">memory</span>
+<span class="font-mono-code text-mono-code">Processes</span>
 </a>
-<a class="flex items-center space-x-3 px-3 py-2.5 text-text-muted hover:bg-gray-800 rounded-md transition-colors text-sm" href="/users">
-<svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
-<span>Users</span>
+<a class="flex items-center gap-3 px-8 py-4 text-on-surface-variant opacity-70 hover:opacity-100 hover:bg-surface-container-high transition-all active:translate-x-1 duration-150" href="/users">
+<span class="material-symbols-outlined">group</span>
+<span class="font-mono-code text-mono-code">Users</span>
 </a>
-<a class="flex items-center space-x-3 px-3 py-2.5 text-text-muted hover:bg-gray-800 rounded-md transition-colors text-sm" href="/alert">
-<svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
-<span>Alerts</span>
+<a class="flex items-center gap-3 px-8 py-4 text-on-surface-variant opacity-70 hover:opacity-100 hover:bg-surface-container-high transition-all active:translate-x-1 duration-150" href="/alert">
+<span class="material-symbols-outlined">warning</span>
+<span class="font-mono-code text-mono-code">Alerts</span>
 </a>
-<a class="flex items-center space-x-3 px-3 py-2.5 text-text-muted hover:bg-gray-800 rounded-md transition-colors text-sm" href="/reports">
-<svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
-<span>Reports</span>
+<a class="flex items-center gap-3 px-8 py-4 text-on-surface-variant opacity-70 hover:opacity-100 hover:bg-surface-container-high transition-all active:translate-x-1 duration-150" href="/reports">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-mono-code text-mono-code">Reports</span>
 </a>
-<a class="flex items-center space-x-3 px-3 py-2.5 text-text-muted hover:bg-gray-800 rounded-md transition-colors text-sm" href="/settings">
-<svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-<span>Settings</span>
+<a class="flex items-center gap-3 px-8 py-4 text-on-surface-variant opacity-70 hover:opacity-100 hover:bg-surface-container-high transition-all active:translate-x-1 duration-150" href="/settings">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-mono-code text-mono-code">Settings</span>
 </a>
 </nav>
-<!-- Sidebar Footer Stats -->
-<div class="p-6 mt-auto">
-<div class="bg-[#161b22] border border-border-gray rounded-lg p-3">
+<div class="mt-auto p-6">
+<div class="bg-surface-container-high p-4 rounded-xl border border-outline-variant">
 <div class="flex justify-between items-center mb-2">
-<span class="text-[10px] font-bold text-text-muted uppercase">CPU Load</span>
-<span class="text-xs font-bold text-accent-green">42%</span>
+<span class="text-mono-code text-[10px] text-outline">CPU LOAD</span>
+<span class="text-mono-code text-[10px] text-secondary">42%</span>
 </div>
-<div class="w-full bg-gray-700 rounded-full h-1.5">
-<div class="bg-accent-green h-1.5 rounded-full" style="width: 42%"></div>
+<div class="w-full bg-background h-1.5 rounded-full overflow-hidden">
+<div class="bg-secondary h-full" style="width: 42%"></div>
 </div>
 </div>
 </div>
 </aside>
-<!-- END: Sidebar Navigation -->
-<!-- BEGIN: Main Content Area -->
-<main class="flex-1 flex flex-col min-w-0 overflow-y-auto">
-<!-- Top Global Search & Header Icons -->
-<header class="h-16 flex items-center justify-between px-8 border-b border-border-gray bg-panel-dark" data-purpose="top-bar">
-<div class="relative w-full max-w-sm">
-<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-<svg class="h-4 w-4 text-text-muted" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+<!-- Main Content -->
+<main class="ml-[280px] pt-16 min-h-screen">
+<div class="p-gutter">
+<!-- Header Section -->
+<header class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
+<div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">System Processes</h1>
+<p class="text-on-surface-variant text-body-base mt-1">Real-time resource monitoring and process thread control.</p>
 </div>
-<input class="block w-full pl-10 pr-3 py-1.5 bg-[#161b22] border-none text-gray-300 text-sm rounded-md focus:ring-1 focus:ring-accent-green placeholder:text-text-muted" placeholder="Global search..." type="text"/>
+<div class="flex items-center gap-3">
+<div class="relative flex items-center bg-surface-container-low border border-outline-variant rounded-lg px-4 py-2.5 focus-within:border-primary transition-all">
+<span class="material-symbols-outlined text-outline text-sm mr-2">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-body-sm text-on-surface w-48 md:w-64" placeholder="Filter processes..." type="text">
 </div>
-<div class="flex items-center space-x-4">
-<button class="text-text-muted hover:text-white">
-<svg class="h-5 w-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
+<button class="flex items-center gap-2 bg-primary text-on-primary font-bold px-6 py-2.5 rounded-lg active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-lg">refresh</span>
+<span class="">Refresh</span>
 </button>
-<button class="text-text-muted hover:text-white">
-<svg class="h-5 w-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path></svg>
-</button>
-<div class="h-8 w-8 bg-gradient-to-tr from-blue-500 to-emerald-400 rounded-md flex items-center justify-center text-xs font-bold text-white">
-<!-- User Avatar Placeholder -->
-          JD
-        </div>
 </div>
 </header>
-<div class="p-8">
-<!-- BEGIN: Content Header -->
-<section class="flex items-center justify-between mb-8" data-purpose="content-header">
-<div>
-<h1 class="text-3xl font-bold text-white tracking-tight">System Processes</h1>
-<p class="text-text-muted mt-1 text-sm">Real-time resource monitoring and process thread control.</p>
-</div>
-<div class="flex items-center space-x-4">
-<div class="relative">
-<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-<svg class="h-4 w-4 text-text-muted" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-</div>
-<input class="bg-[#161b22] border-border-gray border rounded px-10 py-2 text-sm text-gray-300 w-64 focus:ring-1 focus:ring-accent-green" placeholder="Filter processes..." type="text"/>
-</div>
-<button class="bg-[#b4edff] hover:bg-[#a0e4f7] text-[#0d1117] px-4 py-2 rounded font-bold text-sm flex items-center transition-colors">
-<svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
-            Refresh
-          </button>
-</div>
-</section>
-<!-- END: Content Header -->
-<!-- BEGIN: Process Table -->
-<section class="bg-[#0d141b] border border-border-gray rounded-xl overflow-hidden mb-8 shadow-2xl" data-purpose="process-table-container">
-<table class="w-full text-left text-sm border-collapse" id="process-table">
-<thead>
-<tr class="bg-[#161b22] text-text-muted border-b border-border-gray">
-<th class="px-6 py-4 font-bold uppercase tracking-wider text-[11px]">PID</th>
-<th class="px-6 py-4 font-bold uppercase tracking-wider text-[11px]">USER</th>
-<th class="px-6 py-4 font-bold uppercase tracking-wider text-[11px]">PR</th>
-<th class="px-6 py-4 font-bold uppercase tracking-wider text-[11px]">NI</th>
-<th class="px-6 py-4 font-bold uppercase tracking-wider text-[11px]">VIRT</th>
-<th class="px-6 py-4 font-bold uppercase tracking-wider text-[11px]">RES</th>
-<th class="px-6 py-4 font-bold uppercase tracking-wider text-[11px]">CPU%</th>
-<th class="px-6 py-4 font-bold uppercase tracking-wider text-[11px]">MEM%</th>
-<th class="px-6 py-4 font-bold uppercase tracking-wider text-[11px]">TIME+</th>
-<th class="px-6 py-4 font-bold uppercase tracking-wider text-[11px]">COMMAND</th>
+<!-- Monitoring Grid Section -->
+<div class="grid grid-cols-12 gap-widget-gap mb-widget-gap">
+<!-- Process Table Card -->
+<div class="col-span-12 bg-surface-container-low border border-outline-variant rounded-xl overflow-hidden">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead class="bg-surface-container text-mono-code text-[11px] uppercase tracking-wider text-outline border-b border-outline-variant">
+<tr>
+<th class="px-6 py-4 font-bold">PID</th>
+<th class="px-6 py-4 font-bold">User</th>
+<th class="px-6 py-4 font-bold">PR</th>
+<th class="px-6 py-4 font-bold">NI</th>
+<th class="px-6 py-4 font-bold">VIRT</th>
+<th class="px-6 py-4 font-bold">RES</th>
+<th class="px-6 py-4 font-bold">CPU%</th>
+<th class="px-6 py-4 font-bold">MEM%</th>
+<th class="px-6 py-4 font-bold">TIME+</th>
+<th class="px-6 py-4 font-bold">Command</th>
+<th class="px-6 py-4 font-bold text-right">Actions</th>
 </tr>
 </thead>
-<tbody class="divide-y divide-border-gray">
-<tr class="hover:bg-row-hover transition-colors">
-<td class="px-6 py-4 text-gray-100 font-medium">4521</td>
-<td class="px-6 py-4 text-text-muted">root</td>
-<td class="px-6 py-4 text-gray-100">20</td>
-<td class="px-6 py-4 text-gray-100">0</td>
-<td class="px-6 py-4 text-gray-100">2.1G</td>
-<td class="px-6 py-4 text-gray-100">452M</td>
-<td class="px-6 py-4 font-bold text-accent-green">12.4</td>
-<td class="px-6 py-4 text-gray-100">4.2</td>
-<td class="px-6 py-4 text-text-muted">12:44.21</td>
-<td class="px-6 py-4 text-text-muted truncate max-w-xs">/usr/bin/nginx -g daemon ...</td>
+<tbody class="text-mono-data text-mono-data divide-y divide-white/[0.02]">
+<tr class="hover:bg-white/[0.02] transition-colors group">
+<td class="px-6 py-4 text-primary">4521</td>
+<td class="px-6 py-4">root</td>
+<td class="px-6 py-4">20</td>
+<td class="px-6 py-4">0</td>
+<td class="px-6 py-4 text-on-surface-variant">2.1G</td>
+<td class="px-6 py-4 text-on-surface-variant">452M</td>
+<td class="px-6 py-4 text-secondary font-bold">12.4</td>
+<td class="px-6 py-4">4.2</td>
+<td class="px-6 py-4">12:44.21</td>
+<td class="px-6 py-4 font-mono-code text-on-surface truncate max-w-[200px]">/usr/bin/nginx -g daemon off;</td>
+<td class="px-6 py-4 text-right">
+<div class="flex justify-end gap-2">
+<button class="p-1.5 rounded-lg hover:bg-error/10 text-error-container hover:text-error transition-colors" onclick="toggleModal('killModal')" title="Kill Process">
+<span class="material-symbols-outlined text-lg">cancel</span>
+</button>
+<button class="p-1.5 rounded-lg hover:bg-primary/10 text-on-primary-container hover:text-primary transition-colors" title="Renice">
+<span class="material-symbols-outlined text-lg">equalizer</span>
+</button>
+</div>
+</td>
 </tr>
-<tr class="hover:bg-row-hover transition-colors">
-<td class="px-6 py-4 text-gray-100 font-medium">8812</td>
-<td class="px-6 py-4 text-text-muted">admin</td>
-<td class="px-6 py-4 text-gray-100">20</td>
-<td class="px-6 py-4 text-gray-100">0</td>
-<td class="px-6 py-4 text-gray-100">4.5G</td>
-<td class="px-6 py-4 text-gray-100">1.2G</td>
-<td class="px-6 py-4 font-bold text-accent-green">8.1</td>
-<td class="px-6 py-4 text-gray-100">11.5</td>
-<td class="px-6 py-4 text-text-muted">04:12.88</td>
-<td class="px-6 py-4 text-text-muted truncate max-w-xs">node server.js</td>
+<tr class="bg-white/[0.02] hover:bg-white/[0.04] transition-colors group">
+<td class="px-6 py-4 text-primary">8812</td>
+<td class="px-6 py-4">admin</td>
+<td class="px-6 py-4">20</td>
+<td class="px-6 py-4">0</td>
+<td class="px-6 py-4 text-on-surface-variant">4.5G</td>
+<td class="px-6 py-4 text-on-surface-variant">1.2G</td>
+<td class="px-6 py-4 text-secondary font-bold">8.1</td>
+<td class="px-6 py-4">11.5</td>
+<td class="px-6 py-4">04:12.88</td>
+<td class="px-6 py-4 font-mono-code text-on-surface truncate max-w-[200px]">node server.js</td>
+<td class="px-6 py-4 text-right">
+<div class="flex justify-end gap-2">
+<button class="p-1.5 rounded-lg hover:bg-error/10 text-error-container hover:text-error transition-colors" onclick="toggleModal('killModal')">
+<span class="material-symbols-outlined text-lg">cancel</span>
+</button>
+<button class="p-1.5 rounded-lg hover:bg-primary/10 text-on-primary-container hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-lg">equalizer</span>
+</button>
+</div>
+</td>
 </tr>
-<tr class="hover:bg-row-hover transition-colors">
-<td class="px-6 py-4 text-gray-100 font-medium">1204</td>
-<td class="px-6 py-4 text-text-muted">db_user</td>
-<td class="px-6 py-4 text-orange-400">RT</td>
-<td class="px-6 py-4 text-gray-100">-5</td>
-<td class="px-6 py-4 text-gray-100">12.2G</td>
-<td class="px-6 py-4 text-gray-100">8.4G</td>
-<td class="px-6 py-4 font-bold text-accent-green">4.2</td>
-<td class="px-6 py-4 text-gray-100">72.1</td>
-<td class="px-6 py-4 text-text-muted">108:55.02</td>
-<td class="px-6 py-4 text-text-muted truncate max-w-xs">postgres: writer process</td>
+<tr class="hover:bg-white/[0.02] transition-colors group">
+<td class="px-6 py-4 text-primary">1204</td>
+<td class="px-6 py-4">db_user</td>
+<td class="px-6 py-4">RT</td>
+<td class="px-6 py-4">-5</td>
+<td class="px-6 py-4 text-on-surface-variant">12.2G</td>
+<td class="px-6 py-4 text-on-surface-variant">8.4G</td>
+<td class="px-6 py-4 text-tertiary font-bold">4.2</td>
+<td class="px-6 py-4">72.1</td>
+<td class="px-6 py-4">108:55.02</td>
+<td class="px-6 py-4 font-mono-code text-on-surface truncate max-w-[200px]">postgres: writer process</td>
+<td class="px-6 py-4 text-right">
+<div class="flex justify-end gap-2">
+<button class="p-1.5 rounded-lg hover:bg-error/10 text-error-container hover:text-error transition-colors" onclick="toggleModal('killModal')">
+<span class="material-symbols-outlined text-lg">cancel</span>
+</button>
+<button class="p-1.5 rounded-lg hover:bg-primary/10 text-on-primary-container hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-lg">equalizer</span>
+</button>
+</div>
+</td>
 </tr>
-<tr class="hover:bg-row-hover transition-colors">
-<td class="px-6 py-4 text-gray-100 font-medium">22101</td>
-<td class="px-6 py-4 text-text-muted">root</td>
-<td class="px-6 py-4 text-gray-100">20</td>
-<td class="px-6 py-4 text-gray-100">0</td>
-<td class="px-6 py-4 text-gray-100">850M</td>
-<td class="px-6 py-4 text-gray-100">42M</td>
-<td class="px-6 py-4 font-bold text-accent-green">1.2</td>
-<td class="px-6 py-4 text-gray-100">0.4</td>
-<td class="px-6 py-4 text-text-muted">00:02.15</td>
-<td class="px-6 py-4 text-text-muted truncate max-w-xs">/usr/sbin/sshd -D</td>
+<tr class="bg-white/[0.02] hover:bg-white/[0.04] transition-colors group">
+<td class="px-6 py-4 text-primary">22101</td>
+<td class="px-6 py-4">root</td>
+<td class="px-6 py-4">20</td>
+<td class="px-6 py-4">0</td>
+<td class="px-6 py-4 text-on-surface-variant">850M</td>
+<td class="px-6 py-4 text-on-surface-variant">42M</td>
+<td class="px-6 py-4 text-secondary font-bold">1.2</td>
+<td class="px-6 py-4">0.4</td>
+<td class="px-6 py-4">00:02.15</td>
+<td class="px-6 py-4 font-mono-code text-on-surface truncate max-w-[200px]">/usr/sbin/sshd -D</td>
+<td class="px-6 py-4 text-right">
+<div class="flex justify-end gap-2">
+<button class="p-1.5 rounded-lg hover:bg-error/10 text-error-container hover:text-error transition-colors" onclick="toggleModal('killModal')">
+<span class="material-symbols-outlined text-lg">cancel</span>
+</button>
+<button class="p-1.5 rounded-lg hover:bg-primary/10 text-on-primary-container hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-lg">equalizer</span>
+</button>
+</div>
+</td>
 </tr>
 </tbody>
 </table>
-</section>
-<!-- END: Process Table -->
-<!-- BEGIN: Admin Event Logs -->
-<section class="bg-[#0d141b] border border-border-gray rounded-xl p-6 shadow-2xl" data-purpose="event-logs">
+</div>
+</div>
+<!-- Admin Action Logs Section -->
+<div class="col-span-12 bg-surface-container-low border border-outline-variant rounded-xl p-6">
 <div class="flex items-center justify-between mb-4">
-<div class="flex items-center space-x-2">
-<svg class="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
-<h2 class="text-lg font-bold text-white">Admin Event Logs</h2>
+<h3 class="font-bold text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">terminal</span>
+                            Admin Event Logs
+                        </h3>
+<button class="text-[10px] uppercase font-bold text-outline hover:text-primary tracking-widest">Clear Logs</button>
 </div>
-<button class="text-[10px] font-bold text-text-muted uppercase hover:text-white transition-colors">Clear Logs</button>
+<div class="space-y-3 max-h-[200px] overflow-y-auto pr-2">
+<div class="flex items-start gap-4 p-3 bg-background border border-outline-variant rounded-lg text-mono-code">
+<span class="text-secondary opacity-60">14:22:05</span>
+<span class="text-on-surface-variant">Admin <strong class="text-primary">root</strong> killed PID <strong class="text-error">4521</strong> (SIGTERM)</span>
 </div>
-<div class="space-y-3">
-<div class="bg-[#161b22] border border-border-gray/50 rounded p-3 flex items-center text-xs">
-<span class="text-text-muted mr-4">14:22:05</span>
-<p class="text-gray-400">Admin <span class="text-white font-bold">root</span> killed PID <span class="text-red-400 font-bold">4521</span> (SIGTERM)</p>
+<div class="flex items-start gap-4 p-3 bg-background border border-outline-variant rounded-lg text-mono-code">
+<span class="text-secondary opacity-60">14:15:32</span>
+<span class="text-on-surface-variant">Admin <strong class="text-primary">admin</strong> reniced PID <strong class="text-secondary">8812</strong> to 10</span>
 </div>
-<div class="bg-[#161b22] border border-border-gray/50 rounded p-3 flex items-center text-xs">
-<span class="text-text-muted mr-4">14:15:32</span>
-<p class="text-gray-400">Admin <span class="text-blue-400 font-bold">admin</span> reniced PID <span class="text-accent-green font-bold">8812</span> to 10</p>
-</div>
-<div class="bg-[#161b22] border border-border-gray/50 rounded p-3 flex items-center text-xs">
-<span class="text-text-muted mr-4">13:58:12</span>
-<p class="text-gray-400">System node <span class="text-white font-bold">Root-Node-01</span> started process <span class="text-white font-bold">22101</span></p>
+<div class="flex items-start gap-4 p-3 bg-background border border-outline-variant rounded-lg text-mono-code">
+<span class="text-secondary opacity-60">13:58:12</span>
+<span class="text-on-surface-variant">System node <strong class="text-on-surface">Root-Node-01</strong> started process <strong class="text-primary">22101</strong></span>
 </div>
 </div>
-</section>
-<!-- END: Admin Event Logs -->
+</div>
+</div>
 </div>
 </main>
-<!-- END: Main Content Area -->
-<script data-purpose="interactivity">
-    // Add simple hover effect/logging to rows
-    const rows = document.querySelectorAll('#process-table tbody tr');
-    rows.forEach(row => {
-      row.addEventListener('click', () => {
-        console.log('Row selected:', row.querySelector('td:first-child').innerText);
-        // Toggle selected styling
-        rows.forEach(r => r.classList.remove('bg-blue-500/10'));
-        row.classList.add('bg-blue-500/10');
-      });
-    });
-  </script>
-</body>
-</html>
+<!-- Confirmation Modal (Mocked Visible) -->
+<div class="hidden fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-sm px-4" id="killModal">
+<div class="glass-panel w-full max-w-md rounded-2xl p-8 shadow-2xl scale-100 transition-all duration-300">
+<div class="w-16 h-16 bg-error/10 text-error rounded-full flex items-center justify-center mx-auto mb-6">
+<span class="material-symbols-outlined text-4xl">warning</span>
+</div>
+<h2 class="text-headline-md font-headline-md text-center text-on-surface mb-2">Kill Process?</h2>
+<p class="text-on-surface-variant text-center text-body-base mb-8">
+                You are about to terminate <span class="font-mono-code font-bold text-primary">PID 4521</span> (nginx). This action cannot be undone and may cause service interruption.
+            </p>
+<div class="flex flex-col gap-3">
+<button class="w-full py-3 bg-error text-on-error font-bold rounded-xl active:scale-95 transition-transform" onclick="toggleModal('killModal')">
+                    Force Terminate (SIGKILL)
+                </button>
+<button class="w-full py-3 border border-outline-variant text-on-surface font-medium rounded-xl hover:bg-surface-container-high active:scale-95 transition-transform" onclick="toggleModal('killModal')">
+                    Cancel Action
+                </button>
+</div>
+</div>
+</div>
+<script>
+        function toggleModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal.classList.contains('hidden')) {
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+            } else {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }
+        }
+
+        // Simulating interactive feel
+        document.querySelectorAll('button').forEach(btn => {
+            btn.addEventListener('mousedown', () => btn.classList.add('scale-95'));
+            btn.addEventListener('mouseup', () => btn.classList.remove('scale-95'));
+        });
+    </script>
+
+
+</body></html>
