@@ -117,7 +117,7 @@ def test_login():
 # ======================
 
 @app.route("/alert")
-def alerts():
+def alert():
 
     try:
 
@@ -126,7 +126,7 @@ def alerts():
 
         cur.execute("""
         SELECT *
-        FROM alerts
+        FROM alert
         ORDER BY id DESC
         """)
 
@@ -139,8 +139,8 @@ def alerts():
         data = []
 
     return render_template(
-        "alerts.html",
-        alerts=data
+        "alert.html",
+        alert=data
     )
 
 # ======================
