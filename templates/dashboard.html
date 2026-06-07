@@ -520,8 +520,39 @@
             usageChart.update('none');
         }, 2000);
     </script>
+<script>
 
+function loadMonitoring() {
 
+    fetch("/api/monitoring")
+    .then(response => response.json())
+    .then(data => {
 
+        // CPU
+        document.querySelectorAll("h3")[0].innerHTML =
+            data.cpu_usage + "<span class='text-[20px] opacity-60'>%</span>";
 
-</body></html>
+        // RAM
+        document.querySelectorAll("h3")[1].innerHTML =
+            data.ram_usage + "<span class='text-[20px] opacity-60'>%</span>";
+
+        // DISK
+        document.querySelectorAll("h3")[2].innerHTML =
+            data.disk_usage + "<span class='text-[20px] opacity-60'>%</span>";
+
+        // SWAP
+        document.querySelectorAll("h3")[3].innerHTML =
+            data.swap_usage + "<span class='text-[20px] opacity-60'>%</span>";
+
+    })
+    .catch(err => console.log(err));
+
+}
+
+loadMonitoring();
+
+setInterval(loadMonitoring, 2000);
+
+</script>
+</body>
+</html>
