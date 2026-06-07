@@ -102,7 +102,7 @@ def test_login():
 # ALERTS
 # ======================
 
-@app.route("/alerts")
+@app.route("/alert")
 def alerts():
 
     db = get_db()
