@@ -1,10 +1,13 @@
+import os
 import pymysql
 
 def get_db():
+
     return pymysql.connect(
-        host="100.76.221.96",
-        user="tecadmin",
-        password="tec123",
-        database="monitoring_db",
+        host=os.getenv("MYSQLHOST"),
+        user=os.getenv("MYSQLUSER"),
+        password=os.getenv("MYSQLPASSWORD"),
+        database=os.getenv("MYSQLDATABASE"),
+        port=int(os.getenv("MYSQLPORT")),
         cursorclass=pymysql.cursors.DictCursor
     )
