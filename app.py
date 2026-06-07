@@ -68,19 +68,35 @@ from flask import jsonify
 @app.route("/api/monitoring")
 def api_monitoring():
 
-    db = get_db()
-    cur = db.cursor()
+    try:
 
-    cur.execute("""
-        SELECT *
-        FROM monitoring_logs
-        ORDER BY id DESC
-        LIMIT 1
-    """)
+        db = get_db()
+        cur = db.cursor()
 
-    monitoring = cur.fetchone()
+        cur.execute("""
+            SELECT *
+            FROM monitoring_logs
+            ORDER BY id DESC
+            LIMIT 1
+        """)
 
-    if monitoring is None:
+        monitoring = cur.fetchone()
+
+        if monitoring is None:
+            monitoring = {
+                "cpu_usage": 0,
+                "ram_usage": 0,
+                "disk_usage": 0,
+                "swap_usage": 0,
+                "active_users": 0
+            }
+
+        return jsonify(monitoring)
+
+    except Exception as e:
+
+        print("DB ERROR:", e)
+
         return jsonify({
             "cpu_usage": 0,
             "ram_usage": 0,
@@ -88,8 +104,6 @@ def api_monitoring():
             "swap_usage": 0,
             "active_users": 0
         })
-
-    return jsonify(monitoring)
 
 @app.route("/test-login")
 def test_login():
@@ -105,21 +119,30 @@ def test_login():
 @app.route("/alert")
 def alerts():
 
-    db = get_db()
-    cur = db.cursor()
+    try:
 
-    cur.execute("""
-    SELECT *
-    FROM alerts
-    ORDER BY id DESC
-    """)
+        db = get_db()
+        cur = db.cursor()
 
-    data = cur.fetchall()
+        cur.execute("""
+        SELECT *
+        FROM alerts
+        ORDER BY id DESC
+        """)
+
+        data = cur.fetchall()
+
+    except Exception as e:
+
+        print("DB ERROR:", e)
+
+        data = []
 
     return render_template(
         "alerts.html",
         alerts=data
     )
+
 # ======================
 # USERS
 # ======================
@@ -177,17 +200,25 @@ def chart():
 @app.route("/reports")
 def reports():
 
-    db = get_db()
-    cur = db.cursor()
+    try:
 
-    cur.execute("""
-    SELECT *
-    FROM monitoring_logs
-    ORDER BY timestamp DESC
-    LIMIT 100
-    """)
+        db = get_db()
+        cur = db.cursor()
 
-    data = cur.fetchall()
+        cur.execute("""
+        SELECT *
+        FROM monitoring_logs
+        ORDER BY timestamp DESC
+        LIMIT 100
+        """)
+
+        data = cur.fetchall()
+
+    except Exception as e:
+
+        print("DB ERROR:", e)
+
+        data = []
 
     return render_template(
         "reports.html",
