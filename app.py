@@ -32,19 +32,24 @@ def dashboard():
     if "user" not in session:
         return redirect("/")
 
-    db = get_db()
-    cur = db.cursor()
+    try:
 
-    cur.execute("""
-        SELECT *
-        FROM monitoring_logs
-        ORDER BY id DESC
-        LIMIT 1
-    """)
+        db = get_db()
+        cur = db.cursor()
 
-    monitoring = cur.fetchone()
+        cur.execute("""
+            SELECT *
+            FROM monitoring_logs
+            ORDER BY id DESC
+            LIMIT 1
+        """)
 
-    if monitoring is None:
+        monitoring = cur.fetchone()
+
+    except Exception as e:
+
+        print(e)
+
         monitoring = {
             "cpu_usage": 0,
             "ram_usage": 0,
@@ -55,8 +60,7 @@ def dashboard():
 
     return render_template(
         "dashboard.html",
-        monitoring=monitoring,
-        username=session["user"]
+        monitoring=monitoring
     )
 
 from flask import jsonify
