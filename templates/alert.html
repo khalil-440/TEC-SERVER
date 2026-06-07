@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+
+<html class="h-full" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>TEC SERVER - Alert History</title>
+<!-- BEGIN: External Scripts and Styles -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'tec-dark-bg': '#0f171c',
+            'tec-sidebar-bg': '#0d1317',
+            'tec-card-bg': '#141e24',
+            'tec-border': '#1f2937',
+            'tec-accent-green': '#10b981',
+            'tec-accent-red': '#ef4444',
+            'tec-accent-orange': '#f59e0b',
+            'tec-text-muted': '#9ca3af',
+          }
+        }
+      }
+    }
+  </script>
+<style data-purpose="custom-layout">
+    body {
+      background-color: #0f171c;
+      color: #e5e7eb;
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    }
+    .scrollbar-hide::-webkit-scrollbar {
+      display: none;
+    }
+    .severity-critical {
+      background-color: rgba(239, 68, 68, 0.2);
+      color: #ef4444;
+      border: 1px solid rgba(239, 68, 68, 0.3);
+    }
+    .severity-warning {
+      background-color: rgba(245, 158, 11, 0.2);
+      color: #f59e0b;
+      border: 1px solid rgba(245, 158, 11, 0.3);
+    }
+    .live-mode-badge {
+      background-color: rgba(16, 185, 129, 0.1);
+      color: #10b981;
+      border: 1px solid rgba(16, 185, 129, 0.4);
+    }
+  </style>
+<!-- END: External Scripts and Styles -->
+</head>
+<body class="h-full overflow-hidden flex">
+<!-- BEGIN: Sidebar -->
+<aside class="w-64 bg-tec-sidebar-bg border-r border-tec-border flex flex-col shrink-0" data-purpose="main-sidebar">
+<div class="p-6">
+<h1 class="text-xl font-bold tracking-wider text-gray-400">TEC SERVER</h1>
+</div>
+<!-- Node Information -->
+<div class="px-6 py-4 border-b border-tec-border">
+<div class="flex items-start gap-3">
+<div class="mt-1"><i class="fa-solid fa-server text-tec-text-muted"></i></div>
+<div>
+<div class="text-sm font-semibold">Root-Node-01</div>
+<div class="text-xs text-tec-text-muted">192.168.1.105</div>
+</div>
+</div>
+</div>
+<!-- Navigation Links -->
+<nav class="flex-1 mt-6 px-4 space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 text-sm text-tec-text-muted hover:text-white transition-colors" href="#">
+<i class="fa-solid fa-table-columns w-5"></i> Dashboard
+      </a>
+<a class="flex items-center gap-3 px-4 py-3 text-sm text-tec-text-muted hover:text-white transition-colors" href="#">
+<i class="fa-solid fa-microchip w-5"></i> Processes
+      </a>
+<!-- Active Link -->
+<a class="flex items-center gap-3 px-4 py-3 text-sm text-tec-accent-green bg-tec-accent-green/10 border-l-4 border-tec-accent-green" href="#">
+<i class="fa-solid fa-triangle-exclamation w-5"></i> Alerts
+      </a>
+<a class="flex items-center gap-3 px-4 py-3 text-sm text-tec-text-muted hover:text-white transition-colors" href="#">
+<i class="fa-solid fa-users w-5"></i> Users
+      </a>
+<a class="flex items-center gap-3 px-4 py-3 text-sm text-tec-text-muted hover:text-white transition-colors" href="#">
+<i class="fa-solid fa-chart-line w-5"></i> Reports
+      </a>
+<a class="flex items-center gap-3 px-4 py-3 text-sm text-tec-text-muted hover:text-white transition-colors" href="#">
+<i class="fa-solid fa-gear w-5"></i> Settings
+      </a>
+</nav>
+</aside>
+<!-- END: Sidebar -->
+<!-- BEGIN: Main Content Area -->
+<main class="flex-1 flex flex-col min-w-0 overflow-hidden">
+<!-- BEGIN: Top Navigation Bar -->
+<header class="h-16 border-b border-tec-border flex items-center justify-between px-8 shrink-0">
+<div class="flex items-center gap-8 text-sm font-medium">
+<a class="text-tec-text-muted hover:text-white" href="#">Dashboard</a>
+<a class="text-tec-text-muted hover:text-white" href="#">Processes</a>
+<a class="text-white border-b-2 border-tec-accent-green py-5" href="#">Alerts</a>
+</div>
+<div class="flex items-center gap-6">
+<button class="text-tec-text-muted hover:text-white"><i class="fa-regular fa-bell text-lg"></i></button>
+<button class="text-tec-text-muted hover:text-white"><i class="fa-solid fa-gear text-lg"></i></button>
+<div class="w-8 h-8 rounded-full bg-slate-700 flex items-center justify-center border border-tec-border">
+<img alt="User" class="w-full h-full rounded-full object-cover hidden" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDWFymw9EG_fxeQCYre4Dm9VHxzTAwms812qby2-wVEa_VhEAIk8AIhbnGCJSIq4qgvVydBacwhigkVa4H6bqelZrZnOGhG73Rc9jrt-ihZqwB3q8-8Lqa4NrKgP0Y9EiZp8ZV4rEajTrqqe9H13dotdbFb7UTp59s9D2rV3-v1EFdA-IrmjS0KjxRBlgXxuTiqaU5jm0qZxXazlN3aAfguTRWAImyWZTCdzfLlFuOLGFcv10vBPrhXAOBbRmVWJNC9YpGyWHQzn6CG"/>
+<i class="fa-solid fa-user text-xs"></i>
+</div>
+</div>
+</header>
+<!-- END: Top Navigation Bar -->
+<!-- BEGIN: Dashboard Scrollable Body -->
+<div class="flex-1 overflow-y-auto p-8 scrollbar-hide">
+<!-- BEGIN: Page Header Actions -->
+<div class="flex justify-between items-start mb-8">
+<div>
+<h2 class="text-3xl font-bold mb-2">Alert History</h2>
+<p class="text-tec-text-muted text-sm">Real-time log of system threshold breaches and node status changes.</p>
+</div>
+<div class="flex gap-3">
+<button class="bg-red-400/20 text-red-400 hover:bg-red-400/30 transition px-4 py-2 rounded text-sm font-medium flex items-center gap-2">
+<i class="fa-solid fa-eraser text-xs"></i> Clear All Alerts
+          </button>
+<button class="bg-tec-card-bg border border-tec-border hover:bg-tec-border transition px-4 py-2 rounded text-sm font-medium flex items-center gap-2">
+            All Severities <i class="fa-solid fa-filter text-xs"></i>
+</button>
+</div>
+</div>
+<!-- END: Page Header Actions -->
+<div class="grid grid-cols-12 gap-6">
+<!-- BEGIN: System Event Stream Table -->
+<div class="col-span-8 bg-tec-card-bg border border-tec-border rounded-lg overflow-hidden flex flex-col">
+<div class="p-5 flex justify-between items-center border-b border-tec-border">
+<h3 class="font-semibold text-gray-300">System Event Stream</h3>
+<span class="live-mode-badge text-[10px] px-2 py-0.5 rounded font-bold uppercase tracking-widest">LIVE_MODE</span>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead>
+<tr class="text-[10px] uppercase tracking-wider text-tec-text-muted border-b border-tec-border">
+<th class="px-6 py-4 font-semibold">Timestamp</th>
+<th class="px-6 py-4 font-semibold">Type</th>
+<th class="px-6 py-4 font-semibold">Value</th>
+<th class="px-6 py-4 font-semibold text-center">Severity</th>
+<th class="px-6 py-4 font-semibold text-right">Status</th>
+</tr>
+</thead>
+<tbody class="text-sm divide-y divide-tec-border/50">
+<!-- Row 1 -->
+<tr class="hover:bg-white/5 transition-colors">
+<td class="px-6 py-4 text-tec-text-muted whitespace-nowrap">2023-11-24 14:32:01</td>
+<td class="px-6 py-4 font-medium"><i class="fa-solid fa-microchip mr-2 text-blue-400"></i> CPU</td>
+<td class="px-6 py-4 font-medium">98.4%</td>
+<td class="px-6 py-4 text-center">
+<span class="severity-critical px-3 py-0.5 rounded-full text-[10px] font-bold uppercase">Critical</span>
+</td>
+<td class="px-6 py-4 text-right">
+<span class="flex items-center justify-end gap-2"><span class="w-1.5 h-1.5 rounded-full bg-red-500"></span> Active</span>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-white/5 transition-colors">
+<td class="px-6 py-4 text-tec-text-muted whitespace-nowrap">2023-11-24 14:28:45</td>
+<td class="px-6 py-4 font-medium"><i class="fa-solid fa-memory mr-2 text-blue-400"></i> RAM</td>
+<td class="px-6 py-4 font-medium">84.2%</td>
+<td class="px-6 py-4 text-center">
+<span class="severity-warning px-3 py-0.5 rounded-full text-[10px] font-bold uppercase">Warning</span>
+</td>
+<td class="px-6 py-4 text-right text-tec-text-muted">
+<span class="flex items-center justify-end gap-2"><span class="w-1.5 h-1.5 rounded-full bg-gray-500"></span> Cleared</span>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-white/5 transition-colors">
+<td class="px-6 py-4 text-tec-text-muted whitespace-nowrap">2023-11-24 14:15:22</td>
+<td class="px-6 py-4 font-medium"><i class="fa-solid fa-hard-drive mr-2 text-blue-400"></i> Disk</td>
+<td class="px-6 py-4 font-medium">92.0%</td>
+<td class="px-6 py-4 text-center">
+<span class="severity-critical px-3 py-0.5 rounded-full text-[10px] font-bold uppercase">Critical</span>
+</td>
+<td class="px-6 py-4 text-right text-tec-text-muted">
+<span class="flex items-center justify-end gap-2"><span class="w-1.5 h-1.5 rounded-full bg-gray-500"></span> Cleared</span>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-white/5 transition-colors">
+<td class="px-6 py-4 text-tec-text-muted whitespace-nowrap">2023-11-24 13:59:10</td>
+<td class="px-6 py-4 font-medium"><i class="fa-solid fa-network-wired mr-2 text-blue-400"></i> Net I/O</td>
+<td class="px-6 py-4 font-medium">1.2 GB/s</td>
+<td class="px-6 py-4 text-center">
+<span class="severity-warning px-3 py-0.5 rounded-full text-[10px] font-bold uppercase">Warning</span>
+</td>
+<td class="px-6 py-4 text-right text-tec-text-muted">
+<span class="flex items-center justify-end gap-2"><span class="w-1.5 h-1.5 rounded-full bg-gray-500"></span> Cleared</span>
+</td>
+</tr>
+<!-- Row 5 -->
+<tr class="hover:bg-white/5 transition-colors border-b-0">
+<td class="px-6 py-4 text-tec-text-muted whitespace-nowrap">2023-11-24 13:45:00</td>
+<td class="px-6 py-4 font-medium"><i class="fa-solid fa-microchip mr-2 text-blue-400"></i> CPU</td>
+<td class="px-6 py-4 font-medium">99.1%</td>
+<td class="px-6 py-4 text-center">
+<span class="severity-critical px-3 py-0.5 rounded-full text-[10px] font-bold uppercase">Critical</span>
+</td>
+<td class="px-6 py-4 text-right">
+<span class="flex items-center justify-end gap-2"><span class="w-1.5 h-1.5 rounded-full bg-red-500"></span> Active</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- END: System Event Stream Table -->
+<!-- BEGIN: Right Sidebar Panels -->
+<div class="col-span-4 flex flex-col gap-6">
+<!-- Dispatch Log -->
+<div class="bg-tec-card-bg border border-tec-border rounded-lg p-5 flex flex-col" data-purpose="dispatch-log">
+<div class="flex justify-between items-center mb-6">
+<h3 class="font-semibold text-gray-300">Dispatch Log</h3>
+<i class="fa-solid fa-envelope-open-text text-tec-text-muted"></i>
+</div>
+<div class="space-y-4 flex-1">
+<!-- Log Item 1 -->
+<div class="pl-3 border-l-2 border-blue-400">
+<div class="flex justify-between items-center text-[10px] mb-1">
+<span class="text-blue-400 font-bold tracking-tight">OUTGOING EMAIL</span>
+<span class="text-tec-text-muted">14:32:05</span>
+</div>
+<p class="text-sm font-bold text-gray-100">CRITICAL: Node-01 CPU SPIKE</p>
+<p class="text-xs text-tec-text-muted truncate">To: admin-oncall@devops.sh • Status:...</p>
+</div>
+<!-- Log Item 2 -->
+<div class="pl-3 border-l-2 border-orange-400">
+<div class="flex justify-between items-center text-[10px] mb-1">
+<span class="text-orange-400 font-bold tracking-tight">OUTGOING SMS</span>
+<span class="text-tec-text-muted">14:28:50</span>
+</div>
+<p class="text-sm font-bold text-gray-100">WARNING: Memory threshold 8...</p>
+<p class="text-xs text-tec-text-muted truncate">To: +1 555-0123 • Status: Queued</p>
+</div>
+<!-- Log Item 3 -->
+<div class="pl-3 border-l-2 border-tec-accent-green">
+<div class="flex justify-between items-center text-[10px] mb-1">
+<span class="text-tec-accent-green font-bold tracking-tight">WEBHOOK PUSH</span>
+<span class="text-tec-text-muted">14:15:30</span>
+</div>
+<p class="text-sm font-bold text-gray-100">Alert Resolved: Disk Space</p>
+<p class="text-xs text-tec-text-muted truncate">Payload sent to Slack #monitoring • ...</p>
+</div>
+<!-- Log Item 4 -->
+<div class="pl-3 border-l-2 border-blue-400/50">
+<div class="flex justify-between items-center text-[10px] mb-1">
+<span class="text-blue-400/70 font-bold tracking-tight">OUTGOING EMAIL</span>
+<span class="text-tec-text-muted">13:45:10</span>
+</div>
+<p class="text-sm font-bold text-gray-100">CRITICAL: Service Downtime</p>
+<p class="text-xs text-tec-text-muted truncate">To: dev-team@corp.io • Status:...</p>
+</div>
+</div>
+<button class="mt-6 text-center text-xs text-tec-text-muted hover:text-white transition font-semibold">
+              View All Dispatches <i class="fa-solid fa-chevron-right ml-1 text-[8px]"></i>
+</button>
+</div>
+<!-- System Health Score -->
+<div class="bg-tec-card-bg border border-tec-border rounded-lg p-5" data-purpose="health-score-card">
+<h3 class="text-[10px] font-bold text-tec-accent-green uppercase tracking-widest mb-4">System Health Score</h3>
+<div class="flex items-end gap-1 mb-2">
+<span class="text-5xl font-bold text-white">82</span>
+<span class="text-xl text-tec-text-muted pb-1">/100</span>
+<div class="ml-auto mb-1">
+<!-- SVG Wave for Visual Flourish -->
+<svg class="text-tec-accent-green opacity-40" height="20" viewbox="0 0 60 20" width="60">
+<path d="M0 15 Q 15 5, 30 15 T 60 15" fill="none" stroke="currentColor" stroke-width="2"></path>
+</svg>
+</div>
+</div>
+<p class="text-xs text-gray-300">
+              Stability trending up <span class="text-tec-accent-green font-bold">+4%</span>
+</p>
+</div>
+</div>
+<!-- END: Right Sidebar Panels -->
+</div>
+</div>
+<!-- END: Dashboard Scrollable Body -->
+</main>
+<!-- END: Main Content Area -->
+</body></html>
