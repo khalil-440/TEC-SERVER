@@ -393,6 +393,32 @@
             btn.addEventListener('mouseup', () => btn.classList.remove('scale-95'));
         });
     </script>
+<script>
+async function loadProcesses() {
+    const res = await fetch('/api/processes');
+    const data = await res.json();
+
+    const table = document.getElementById('processTable');
+    table.innerHTML = '';
+
+    data.forEach(proc => {
+        table.innerHTML += `
+        <tr>
+            <td>${proc.pid}</td>
+            <td>${proc.user}</td>
+            <td>${proc.cpu}%</td>
+            <td>${proc.mem}%</td>
+            <td>${proc.command}</td>
+        </tr>`;
+    });
+}
+
+setInterval(loadProcesses, 3000);
+loadProcesses();
+</script>
+
+</body>
+</html>
 
 
 </body></html>
