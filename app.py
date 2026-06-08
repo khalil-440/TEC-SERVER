@@ -85,14 +85,17 @@ def api_monitoring():
 
         monitoring = cur.fetchone()
 
+        print("MONITORING:", monitoring)
+        print("TYPE:", type(monitoring))
+
         if monitoring is None:
-            monitoring = {
+            return jsonify({
                 "cpu_usage": 0,
                 "ram_usage": 0,
                 "disk_usage": 0,
                 "swap_usage": 0,
                 "active_users": 0
-            }
+            })
 
         return jsonify(monitoring)
 
