@@ -233,11 +233,15 @@
     onclick="toggleRealtime()"
     class="relative inline-flex h-6 w-11 items-center rounded-full bg-secondary-container transition-colors focus:outline-none">
 <span class="inline-block h-4 w-4 transform rounded-full bg-on-secondary-container transition-transform translate-x-6" id="toggleDot"></span>
+<button
+    id="refreshBtn"
+    onclick="refreshData()"
+    class="flex items-center gap-2 bg-primary text-on-primary px-4 py-1.5 rounded-md font-bold text-body-sm active:scale-95 transition-transform">
+
+    <span class="material-symbols-outlined text-[18px]">refresh</span>
+    Refresh
+
 </button>
-<button class="flex items-center gap-2 bg-primary text-on-primary px-4 py-1.5 rounded-md font-bold text-body-sm active:scale-95 transition-transform">
-<span class="material-symbols-outlined text-[18px]">refresh</span>
-                            Refresh
-                        </button>
 </div>
 </div>
 </div>
@@ -650,6 +654,21 @@ function toggleRealtime() {
 
         console.log("Realtime ON");
     }
+}
+
+function refreshData() {
+
+    const btn = document.getElementById("refreshBtn");
+
+    btn.disabled = true;
+
+    loadMonitoring();
+    loadHistory();
+    loadProcesses();
+
+    setTimeout(() => {
+        btn.disabled = false;
+    }, 500);
 }
 
 // Jalankan pertama kali
