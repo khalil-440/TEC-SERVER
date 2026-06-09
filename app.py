@@ -347,6 +347,21 @@ def dbtest():
 
     return "Database Connected"
 
+@app.route("/api/monitoring/history")
+def monitoring_history():
+
+    db = get_db()
+    cur = db.cursor()
+
+    cur.execute("""
+        SELECT cpu_usage, ram_usage, timestamp
+        FROM monitoring_logs
+        ORDER BY id ASC
+    """)
+
+    rows = cur.fetchall()
+
+    return jsonify(rows)
 
 if __name__ == "__main__":
     app.run(

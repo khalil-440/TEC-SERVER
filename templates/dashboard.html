@@ -537,6 +537,40 @@ class="text-headline-lg font-bold text-primary">
     </script>
 <script>
 
+function loadHistory() {
+
+    fetch("/api/monitoring/history")
+    .then(response => response.json())
+    .then(data => {
+
+        const labels = [];
+        const cpuData = [];
+        const ramData = [];
+
+        data.forEach(row => {
+
+            labels.push(
+                new Date(row.timestamp)
+                .toLocaleTimeString([], {
+                    hour: '2-digit',
+                    minute: '2-digit'
+                })
+            );
+
+            cpuData.push(parseFloat(row.cpu_usage));
+            ramData.push(parseFloat(row.ram_usage));
+        });
+
+        usageChart.data.labels = labels;
+        usageChart.data.datasets[0].data = cpuData;
+        usageChart.data.datasets[1].data = ramData;
+
+        usageChart.update();
+    });
+}
+
+loadHistory();
+
 const cpuHistory = [];
 const ramHistory = [];
 const labels = [];
