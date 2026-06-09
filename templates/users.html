@@ -244,6 +244,24 @@
     <td>{{ user.uid }}/{{ user.gid }}</td>
     <td>{{ user.home }}</td>
     <td>{{ user.shell }}</td>
+
+<td class="px-6 py-4 text-right">
+    <div class="flex items-center justify-end gap-2">
+
+        <a href="/lock_user/{{ user.username }}"
+           onclick="return confirm('Yakin ingin menonaktifkan user ini?')"
+           class="p-2 hover:text-error transition-colors"
+           title="Lock User">
+
+            <span class="material-symbols-outlined text-[20px]">
+                lock
+            </span>
+
+        </a>
+
+    </div>
+</td>
+
 </tr>
 {% endfor %}
 

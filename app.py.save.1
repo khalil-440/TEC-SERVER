@@ -1,9 +1,9 @@
+
 import psutil
 import subprocess
 from flask import *
 from config import get_db
 import pwd 
-from flask import redirect
 
 app = Flask(__name__)
 
@@ -185,24 +185,6 @@ def users():
         users=users
     )
 
-@app.route("/users")
-def show_users():
-
-    users = []
-
-    for u in pwd.getpwall():
-        users.append({
-            "username": u.pw_name,
-            "uid": u.pw_uid,
-            "gid": u.pw_gid,
-            "home": u.pw_dir,
-            "shell": u.pw_shell
-        })
-
-    return render_template(
-        "users.html",
-        users=users
-    )
 
 @app.get("/api/users")
 def get_users():
@@ -219,37 +201,6 @@ def get_users():
 
     return users
 
-@app.route("/add_user", methods=["POST"])
-def add_user():
-
-    username = request.form["username"]
-
-    subprocess.run(
-        ["useradd", "-m", username],
-        check=True
-    )
-
-    return redirect("/users")
-
-@app.route("/lock_user/<username>")
-def lock_user(username):
-
-    subprocess.run(
-        ["usermod", "-L", username],
-        check=True
-    )
-
-    return redirect("/users")
-
-@app.route("/unlock_user/<username>")
-def unlock_user(username):
-
-    subprocess.run(
-        ["usermod", "-U", username],
-        check=True
-    )
-
-    return redirect("/users")
 
 # ======================
 # PROCESS
@@ -324,8 +275,7 @@ def chart():
     rows.reverse()
 
     return jsonify(rows)
-# ======================
-# REPORT
+# ======================# REPORT
 # ======================
 
 @app.route("/reports")
