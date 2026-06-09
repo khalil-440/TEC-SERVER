@@ -449,10 +449,10 @@ class="text-headline-lg font-bold text-primary">
         const usageChart = new Chart(ctx, {
             type: 'line',
             data: {
-                labels: ['12:00', '12:05', '12:10', '12:15', '12:20', '12:25', '12:30', '12:35', '12:40', '12:45'],
+                labels: [],
                 datasets: [{
                     label: 'CPU %',
-                    data: [35, 42, 38, 45, 60, 55, 48, 42, 38, 42.8],
+                    data: [],
                     borderColor: '#a4e6ff',
                     borderWidth: 2,
                     tension: 0.4,
@@ -467,7 +467,7 @@ class="text-headline-lg font-bold text-primary">
                      }
                 }, {
                     label: 'RAM %',
-                    data: [78, 79, 80, 81, 82, 82, 81, 82, 82.5, 82.1],
+                    data: [],
                     borderColor: '#4edea3',
                     borderWidth: 2,
                     tension: 0.4,
@@ -534,27 +534,52 @@ class="text-headline-lg font-bold text-primary">
     </script>
 <script>
 
+const cpuHistory = [];
+const ramHistory = [];
+const labels = [];
+
 function loadMonitoring() {
 
     fetch("/api/monitoring")
     .then(response => response.json())
     .then(data => {
 
-        // CPU
-        document.querySelectorAll("h3")[0].innerHTML =
+        // Card Monitoring
+        document.getElementById("cpu-usage").innerHTML =
             data.cpu_usage + "<span class='text-[20px] opacity-60'>%</span>";
 
-        // RAM
-        document.querySelectorAll("h3")[1].innerHTML =
+        document.getElementById("ram-usage").innerHTML =
             data.ram_usage + "<span class='text-[20px] opacity-60'>%</span>";
 
-        // DISK
-        document.querySelectorAll("h3")[2].innerHTML =
+        document.getElementById("disk-usage").innerHTML =
             data.disk_usage + "<span class='text-[20px] opacity-60'>%</span>";
 
-        // SWAP
-        document.querySelectorAll("h3")[3].innerHTML =
+        document.getElementById("swap-usage").innerHTML =
             data.swap_usage + "<span class='text-[20px] opacity-60'>%</span>";
+
+        // Waktu sekarang
+        const now = new Date().toLocaleTimeString([], {
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit'
+        });
+
+        labels.push(now);
+        cpuHistory.push(parseFloat(data.cpu_usage));
+        ramHistory.push(parseFloat(data.ram_usage));
+
+        // Simpan maksimal 10 titik
+        if(labels.length > 10){
+            labels.shift();
+            cpuHistory.shift();
+            ramHistory.shift();
+        }
+
+        usageChart.data.labels = labels;
+        usageChart.data.datasets[0].data = cpuHistory;
+        usageChart.data.datasets[1].data = ramHistory;
+
+        usageChart.update();
 
     })
     .catch(err => console.log(err));
@@ -562,8 +587,6 @@ function loadMonitoring() {
 }
 
 loadMonitoring();
-
-setInterval(loadMonitoring, 2000);
 
 </script>
 </body>
