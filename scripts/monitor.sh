@@ -21,6 +21,6 @@ VALUES
 ($CPU, $RAM, $DISK, $SWAP, $USERS);
 "
 
-sleep 5
+sleep 1
 
 done

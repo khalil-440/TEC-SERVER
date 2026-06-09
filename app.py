@@ -242,6 +242,19 @@ def get_processes():
 
     return processes
 
+@app.route("/processes")
+def processes():
+    conn = get_db()
+    cur = conn.cursor(dictionary=True)
+
+    cur.execute("SELECT * FROM processes")
+    processes = cur.fetchall()
+
+    return render_template(
+        "processes.html",
+        processes=processes
+    )
+
 @app.route("/api/chart")
 def chart():
 

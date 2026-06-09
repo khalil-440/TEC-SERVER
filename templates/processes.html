@@ -236,94 +236,30 @@
 </tr>
 </thead>
 <tbody class="text-mono-data text-mono-data divide-y divide-white/[0.02]">
+
+{% for proc in processes %}
 <tr class="hover:bg-white/[0.02] transition-colors group">
-<td class="px-6 py-4 text-primary">4521</td>
-<td class="px-6 py-4">root</td>
-<td class="px-6 py-4">20</td>
-<td class="px-6 py-4">0</td>
-<td class="px-6 py-4 text-on-surface-variant">2.1G</td>
-<td class="px-6 py-4 text-on-surface-variant">452M</td>
-<td class="px-6 py-4 text-secondary font-bold">12.4</td>
-<td class="px-6 py-4">4.2</td>
-<td class="px-6 py-4">12:44.21</td>
-<td class="px-6 py-4 font-mono-code text-on-surface truncate max-w-[200px]">/usr/bin/nginx -g daemon off;</td>
-<td class="px-6 py-4 text-right">
-<div class="flex justify-end gap-2">
-<button class="p-1.5 rounded-lg hover:bg-error/10 text-error-container hover:text-error transition-colors" onclick="toggleModal('killModal')" title="Kill Process">
-<span class="material-symbols-outlined text-lg">cancel</span>
-</button>
-<button class="p-1.5 rounded-lg hover:bg-primary/10 text-on-primary-container hover:text-primary transition-colors" title="Renice">
-<span class="material-symbols-outlined text-lg">equalizer</span>
-</button>
-</div>
-</td>
+    <td class="px-6 py-4 text-primary">{{ proc.pid }}</td>
+    <td class="px-6 py-4">{{ proc.user }}</td>
+    <td class="px-6 py-4">{{ proc.pr }}</td>
+    <td class="px-6 py-4">{{ proc.ni }}</td>
+    <td class="px-6 py-4">{{ proc.virt }}</td>
+    <td class="px-6 py-4">{{ proc.res }}</td>
+    <td class="px-6 py-4">{{ proc.cpu }}</td>
+    <td class="px-6 py-4">{{ proc.mem }}</td>
+    <td class="px-6 py-4">{{ proc.time }}</td>
+    <td class="px-6 py-4">{{ proc.command }}</td>
+
+    <td class="px-6 py-4 text-right">
+        <div class="flex justify-end gap-2">
+            <button class="p-1.5 rounded-lg hover:bg-error/10 text-error-container">
+                <span class="material-symbols-outlined text-lg">cancel</span>
+            </button>
+        </div>
+    </td>
 </tr>
-<tr class="bg-white/[0.02] hover:bg-white/[0.04] transition-colors group">
-<td class="px-6 py-4 text-primary">8812</td>
-<td class="px-6 py-4">admin</td>
-<td class="px-6 py-4">20</td>
-<td class="px-6 py-4">0</td>
-<td class="px-6 py-4 text-on-surface-variant">4.5G</td>
-<td class="px-6 py-4 text-on-surface-variant">1.2G</td>
-<td class="px-6 py-4 text-secondary font-bold">8.1</td>
-<td class="px-6 py-4">11.5</td>
-<td class="px-6 py-4">04:12.88</td>
-<td class="px-6 py-4 font-mono-code text-on-surface truncate max-w-[200px]">node server.js</td>
-<td class="px-6 py-4 text-right">
-<div class="flex justify-end gap-2">
-<button class="p-1.5 rounded-lg hover:bg-error/10 text-error-container hover:text-error transition-colors" onclick="toggleModal('killModal')">
-<span class="material-symbols-outlined text-lg">cancel</span>
-</button>
-<button class="p-1.5 rounded-lg hover:bg-primary/10 text-on-primary-container hover:text-primary transition-colors">
-<span class="material-symbols-outlined text-lg">equalizer</span>
-</button>
-</div>
-</td>
-</tr>
-<tr class="hover:bg-white/[0.02] transition-colors group">
-<td class="px-6 py-4 text-primary">1204</td>
-<td class="px-6 py-4">db_user</td>
-<td class="px-6 py-4">RT</td>
-<td class="px-6 py-4">-5</td>
-<td class="px-6 py-4 text-on-surface-variant">12.2G</td>
-<td class="px-6 py-4 text-on-surface-variant">8.4G</td>
-<td class="px-6 py-4 text-tertiary font-bold">4.2</td>
-<td class="px-6 py-4">72.1</td>
-<td class="px-6 py-4">108:55.02</td>
-<td class="px-6 py-4 font-mono-code text-on-surface truncate max-w-[200px]">postgres: writer process</td>
-<td class="px-6 py-4 text-right">
-<div class="flex justify-end gap-2">
-<button class="p-1.5 rounded-lg hover:bg-error/10 text-error-container hover:text-error transition-colors" onclick="toggleModal('killModal')">
-<span class="material-symbols-outlined text-lg">cancel</span>
-</button>
-<button class="p-1.5 rounded-lg hover:bg-primary/10 text-on-primary-container hover:text-primary transition-colors">
-<span class="material-symbols-outlined text-lg">equalizer</span>
-</button>
-</div>
-</td>
-</tr>
-<tr class="bg-white/[0.02] hover:bg-white/[0.04] transition-colors group">
-<td class="px-6 py-4 text-primary">22101</td>
-<td class="px-6 py-4">root</td>
-<td class="px-6 py-4">20</td>
-<td class="px-6 py-4">0</td>
-<td class="px-6 py-4 text-on-surface-variant">850M</td>
-<td class="px-6 py-4 text-on-surface-variant">42M</td>
-<td class="px-6 py-4 text-secondary font-bold">1.2</td>
-<td class="px-6 py-4">0.4</td>
-<td class="px-6 py-4">00:02.15</td>
-<td class="px-6 py-4 font-mono-code text-on-surface truncate max-w-[200px]">/usr/sbin/sshd -D</td>
-<td class="px-6 py-4 text-right">
-<div class="flex justify-end gap-2">
-<button class="p-1.5 rounded-lg hover:bg-error/10 text-error-container hover:text-error transition-colors" onclick="toggleModal('killModal')">
-<span class="material-symbols-outlined text-lg">cancel</span>
-</button>
-<button class="p-1.5 rounded-lg hover:bg-primary/10 text-on-primary-container hover:text-primary transition-colors">
-<span class="material-symbols-outlined text-lg">equalizer</span>
-</button>
-</div>
-</td>
-</tr>
+{% endfor %}
+
 </tbody>
 </table>
 </div>
