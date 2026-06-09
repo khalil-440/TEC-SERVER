@@ -228,7 +228,10 @@
 </div></div>
 <div class="flex items-center gap-2 bg-surface-container-high p-1 rounded-lg border border-outline-variant">
 <span class="text-body-sm font-medium px-3 text-outline">Real-time</span>
-<button class="relative inline-flex h-6 w-11 items-center rounded-full bg-secondary-container transition-colors focus:outline-none" id="realtimeToggle">
+<button
+    id="realtimeToggle"
+    onclick="toggleRealtime()"
+    class="relative inline-flex h-6 w-11 items-center rounded-full bg-secondary-container transition-colors focus:outline-none">
 <span class="inline-block h-4 w-4 transform rounded-full bg-on-secondary-container transition-transform translate-x-6" id="toggleDot"></span>
 </button>
 <button class="flex items-center gap-2 bg-primary text-on-primary px-4 py-1.5 rounded-md font-bold text-body-sm active:scale-95 transition-transform">
@@ -552,13 +555,6 @@ function loadHistory() {
 
 }      
 
-loadHistory();
-setInterval(loadHistory, 1000);
-
-loadMonitoring();
-setInterval(loadMonitoring, 1000);
-
-
 function loadMonitoring() {
 
     fetch("/api/monitoring")
@@ -627,8 +623,52 @@ function loadProcesses() {
         });
 }
 
+function toggleRealtime() {
+
+    if (realtimeEnabled) {
+
+        clearInterval(historyInterval);
+        clearInterval(monitoringInterval);
+        clearInterval(processInterval);
+
+        realtimeEnabled = false;
+
+        console.log("Realtime OFF");
+
+    } else {
+
+        historyInterval =
+            setInterval(loadHistory, 1000);
+
+        monitoringInterval =
+            setInterval(loadMonitoring, 1000);
+
+        processInterval =
+            setInterval(loadProcesses, 5000);
+
+        realtimeEnabled = true;
+
+        console.log("Realtime ON");
+    }
+}
+
+// Jalankan pertama kali
+loadHistory();
+loadMonitoring();
 loadProcesses();
-setInterval(loadProcesses, 5000);
+
+// Status realtime
+let realtimeEnabled = true;
+
+// Simpan interval
+let historyInterval =
+    setInterval(loadHistory, 1000);
+
+let monitoringInterval =
+    setInterval(loadMonitoring, 1000);
+
+let processInterval =
+    setInterval(loadProcesses, 5000);
 </script>
 </body>
 </html>
