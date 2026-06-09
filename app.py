@@ -68,35 +68,24 @@ def dashboard():
 
 from flask import jsonify
 
-@app.route("/api/monitoring")
-def api_monitoring():
+@app.route("/api/monitoring/history")
+def monitoring_history():
 
-    try:
+    db = get_db()
+    cur = db.cursor()
 
-        db = get_db()
-        cur = db.cursor()
+    cur.execute("""
+        SELECT cpu_usage, ram_usage, timestamp
+        FROM monitoring_logs
+        ORDER BY id DESC
+        LIMIT 20
+    """)
 
-        cur.execute("""
-            SELECT *
-            FROM monitoring_logs
-            ORDER BY id DESC
-            LIMIT 1
-        """)
+    rows = cur.fetchall()
 
-        monitoring = cur.fetchone()
+    rows.reverse()
 
-        print("MONITORING =", monitoring)
-        print("TYPE =", type(monitoring))
-
-        return jsonify(monitoring)
-
-    except Exception as e:
-
-        print("DB ERROR:", str(e))
-
-        return jsonify({
-            "error": str(e)
-        }), 500
+    return jsonify(rows)
 
 @app.route("/test-login")
 def test_login():

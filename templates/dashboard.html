@@ -570,10 +570,11 @@ function loadHistory() {
 }
 
 loadHistory();
+setInterval(loadHistory, 5000);
 
-const cpuHistory = [];
-const ramHistory = [];
-const labels = [];
+loadMonitoring();
+setInterval(loadMonitoring, 5000);
+
 
 function loadMonitoring() {
 
@@ -594,36 +595,11 @@ function loadMonitoring() {
         document.getElementById("swap-usage").innerHTML =
             data.swap_usage + "<span class='text-[20px] opacity-60'>%</span>";
 
-        // Waktu sekarang
-        const now = new Date().toLocaleTimeString([], {
-            hour: '2-digit',
-            minute: '2-digit',
-            second: '2-digit'
-        });
-
-        labels.push(now);
-        cpuHistory.push(parseFloat(data.cpu_usage));
-        ramHistory.push(parseFloat(data.ram_usage));
-
-        // Simpan maksimal 10 titik
-        if(labels.length > 10){
-            labels.shift();
-            cpuHistory.shift();
-            ramHistory.shift();
-        }
-
-        usageChart.data.labels = labels;
-        usageChart.data.datasets[0].data = cpuHistory;
-        usageChart.data.datasets[1].data = ramHistory;
-
-        usageChart.update();
 
     })
     .catch(err => console.log(err));
 
 }
-
-loadMonitoring();
 
 </script>
 </body>
