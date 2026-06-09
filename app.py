@@ -184,6 +184,27 @@ def users():
         "users.html",
         users=users
     )
+@app.route("/users")
+def show_users():
+
+    conn = get_db()
+    cur = conn.cursor(dictionary=True)
+
+    cur.execute("""
+        SELECT *
+        FROM users
+    """)
+
+    users = cur.fetchall()
+
+    cur.close()
+    conn.close()
+
+    return render_template(
+        "users.html",
+        users=users
+    )
+
 @app.get("/api/users")
 def get_users():
     users = []
