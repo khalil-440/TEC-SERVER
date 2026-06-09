@@ -236,45 +236,14 @@
 <th class="px-6 py-4 font-mono-code text-[11px] uppercase tracking-wider text-outline text-right">Operations</th>
 </tr>
 </thead>
-<tbody class="divide-y divide-outline-variant/30">
+<tbody>
 
 {% for user in users %}
-<tr class="hover:bg-white/[0.02] transition-colors group">
-
-    <td class="px-6 py-4">
-        <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
-                <span class="material-symbols-outlined">person</span>
-            </div>
-
-            <div>
-                <div class="font-bold text-on-surface text-body-sm">
-                    {{ user.username }}
-                </div>
-
-                <div class="text-[12px] text-outline">
-                    {{ user.home }}
-                </div>
-            </div>
-        </div>
-    </td>
-
-    <td class="px-6 py-4 text-center">
-        {{ user.uid }}/{{ user.gid }}
-    </td>
-
-    <td class="px-6 py-4">
-        {{ user.last_login }}
-    </td>
-
-    <td class="px-6 py-4 text-center">
-        {{ user.status }}
-    </td>
-
-    <td class="px-6 py-4 text-right">
-        ...
-    </td>
-
+<tr>
+    <td>{{ user.username }}</td>
+    <td>{{ user.uid }}/{{ user.gid }}</td>
+    <td>{{ user.home }}</td>
+    <td>{{ user.shell }}</td>
 </tr>
 {% endfor %}
 

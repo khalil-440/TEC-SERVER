@@ -610,6 +610,58 @@ function loadMonitoring() {
 
 }
 
+function loadProcesses() {
+
+    fetch("/api/processes")
+    .then(response => response.json())
+    .then(data => {
+
+        // urutkan berdasarkan CPU terbesar
+        data.sort((a, b) => b.cpu - a.cpu);
+
+        // ambil 5 teratas
+        const top5 = data.slice(0, 5);
+
+        let html = "";
+
+        top5.forEach(proc => {
+
+            html += `
+            <tr class="hover:bg-primary/5">
+                <td class="px-6 py-4 text-primary">
+                    ${proc.pid}
+                </td>
+
+                <td class="px-6 py-4">
+                    ${proc.user}
+                </td>
+
+                <td class="px-6 py-4 text-right text-secondary">
+                    ${proc.cpu}
+                </td>
+
+                <td class="px-6 py-4 text-right">
+                    ${proc.mem}
+                </td>
+
+                <td class="px-6 py-4">
+                    ${proc.command}
+                </td>
+
+                <td class="px-6 py-4 text-center">
+                    <span class="inline-block w-2 h-2 rounded-full bg-secondary"></span>
+                </td>
+            </tr>
+            `;
+        });
+
+        document.getElementById("process-table").innerHTML = html;
+
+    })
+    .catch(err => console.log(err));
+
+}
+setInterval(loadProcesses, 1000);
 </script>
 </body>
 </html>
