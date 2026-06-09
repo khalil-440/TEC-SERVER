@@ -356,10 +356,13 @@ def monitoring_history():
     cur.execute("""
         SELECT cpu_usage, ram_usage, timestamp
         FROM monitoring_logs
-        ORDER BY id ASC
+        ORDER BY id DESC
+        LIMIT 20
     """)
 
     rows = cur.fetchall()
+
+    rows.reverse()
 
     return jsonify(rows)
 
