@@ -46,7 +46,7 @@ echo "CPU=$CPU"
 echo "RAM=$RAM"
 echo "DISK=$DISK"
 
-if (( $(echo "$CPU > 0" | bc -l) ))
+if (( $(echo "$CPU > 80" | bc -l) ))
 then
 
 mysql \
