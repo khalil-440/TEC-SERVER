@@ -539,47 +539,41 @@ class="text-headline-lg font-bold text-primary">
 
 function loadHistory() {
 
-    fetch("/api/monitoring")
+    fetch("/api/monitoring/history")
     .then(response => response.json())
     .then(data => {
 
-        const now = new Date().toLocaleTimeString([], {
-            hour: '2-digit',
-            minute: '2-digit',
-            second: '2-digit'
+        const labels = [];
+        const cpuData = [];
+        const ramData = [];
+
+        data.forEach(row => {
+
+            labels.push(
+                new Date(row.timestamp)
+                .toLocaleTimeString([], {
+                    hour: '2-digit',
+                    minute: '2-digit'
+                })
+            );
+
+            cpuData.push(parseFloat(row.cpu_usage));
+            ramData.push(parseFloat(row.ram_usage));
         });
 
-        usageChart.data.labels.push(now);
-
-        usageChart.data.datasets[0].data.push(
-            parseFloat(data.cpu_usage)
-        );
-
-        usageChart.data.datasets[1].data.push(
-            parseFloat(data.ram_usage)
-        );
-
-        // simpan maksimal 20 titik
-        if (usageChart.data.labels.length > 20) {
-
-            usageChart.data.labels.shift();
-            usageChart.data.datasets[0].data.shift();
-            usageChart.data.datasets[1].data.shift();
-
-        }
+        usageChart.data.labels = labels;
+        usageChart.data.datasets[0].data = cpuData;
+        usageChart.data.datasets[1].data = ramData;
 
         usageChart.update();
-
-    })
-    .catch(err => console.log(err));
-
-}      
+    });
+}
 
 loadHistory();
-setInterval(loadHistory, 1000);
+setInterval(loadHistory, 5000);
 
 loadMonitoring();
-setInterval(loadMonitoring, 1000);
+setInterval(loadMonitoring, 5000);
 
 
 function loadMonitoring() {
