@@ -68,6 +68,50 @@ def dashboard():
 
 from flask import jsonify
 
+@app.route("/api/monitoring")
+def api_monitoring():
+
+    try:
+
+        db = get_db()
+        cur = db.cursor()
+
+        cur.execute("""
+            SELECT cpu_usage,
+                   ram_usage,
+                   disk_usage,
+                   swap_usage,
+                   active_users
+            FROM monitoring_logs
+            ORDER BY id DESC
+            LIMIT 1
+        """)
+
+        monitoring = cur.fetchone()
+
+        if monitoring is None:
+            return jsonify({
+                "cpu_usage": 0,
+                "ram_usage": 0,
+                "disk_usage": 0,
+                "swap_usage": 0,
+                "active_users": 0
+            })
+
+        return jsonify(monitoring)
+
+    except Exception as e:
+
+        print("API MONITORING ERROR:", e)
+
+        return jsonify({
+            "cpu_usage": 0,
+            "ram_usage": 0,
+            "disk_usage": 0,
+            "swap_usage": 0,
+            "active_users": 0
+        })
+
 @app.route("/api/monitoring/history")
 def monitoring_history():
 
