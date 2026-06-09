@@ -1,18 +1,41 @@
-CPU=$(mysql -u tecadmin -ptec123 monitoring_db -N -e "
+#!/bin/bash
+
+while true
+do
+
+CPU=$(mysql \
+-h zephyr.proxy.rlwy.net \
+-u root \
+-p'lbQeVgmlGdZvcrxOXkkpVEAcmGSsILJR' \
+--port 34161 \
+railway \
+-N -e "
 SELECT cpu_usage
 FROM monitoring_logs
 ORDER BY id DESC
 LIMIT 1;
 ")
 
-RAM=$(mysql -u tecadmin -ptec123 monitoring_db -N -e "
+RAM=$(mysql \
+-h zephyr.proxy.rlwy.net \
+-u root \
+-p'lbQeVgmlGdZvcrxOXkkpVEAcmGSsILJR' \
+--port 34161 \
+railway \
+-N -e "
 SELECT ram_usage
 FROM monitoring_logs
 ORDER BY id DESC
 LIMIT 1;
 ")
 
-DISK=$(mysql -u tecadmin -ptec123 monitoring_db -N -e "
+DISK=$(mysql \
+-h zephyr.proxy.rlwy.net \
+-u root \
+-p'lbQeVgmlGdZvcrxOXkkpVEAcmGSsILJR' \
+--port 34161 \
+railway \
+-N -e "
 SELECT disk_usage
 FROM monitoring_logs
 ORDER BY id DESC
@@ -23,12 +46,21 @@ echo "CPU=$CPU"
 echo "RAM=$RAM"
 echo "DISK=$DISK"
 
-if (( $(echo "$CPU > 80" | bc -l) ))
+if (( $(echo "$CPU > 0" | bc -l) ))
 then
 
-mysql -u tecadmin -ptec123 monitoring_db -e "
+mysql \
+-h zephyr.proxy.rlwy.net \
+-u root \
+-p'lbQeVgmlGdZvcrxOXkkpVEAcmGSsILJR' \
+--port 34161 \
+railway -e "
 INSERT INTO alerts(type,value,status)
 VALUES('CPU','$CPU','WARNING');
 "
 
 fi
+
+sleep 1
+
+done

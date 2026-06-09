@@ -145,24 +145,16 @@ def test_login():
 @app.route("/alert")
 def alert():
 
-    try:
+    db = get_db()
+    cur = db.cursor()
 
-        db = get_db()
-        cur = db.cursor()
+    cur.execute("""
+    SELECT *
+    FROM alerts
+    ORDER BY id DESC
+    """)
 
-        cur.execute("""
-        SELECT *
-        FROM alert
-        ORDER BY id DESC
-        """)
-
-        data = cur.fetchall()
-
-    except Exception as e:
-
-        print("DB ERROR:", e)
-
-        data = []
+    data = cur.fetchall()
 
     return render_template(
         "alert.html",
