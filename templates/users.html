@@ -237,140 +237,47 @@
 </tr>
 </thead>
 <tbody class="divide-y divide-outline-variant/30">
-<!-- User Row: Active -->
+
+{% for user in users %}
 <tr class="hover:bg-white/[0.02] transition-colors group">
-<td class="px-6 py-4">
-<div class="flex items-center gap-3">
-<div class="w-10 h-10 rounded-full bg-secondary/10 flex items-center justify-center text-secondary">
-<span class="material-symbols-outlined">person</span>
-</div>
-<div>
-<div class="font-bold text-on-surface text-body-sm">admin_user</div>
-<div class="text-[12px] text-outline">/home/admin_user</div>
-</div>
-</div>
-</td>
-<td class="px-6 py-4 text-center">
-<div class="font-mono-data text-body-sm text-secondary">1001 <span class="text-outline">/</span> 1001</div>
-</td>
-<td class="px-6 py-4">
-<div class="text-body-sm text-on-surface">Today, 09:42 AM</div>
-<div class="text-[11px] text-outline">IP: 192.168.1.12</div>
-</td>
-<td class="px-6 py-4 text-center">
-<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-secondary-container/10 text-secondary border border-secondary/20">
-                                            ACTIVE
-                                        </span>
-</td>
-<td class="px-6 py-4 text-right">
-<div class="flex items-center justify-end gap-2">
-<button class="p-2 hover:text-primary transition-colors" title="Reset Password"><span class="material-symbols-outlined text-[20px]">lock_reset</span></button>
-<button class="p-2 hover:text-primary transition-colors" title="View Log"><span class="material-symbols-outlined text-[20px]">history</span></button>
-<button class="p-2 hover:text-error transition-colors" title="Deactivate"><span class="material-symbols-outlined text-[20px]">block</span></button>
-</div>
-</td>
+
+    <td class="px-6 py-4">
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+                <span class="material-symbols-outlined">person</span>
+            </div>
+
+            <div>
+                <div class="font-bold text-on-surface text-body-sm">
+                    {{ user.username }}
+                </div>
+
+                <div class="text-[12px] text-outline">
+                    {{ user.home }}
+                </div>
+            </div>
+        </div>
+    </td>
+
+    <td class="px-6 py-4 text-center">
+        {{ user.uid }}/{{ user.gid }}
+    </td>
+
+    <td class="px-6 py-4">
+        {{ user.last_login }}
+    </td>
+
+    <td class="px-6 py-4 text-center">
+        {{ user.status }}
+    </td>
+
+    <td class="px-6 py-4 text-right">
+        ...
+    </td>
+
 </tr>
-<!-- User Row: Warning (>30 days) -->
-<tr class="bg-tertiary-container/5 hover:bg-tertiary-container/10 transition-colors group">
-<td class="px-6 py-4">
-<div class="flex items-center gap-3">
-<div class="w-10 h-10 rounded-full bg-tertiary/10 flex items-center justify-center text-tertiary">
-<span class="material-symbols-outlined">person</span>
-</div>
-<div>
-<div class="font-bold text-on-surface text-body-sm">j_doe_temp</div>
-<div class="text-[12px] text-outline">/home/j_doe_temp</div>
-</div>
-</div>
-</td>
-<td class="px-6 py-4 text-center">
-<div class="font-mono-data text-body-sm text-on-surface">1042 <span class="text-outline">/</span> 1000</div>
-</td>
-<td class="px-6 py-4">
-<div class="flex items-center gap-2 text-tertiary font-bold text-body-sm">
-<span class="material-symbols-outlined text-[18px]">warning</span>
-<span class="">42 days ago</span>
-</div>
-<div class="text-[11px] text-outline italic">Security policy violation risk</div>
-</td>
-<td class="px-6 py-4 text-center">
-<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-secondary-container/10 text-secondary border border-secondary/20">
-                                            ACTIVE
-                                        </span>
-</td>
-<td class="px-6 py-4 text-right">
-<div class="flex items-center justify-end gap-2">
-<button class="p-2 hover:text-primary transition-colors" title="Reset Password"><span class="material-symbols-outlined text-[20px]">lock_reset</span></button>
-<button class="p-2 hover:text-primary transition-colors" title="View Log"><span class="material-symbols-outlined text-[20px]">history</span></button>
-<button class="p-2 hover:text-error transition-colors" title="Deactivate"><span class="material-symbols-outlined text-[20px]">block</span></button>
-</div>
-</td>
-</tr>
-<!-- User Row: Inactive -->
-<tr class="hover:bg-white/[0.02] transition-colors group opacity-60">
-<td class="px-6 py-4">
-<div class="flex items-center gap-3">
-<div class="w-10 h-10 rounded-full bg-surface-variant flex items-center justify-center text-outline">
-<span class="material-symbols-outlined">person_off</span>
-</div>
-<div>
-<div class="font-bold text-on-surface text-body-sm">legacy_service</div>
-<div class="text-[12px] text-outline">/var/lib/legacy</div>
-</div>
-</div>
-</td>
-<td class="px-6 py-4 text-center">
-<div class="font-mono-data text-body-sm text-on-surface">998 <span class="text-outline">/</span> 998</div>
-</td>
-<td class="px-6 py-4">
-<div class="text-body-sm text-outline">Never logged in</div>
-</td>
-<td class="px-6 py-4 text-center">
-<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-outline-variant/20 text-outline border border-outline-variant/40">
-                                            INACTIVE
-                                        </span>
-</td>
-<td class="px-6 py-4 text-right">
-<div class="flex items-center justify-end gap-2">
-<button class="p-2 hover:text-primary transition-colors" title="Reset Password"><span class="material-symbols-outlined text-[20px]">lock_reset</span></button>
-<button class="p-2 hover:text-primary transition-colors" title="View Log"><span class="material-symbols-outlined text-[20px]">history</span></button>
-<button class="p-2 text-primary hover:text-secondary transition-colors" title="Deactivate"><span class="material-symbols-outlined text-[20px]">settings_backup_restore</span></button>
-</div>
-</td>
-</tr>
-<!-- User Row: Normal -->
-<tr class="hover:bg-white/[0.02] transition-colors group">
-<td class="px-6 py-4">
-<div class="flex items-center gap-3">
-<div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
-<span class="material-symbols-outlined">person</span>
-</div>
-<div>
-<div class="font-bold text-on-surface text-body-sm">dev_m_smith</div>
-<div class="text-[12px] text-outline">/home/dev_m_smith</div>
-</div>
-</div>
-</td>
-<td class="px-6 py-4 text-center">
-<div class="font-mono-data text-body-sm text-on-surface">1005 <span class="text-outline">/</span> 1005</div>
-</td>
-<td class="px-6 py-4">
-<div class="text-body-sm text-on-surface">3 days ago</div>
-<div class="text-[11px] text-outline">IP: 10.0.0.155</div>
-</td>
-<td class="px-6 py-4 text-center">
-<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-secondary-container/10 text-secondary border border-secondary/20">
-                                            ACTIVE
-                                        </span>
-</td>
-<td class="px-6 py-4 text-right">
-<div class="flex items-center justify-end gap-2">
-<button class="p-2 hover:text-primary transition-colors" title="Reset Password"><span class="material-symbols-outlined text-[20px]">lock_reset</span></button>
-<button class="p-2 hover:text-primary transition-colors" title="View Log"><span class="material-symbols-outlined text-[20px]">history</span></button>
-<button class="p-2 hover:text-error transition-colors" title="Deactivate"><span class="material-symbols-outlined text-[20px]">block</span></button>
-</div>
-</td>
-</tr>
+{% endfor %}
+
 </tbody>
 </table>
 </div>

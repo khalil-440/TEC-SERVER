@@ -601,6 +601,17 @@ function loadMonitoring() {
         document.getElementById("swap-usage").innerHTML =
             data.swap_usage + "<span class='text-[20px] opacity-60'>%</span>";
 
+	document.getElementById("cpu-bar").style.width =
+	    data.cpu_usage + "%";
+
+	document.getElementById("ram-bar").style.width =
+	    data.ram_usage + "%";
+
+	document.getElementById("disk-bar").style.width =
+	    data.disk_usage + "%";
+
+	document.getElementById("swap-bar").style.width =
+	    data.swap_usage + "%";
 
     })
     .catch(err => console.log(err));
