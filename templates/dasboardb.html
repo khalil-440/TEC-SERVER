@@ -382,27 +382,12 @@ class="text-headline-lg font-bold text-primary">
 <th class="px-6 py-4 font-bold text-center">Status</th>
 </tr>
 </thead>
-<tbody class="divide-y divide-outline-variant/10">
-<tr class="hover:bg-primary/5 transition-colors group">
-<td class="px-6 py-4 text-primary">31422</td>
-<td class="px-6 py-4">nginx</td>
-<td class="px-6 py-4 text-right font-mono-data text-secondary">24.2</td>
-<td class="px-6 py-4 text-right font-mono-data">4.5</td>
-<td class="px-6 py-4 text-on-surface-variant">nginx: worker process</td>
-<td class="px-6 py-4 text-center">
-<span class="inline-block w-2 h-2 rounded-full bg-secondary"></span>
-</td>
-</tr>
-<tr class="hover:bg-primary/5 transition-colors group even:bg-white/[0.02]">
-<td class="px-6 py-4 text-primary">1029</td>
-<td class="px-6 py-4">postgres</td>
-<td class="px-6 py-4 text-right font-mono-data text-secondary">18.1</td>
-<td class="px-6 py-4 text-right font-mono-data">12.8</td>
-<td class="px-6 py-4 text-on-surface-variant">postgres: checkpointer</td>
-<td class="px-6 py-4 text-center">
-<span class="inline-block w-2 h-2 rounded-full bg-secondary"></span>
-</td>
-</tr>
+<tbody id="process-table"
+       class="divide-y divide-outline-variant/10">
+</tbody>
+<tbody id="process-table"
+       class="divide-y divide-outline-variant/10">
+</tbody>
 <tr class="hover:bg-primary/5 transition-colors group">
 <td class="px-6 py-4 text-primary">4410</td>
 <td class="px-6 py-4">root</td>
@@ -539,41 +524,47 @@ class="text-headline-lg font-bold text-primary">
 
 function loadHistory() {
 
-    fetch("/api/monitoring/history")
+    fetch("/api/monitoring")
     .then(response => response.json())
     .then(data => {
 
-        const labels = [];
-        const cpuData = [];
-        const ramData = [];
-
-        data.forEach(row => {
-
-            labels.push(
-                new Date(row.timestamp)
-                .toLocaleTimeString([], {
-                    hour: '2-digit',
-                    minute: '2-digit'
-                })
-            );
-
-            cpuData.push(parseFloat(row.cpu_usage));
-            ramData.push(parseFloat(row.ram_usage));
+        const now = new Date().toLocaleTimeString([], {
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit'
         });
 
-        usageChart.data.labels = labels;
-        usageChart.data.datasets[0].data = cpuData;
-        usageChart.data.datasets[1].data = ramData;
+        usageChart.data.labels.push(now);
+
+        usageChart.data.datasets[0].data.push(
+            parseFloat(data.cpu_usage)
+        );
+
+        usageChart.data.datasets[1].data.push(
+            parseFloat(data.ram_usage)
+        );
+
+        // simpan maksimal 20 titik
+        if (usageChart.data.labels.length > 20) {
+
+            usageChart.data.labels.shift();
+            usageChart.data.datasets[0].data.shift();
+            usageChart.data.datasets[1].data.shift();
+
+        }
 
         usageChart.update();
-    });
-}
+
+    })
+    .catch(err => console.log(err));
+
+}      
 
 loadHistory();
-setInterval(loadHistory, 5000);
+setInterval(loadHistory, 1000);
 
 loadMonitoring();
-setInterval(loadMonitoring, 5000);
+setInterval(loadMonitoring, 1000);
 
 
 function loadMonitoring() {
@@ -595,12 +586,75 @@ function loadMonitoring() {
         document.getElementById("swap-usage").innerHTML =
             data.swap_usage + "<span class='text-[20px] opacity-60'>%</span>";
 
+	document.getElementById("cpu-bar").style.width =
+	    data.cpu_usage + "%";
+
+	document.getElementById("ram-bar").style.width =
+	    data.ram_usage + "%";
+
+	document.getElementById("disk-bar").style.width =
+	    data.disk_usage + "%";
+
+	document.getElementById("swap-bar").style.width =
+	    data.swap_usage + "%";
 
     })
     .catch(err => console.log(err));
 
 }
 
+function loadProcesses() {
+
+    fetch("/api/processes")
+    .then(response => response.json())
+    .then(data => {
+
+        // urutkan berdasarkan CPU terbesar
+        data.sort((a, b) => b.cpu - a.cpu);
+
+        // ambil 5 teratas
+        const top5 = data.slice(0, 5);
+
+        let html = "";
+
+        top5.forEach(proc => {
+
+            html += `
+            <tr class="hover:bg-primary/5">
+                <td class="px-6 py-4 text-primary">
+                    ${proc.pid}
+                </td>
+
+                <td class="px-6 py-4">
+                    ${proc.user}
+                </td>
+
+                <td class="px-6 py-4 text-right text-secondary">
+                    ${proc.cpu}
+                </td>
+
+                <td class="px-6 py-4 text-right">
+                    ${proc.mem}
+                </td>
+
+                <td class="px-6 py-4">
+                    ${proc.command}
+                </td>
+
+                <td class="px-6 py-4 text-center">
+                    <span class="inline-block w-2 h-2 rounded-full bg-secondary"></span>
+                </td>
+            </tr>
+            `;
+        });
+
+        document.getElementById("process-table").innerHTML = html;
+
+    })
+    .catch(err => console.log(err));
+
+}
+setInterval(loadProcesses, 1000);
 </script>
 </body>
 </html>

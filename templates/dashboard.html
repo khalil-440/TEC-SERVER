@@ -363,67 +363,47 @@ class="text-headline-lg font-bold text-primary">
 </div>
 <!-- Bottom Section: Top 5 Linux Processes Table -->
 <div class="bg-surface-container-low rounded-xl border border-outline-variant overflow-hidden">
-<div class="px-6 py-4 border-b border-outline-variant flex justify-between items-center bg-surface-container-high/50">
-<h3 class="text-body-base font-bold text-on-surface">Top 5 Linux Processes</h3>
-<div class="flex gap-2">
-<button class="px-3 py-1 bg-surface-variant hover:bg-outline-variant rounded text-[11px] font-mono-code text-on-surface transition-colors">KILL TASK</button>
-<button class="px-3 py-1 bg-surface-variant hover:bg-outline-variant rounded text-[11px] font-mono-code text-on-surface transition-colors">EXPORT</button>
+
+    <div class="px-6 py-4 border-b border-outline-variant flex justify-between items-center bg-surface-container-high/50">
+        <h3 class="text-body-base font-bold text-on-surface">
+            Top 5 Linux Processes
+        </h3>
+
+        <div class="flex gap-2">
+            <button class="px-3 py-1 bg-surface-variant hover:bg-outline-variant rounded text-[11px] font-mono-code text-on-surface transition-colors">
+                KILL TASK
+            </button>
+
+            <button class="px-3 py-1 bg-surface-variant hover:bg-outline-variant rounded text-[11px] font-mono-code text-on-surface transition-colors">
+                EXPORT
+            </button>
+        </div>
+    </div>
+
+    <div class="overflow-x-auto">
+
+        <table class="w-full text-left font-mono-code text-mono-code">
+
+            <thead>
+                <tr class="text-outline uppercase text-[11px] border-b border-outline-variant/30">
+                    <th class="px-6 py-4 font-bold">PID</th>
+                    <th class="px-6 py-4 font-bold">USER</th>
+                    <th class="px-6 py-4 font-bold text-right">CPU %</th>
+                    <th class="px-6 py-4 font-bold text-right">MEM %</th>
+                    <th class="px-6 py-4 font-bold">COMMAND</th>
+                    <th class="px-6 py-4 font-bold text-center">STATUS</th>
+                </tr>
+            </thead>
+
+            <tbody id="process-table"
+                   class="divide-y divide-outline-variant/10">
+            </tbody>
+
+        </table>
+
+    </div>
+
 </div>
-</div>
-<div class="overflow-x-auto">
-<table class="w-full text-left font-mono-code text-mono-code">
-<thead>
-<tr class="text-outline uppercase text-[11px] border-b border-outline-variant/30">
-<th class="px-6 py-4 font-bold">PID</th>
-<th class="px-6 py-4 font-bold">User</th>
-<th class="px-6 py-4 font-bold text-right">CPU %</th>
-<th class="px-6 py-4 font-bold text-right">MEM %</th>
-<th class="px-6 py-4 font-bold">Command</th>
-<th class="px-6 py-4 font-bold text-center">Status</th>
-</tr>
-</thead>
-<tbody id="process-table"
-       class="divide-y divide-outline-variant/10">
-</tbody>
-<tbody id="process-table"
-       class="divide-y divide-outline-variant/10">
-</tbody>
-<tr class="hover:bg-primary/5 transition-colors group">
-<td class="px-6 py-4 text-primary">4410</td>
-<td class="px-6 py-4">root</td>
-<td class="px-6 py-4 text-right font-mono-data text-tertiary">14.0</td>
-<td class="px-6 py-4 text-right font-mono-data">34.2</td>
-<td class="px-6 py-4 text-on-surface-variant">java -jar metrics-collector.jar</td>
-<td class="px-6 py-4 text-center">
-<span class="inline-block w-2 h-2 rounded-full bg-tertiary"></span>
-</td>
-</tr>
-<tr class="hover:bg-primary/5 transition-colors group even:bg-white/[0.02]">
-<td class="px-6 py-4 text-primary">5521</td>
-<td class="px-6 py-4">prometheus</td>
-<td class="px-6 py-4 text-right font-mono-data text-secondary">8.2</td>
-<td class="px-6 py-4 text-right font-mono-data">15.1</td>
-<td class="px-6 py-4 text-on-surface-variant">/usr/bin/prometheus --config</td>
-<td class="px-6 py-4 text-center">
-<span class="inline-block w-2 h-2 rounded-full bg-secondary"></span>
-</td>
-</tr>
-<tr class="hover:bg-primary/5 transition-colors group">
-<td class="px-6 py-4 text-primary">8891</td>
-<td class="px-6 py-4">grafana</td>
-<td class="px-6 py-4 text-right font-mono-data text-secondary">3.5</td>
-<td class="px-6 py-4 text-right font-mono-data">6.2</td>
-<td class="px-6 py-4 text-on-surface-variant">grafana-server --homepath</td>
-<td class="px-6 py-4 text-center">
-<span class="inline-block w-2 h-2 rounded-full bg-secondary"></span>
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-</main>
 <!-- Floating Action Button (FAB) - For critical reset/emergency -->
 <button class="fixed bottom-8 right-8 h-14 w-14 bg-primary text-on-primary rounded-full shadow-lg shadow-primary/20 flex items-center justify-center hover:scale-110 active:scale-95 transition-all z-50">
 <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">terminal</span>
@@ -606,55 +586,37 @@ function loadMonitoring() {
 function loadProcesses() {
 
     fetch("/api/processes")
-    .then(response => response.json())
-    .then(data => {
+        .then(response => response.json())
+        .then(data => {
 
-        // urutkan berdasarkan CPU terbesar
-        data.sort((a, b) => b.cpu - a.cpu);
+            data.sort((a, b) => b.cpu - a.cpu);
 
-        // ambil 5 teratas
-        const top5 = data.slice(0, 5);
+            const top5 = data.slice(0, 5);
 
-        let html = "";
+            let html = "";
 
-        top5.forEach(proc => {
+            top5.forEach(proc => {
 
-            html += `
-            <tr class="hover:bg-primary/5">
-                <td class="px-6 py-4 text-primary">
-                    ${proc.pid}
-                </td>
+                html += `
+                <tr class="hover:bg-primary/5 transition-colors">
+                    <td class="px-6 py-4 text-primary">${proc.pid}</td>
+                    <td class="px-6 py-4">${proc.user}</td>
+                    <td class="px-6 py-4 text-right text-secondary">${proc.cpu}</td>
+                    <td class="px-6 py-4 text-right">${proc.mem}</td>
+                    <td class="px-6 py-4">${proc.command}</td>
+                    <td class="px-6 py-4 text-center">
+                        <span class="inline-block w-2 h-2 rounded-full bg-green-400"></span>
+                    </td>
+                </tr>
+                `;
+            });
 
-                <td class="px-6 py-4">
-                    ${proc.user}
-                </td>
-
-                <td class="px-6 py-4 text-right text-secondary">
-                    ${proc.cpu}
-                </td>
-
-                <td class="px-6 py-4 text-right">
-                    ${proc.mem}
-                </td>
-
-                <td class="px-6 py-4">
-                    ${proc.command}
-                </td>
-
-                <td class="px-6 py-4 text-center">
-                    <span class="inline-block w-2 h-2 rounded-full bg-secondary"></span>
-                </td>
-            </tr>
-            `;
+            document.getElementById("process-table").innerHTML = html;
         });
-
-        document.getElementById("process-table").innerHTML = html;
-
-    })
-    .catch(err => console.log(err));
-
 }
-setInterval(loadProcesses, 1000);
+
+loadProcesses();
+setInterval(loadProcesses, 5000);
 </script>
 </body>
 </html>
