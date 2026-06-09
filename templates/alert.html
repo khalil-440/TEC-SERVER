@@ -250,7 +250,9 @@
     </td>
 
     <td class="px-6 py-4">
-        WARNING
+        <span class="px-2 py-1 bg-error-container text-error text-[11px] rounded-full">
+            WARNING
+        </span>
     </td>
 
     <td class="px-6 py-4">
@@ -276,43 +278,38 @@
 </div>
 <div class="space-y-4">
 <!-- Email Item -->
-<div class="p-3 rounded-lg bg-surface-container-highest/20 border-l-2 border-primary group hover:bg-surface-container-highest/40 transition-colors cursor-pointer">
-<div class="flex justify-between items-start mb-1">
-<span class="text-mono-code text-[10px] text-primary uppercase">Outgoing Email</span>
-<span class="text-mono-code text-[10px] text-on-surface-variant">14:32:05</span>
+<div class="space-y-4">
+
+{% for log in logs %}
+
+<div class="p-3 rounded-lg bg-surface-container-highest/20 border-l-2 border-primary">
+
+    <div class="flex justify-between items-start mb-1">
+
+        <span class="text-mono-code text-[10px] text-primary uppercase">
+            EMAIL
+        </span>
+
+        <span class="text-mono-code text-[10px] text-on-surface-variant">
+            {{ log.timestamp }}
+        </span>
+
+    </div>
+
+    <h4 class="text-body-sm font-bold">
+        {{ log.action }}
+    </h4>
+
+    <p class="text-[12px] text-on-surface-variant">
+        Admin : {{ log.admin }}
+    </p>
+
 </div>
-<h4 class="text-body-sm font-bold truncate">CRITICAL: Node-01 CPU SPIKE</h4>
-<p class="text-[12px] text-on-surface-variant line-clamp-1">To: admin-oncall@devops.sh • Status: Delivered</p>
+
+{% endfor %}
+
 </div>
-<div class="p-3 rounded-lg bg-surface-container-highest/20 border-l-2 border-tertiary group hover:bg-surface-container-highest/40 transition-colors cursor-pointer">
-<div class="flex justify-between items-start mb-1">
-<span class="text-mono-code text-[10px] text-tertiary uppercase">Outgoing SMS</span>
-<span class="text-mono-code text-[10px] text-on-surface-variant">14:28:50</span>
-</div>
-<h4 class="text-body-sm font-bold truncate">WARNING: Memory threshold 85%</h4>
-<p class="text-[12px] text-on-surface-variant line-clamp-1">To: +1 555-0123 • Status: Queued</p>
-</div>
-<div class="p-3 rounded-lg bg-surface-container-highest/20 border-l-2 border-secondary group hover:bg-surface-container-highest/40 transition-colors cursor-pointer">
-<div class="flex justify-between items-start mb-1">
-<span class="text-mono-code text-[10px] text-secondary uppercase">Webhook Push</span>
-<span class="text-mono-code text-[10px] text-on-surface-variant">14:15:30</span>
-</div>
-<h4 class="text-body-sm font-bold truncate">Alert Resolved: Disk Space</h4>
-<p class="text-[12px] text-on-surface-variant line-clamp-1">Payload sent to Slack #monitoring • Status: 200 OK</p>
-</div>
-<div class="p-3 rounded-lg bg-surface-container-highest/20 border-l-2 border-primary group hover:bg-surface-container-highest/40 transition-colors cursor-pointer opacity-50">
-<div class="flex justify-between items-start mb-1">
-<span class="text-mono-code text-[10px] text-primary uppercase">Outgoing Email</span>
-<span class="text-mono-code text-[10px] text-on-surface-variant">13:45:10</span>
-</div>
-<h4 class="text-body-sm font-bold truncate">CRITICAL: Service Downtime</h4>
-<p class="text-[12px] text-on-surface-variant line-clamp-1">To: dev-team@corp.io • Status: Delivered</p>
-</div>
-</div>
-<button class="w-full py-2 text-mono-code text-on-surface-variant hover:text-primary transition-colors border-t border-outline-variant mt-2 flex items-center justify-center gap-2">
-                            View All Dispatches <span class="material-symbols-outlined text-[16px]">chevron_right</span>
-</button>
-</div>
+
 <!-- Atmospheric Gauge / Status Card -->
 <div class="relative overflow-hidden bg-surface-container-low border border-outline-variant rounded-xl p-6 h-40 group">
 <div class="relative z-10">

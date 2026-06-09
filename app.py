@@ -148,17 +148,27 @@ def alert():
     db = get_db()
     cur = db.cursor()
 
+    # Alert history
     cur.execute("""
-    SELECT *
-    FROM alerts
-    ORDER BY id DESC
+        SELECT *
+        FROM alerts
+        ORDER BY id DESC
     """)
+    alerts = cur.fetchall()
 
-    data = cur.fetchall()
+    # Dispatch log (simulasi email)
+    cur.execute("""
+        SELECT *
+        FROM activity_logs
+        ORDER BY id DESC
+        LIMIT 10
+    """)
+    logs = cur.fetchall()
 
     return render_template(
         "alert.html",
-        alert=data
+        alert=alerts,
+        logs=logs
     )
 
 # ======================
