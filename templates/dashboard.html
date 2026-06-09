@@ -529,6 +529,9 @@ class="text-headline-lg font-bold text-primary">
             
             usageChart.data.datasets[0].data.shift();
             usageChart.data.datasets[0].data.push(newVal);
+	    console.log(labels);
+	    console.log(cpuHistory);
+	    console.log(ramHistory);
             usageChart.update('none');
         }, 2000);
     </script>
