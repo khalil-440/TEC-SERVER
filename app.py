@@ -207,15 +207,33 @@ def get_users():
 
     return users
 
+from werkzeug.security import generate_password_hash
+
 @app.route("/add_user", methods=["POST"])
 def add_user():
 
     username = request.form["username"]
+    password = request.form["password"]
+    role = request.form["role"]
 
-    subprocess.run(
-        ["useradd", "-m", username],
-        check=True
-    )
+    password_hash = generate_password_hash(password)
+
+    conn = get_db()
+    cur = conn.cursor()
+
+    cur.execute("""
+        INSERT INTO users
+        (username, password_hash, role, last_login)
+        VALUES (%s, %s, %s, NULL)
+    """, (
+        username,
+        password_hash,
+        role
+    ))
+
+    conn.commit()
+    cur.close()
+    conn.close()
 
     return redirect("/users")
 
