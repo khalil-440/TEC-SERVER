@@ -176,18 +176,6 @@ def alert():
 @app.route("/users")
 def users():
 
-    users = subprocess.check_output(
-        ["bash","scripts/users.sh"]
-    ).decode()
-
-    return render_template(
-        "users.html",
-        users=users
-    )
-
-@app.route("/users")
-def show_users():
-
     users = []
 
     for u in pwd.getpwall():
