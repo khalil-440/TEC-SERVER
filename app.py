@@ -243,7 +243,7 @@ def get_processes():
     return processes
 
 @app.route("/processes")
-def processes():
+def show_processes():
     conn = get_db()
     cur = conn.cursor(dictionary=True)
 
