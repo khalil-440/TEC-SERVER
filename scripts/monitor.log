@@ -6887,3 +6887,67 @@ VALUES
 --------------
 
 ERROR 1064 (42000) at line 2: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ','card1-crtc2')' at line 4
+--------------
+INSERT INTO processes
+(pid,user,cpu,mem,nice,command)
+VALUES
+(37495,'root',0.0,0.3,-,'multipathd')
+--------------
+
+ERROR 1064 (42000) at line 2: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ','multipathd')' at line 4
+--------------
+INSERT INTO processes
+(pid,user,cpu,mem,nice,command)
+VALUES
+(444390,'root',0.0,0.0,-,'psimon')
+--------------
+
+ERROR 1064 (42000) at line 2: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ','psimon')' at line 4
+--------------
+INSERT INTO processes
+(pid,user,cpu,mem,nice,command)
+VALUES
+(444453,'root',0.0,0.0,-,'psimon')
+--------------
+
+ERROR 1064 (42000) at line 2: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ','psimon')' at line 4
+--------------
+INSERT INTO processes
+(pid,user,cpu,mem,nice,command)
+VALUES
+(18,'root',0.0,0.0,-,'migration/0')
+--------------
+
+ERROR 1064 (42000) at line 2: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ','migration/0')' at line 4
+--------------
+INSERT INTO processes
+(pid,user,cpu,mem,nice,command)
+VALUES
+(19,'root',0.0,0.0,-,'idle_inject/0')
+--------------
+
+ERROR 1064 (42000) at line 2: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ','idle_inject/0')' at line 4
+--------------
+INSERT INTO processes
+(pid,user,cpu,mem,nice,command)
+VALUES
+(22,'root',0.0,0.0,-,'idle_inject/2')
+--------------
+
+ERROR 1064 (42000) at line 2: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ','idle_inject/2')' at line 4
+--------------
+INSERT INTO processes
+(pid,user,cpu,mem,nice,command)
+VALUES
+(23,'root',0.0,0.0,-,'migration/2')
+--------------
+
+ERROR 1064 (42000) at line 2: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ','migration/2')' at line 4
+--------------
+INSERT INTO processes
+(pid,user,cpu,mem,nice,command)
+VALUES
+(28,'root',0.0,0.0,-,'idle_inject/4')
+--------------
+
+ERROR 1064 (42000) at line 2: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ','idle_inject/4')' at line 4

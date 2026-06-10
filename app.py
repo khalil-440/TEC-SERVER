@@ -211,6 +211,30 @@ def alert():
         alert=alerts,
         logs=logs
     )
+@app.route("/clear_alerts", methods=["POST"])
+def clear_alerts():
+
+    try:
+        db = get_db()
+        cur = db.cursor()
+
+        cur.execute("DELETE FROM alerts")
+
+        db.commit()
+
+        cur.close()
+        db.close()
+
+        return jsonify({
+            "success": True
+        })
+
+    except Exception as e:
+
+        return jsonify({
+            "success": False,
+            "error": str(e)
+        })
 # ======================
 # USERS
 # ======================
@@ -220,7 +244,7 @@ from datetime import datetime, timedelta
 @app.route("/users")
 def users():
 
-print("USERS ROUTE V3")
+    print("USERS ROUTE V3")
 
     db = get_db()
     cur = db.cursor(dictionary=True)
