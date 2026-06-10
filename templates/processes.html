@@ -320,13 +320,27 @@ async function loadProcesses() {
 
         allProcesses = data;
 
-        renderTable(allProcesses);
+	const keyword =
+	document.getElementById('searchProcess')
+	.value
+	.toLowerCase();
 
-    } catch(error) {
-        console.log(error);
-    }
-}
+	if(keyword){
 
+	    const filtered = allProcesses.filter(proc =>
+        	String(proc.pid).includes(keyword) ||
+        	String(proc.user).toLowerCase().includes(keyword) ||
+        	String(proc.command).toLowerCase().includes(keyword)
+    	    );
+
+    	    renderTable(filtered);
+
+	} else {
+
+	    renderTable(allProcesses);
+
+	}
+	
 function renderTable(data) {
 
     const table = document.getElementById('processTable');
