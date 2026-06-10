@@ -311,7 +311,7 @@ def unlock_user(username):
 #   data = subprocess.check_output(
 #        ["bash","scripts/process.sh"]
 #    ).decode()
-
+#
 #    return render_template(
 #        "processes.html",
 #        processes=data
@@ -443,7 +443,7 @@ def reports():
     )
 
 @app.route("/kill-process", methods=["POST"])
-def kill_process():
+def kill_process_reports():
 
     pid = request.form["pid"]
 
