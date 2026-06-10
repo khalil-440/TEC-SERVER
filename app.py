@@ -214,6 +214,8 @@ def alert():
 # USERS
 # ======================
 
+from datetime import datetime, timedelta
+
 @app.route("/users")
 def users():
 
@@ -230,7 +232,27 @@ def users():
         ORDER BY username
     """)
 
-    users = cur.fetchall()
+    rows = cur.fetchall()
+
+    users = []
+
+    for row in rows:
+
+        status = "Offline"
+
+        if row["last_seen"]:
+
+            selisih = datetime.now() - row["last_seen"]
+
+            if selisih < timedelta(minutes=2):
+                status = "Online"
+
+        users.append({
+            "username": row["username"],
+            "role": row["role"],
+            "last_login": row["last_login"],
+            "status": status
+        })
 
     return render_template(
         "users.html",

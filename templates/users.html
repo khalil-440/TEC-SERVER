@@ -229,11 +229,11 @@
 <table class="w-full text-left border-collapse">
 <thead>
 <tr class="bg-surface-container-low/50">
-<th class="px-6 py-4 font-mono-code text-[11px] uppercase tracking-wider text-outline">User Entity</th>
-<th class="px-6 py-4 font-mono-code text-[11px] uppercase tracking-wider text-outline text-center">UID/GID</th>
-<th class="px-6 py-4 font-mono-code text-[11px] uppercase tracking-wider text-outline">Last Authentication</th>
-<th class="px-6 py-4 font-mono-code text-[11px] uppercase tracking-wider text-outline text-center">Status</th>
-<th class="px-6 py-4 font-mono-code text-[11px] uppercase tracking-wider text-outline text-right">Operations</th>
+<th class="px-6 py-4 font-mono-code text-[11px] uppercase tracking-wider text-outline">Username</th>
+<th class="px-6 py-4 font-mono-code text-[11px] uppercase tracking-wider text-outline text-center">Role</th>
+<th class="px-6 py-4 font-mono-code text-[11px] uppercase tracking-wider text-outline">Last Login</th>
+<th class="px-6 py-4 font-mono-code text-[11px] uppercase tracking-wider text-outline text-center"></th>
+<th class="px-6 py-4 font-mono-code text-[11px] uppercase tracking-wider text-outline text-right">Status</th>
 </tr>
 </thead>
 <tbody>
@@ -428,7 +428,7 @@
     </script>
 
 
-1<script>
+<script>
 setInterval(() => {
 
     fetch("/api/heartbeat", {
