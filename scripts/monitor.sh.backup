@@ -21,37 +21,6 @@ VALUES
 ($CPU, $RAM, $DISK, $SWAP, $USERS);
 "
 
-# =========================
-# PROCESS MONITORING
-# =========================
-
-mysql \
--h zephyr.proxy.rlwy.net \
--u root \
--p'lbQeVgmlGdZvcrxOXkkpVEAcmGSsILJR' \
---port 34161 \
-railway -e "
-TRUNCATE TABLE processes;
-"
-
-ps -eo pid,user,ni,%cpu,%mem,comm --no-headers |
-while read pid user nice cpu mem command
-do
-
-mysql \
--h zephyr.proxy.rlwy.net \
--u root \
--p'lbQeVgmlGdZvcrxOXkkpVEAcmGSsILJR' \
---port 34161 \
-railway -e "
-INSERT INTO processes
-(pid,user,cpu,mem,nice,command)
-VALUES
-($pid,'$user',$cpu,$mem,$nice,'$command');
-"
-
-done
-
 sleep 1
 
 done
