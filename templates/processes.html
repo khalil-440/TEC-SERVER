@@ -377,6 +377,31 @@ async function loadProcesses() {
 
 }
 
+function renderTable(data) {
+    const table = document.getElementById('processTable');
+
+    table.innerHTML = '';
+
+    data.forEach(proc => {
+
+        table.innerHTML += `
+        <tr>
+            <td>${proc.pid}</td>
+            <td>${proc.user}</td>
+            <td>${proc.cpu}%</td>
+            <td>${proc.mem}%</td>
+            <td>${proc.nice}</td>
+            <td>${proc.command}</td>
+            <td>
+                <button onclick="killProcess(${proc.pid})">
+                    Kill
+                </button>
+            </td>
+        </tr>
+        `;
+    });
+}
+
 async function killProcess(pid) {
 
     if (!confirm("Kill PID " + pid + " ?")) {
@@ -406,35 +431,6 @@ async function killProcess(pid) {
 
 }
 
-loadProcesses();
-
-setInterval(loadProcesses, 3000);
-
-function renderTable(data) {
-    const table = document.getElementById('processTable');
-
-    table.innerHTML = '';
-
-    data.forEach(proc => {
-
-        table.innerHTML += `
-        <tr>
-            <td>${proc.pid}</td>
-            <td>${proc.user}</td>
-            <td>${proc.cpu}%</td>
-            <td>${proc.mem}%</td>
-            <td>${proc.nice}</td>
-            <td>${proc.command}</td>
-            <td>
-                <button onclick="killProcess(${proc.pid})">
-                    Kill
-                </button>
-            </td>
-        </tr>
-        `;
-    });
-}
-
 document
 .getElementById('searchProcess')
 .addEventListener('keyup', function() {
@@ -451,6 +447,10 @@ document
 
     renderTable(filtered);
 });
+
+loadProcesses();
+
+setInterval(loadProcesses, 3000);
 
 </script>
 
