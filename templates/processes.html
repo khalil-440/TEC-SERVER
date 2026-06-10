@@ -223,43 +223,17 @@
 <thead class="bg-surface-container text-mono-code text-[11px] uppercase tracking-wider text-outline border-b border-outline-variant">
 <tr>
 <th class="px-6 py-4 font-bold">PID</th>
-<th class="px-6 py-4 font-bold">User</th>
-<th class="px-6 py-4 font-bold">PR</th>
-<th class="px-6 py-4 font-bold">NI</th>
-<th class="px-6 py-4 font-bold">VIRT</th>
-<th class="px-6 py-4 font-bold">RES</th>
+<th class="px-6 py-4 font-bold">USER</th>
 <th class="px-6 py-4 font-bold">CPU%</th>
 <th class="px-6 py-4 font-bold">MEM%</th>
-<th class="px-6 py-4 font-bold">TIME+</th>
-<th class="px-6 py-4 font-bold">Command</th>
-<th class="px-6 py-4 font-bold text-right">Actions</th>
+<th class="px-6 py-4 font-bold">NICE</th>
+<th class="px-6 py-4 font-bold">COMMAND</th>
+<th class="px-6 py-4 font-bold text-right">ACTIONS</th>
 </tr>
 </thead>
-<tbody class="text-mono-data text-mono-data divide-y divide-white/[0.02]">
-
-{% for proc in processes %}
-<tr class="hover:bg-white/[0.02] transition-colors group">
-    <td class="px-6 py-4 text-primary">{{ proc.pid }}</td>
-    <td class="px-6 py-4">{{ proc.user }}</td>
-    <td class="px-6 py-4">{{ proc.pr }}</td>
-    <td class="px-6 py-4">{{ proc.ni }}</td>
-    <td class="px-6 py-4">{{ proc.virt }}</td>
-    <td class="px-6 py-4">{{ proc.res }}</td>
-    <td class="px-6 py-4">{{ proc.cpu }}</td>
-    <td class="px-6 py-4">{{ proc.mem }}</td>
-    <td class="px-6 py-4">{{ proc.time }}</td>
-    <td class="px-6 py-4">{{ proc.command }}</td>
-
-    <td class="px-6 py-4 text-right">
-        <div class="flex justify-end gap-2">
-            <button class="p-1.5 rounded-lg hover:bg-error/10 text-error-container">
-                <span class="material-symbols-outlined text-lg">cancel</span>
-            </button>
-        </div>
-    </td>
-</tr>
-{% endfor %}
-
+<tbody
+    id="processTable"
+    class="text-mono-data divide-y divide-white/[0.02]">
 </tbody>
 </table>
 </div>
@@ -329,28 +303,107 @@
             btn.addEventListener('mouseup', () => btn.classList.remove('scale-95'));
         });
     </script>
+
 <script>
+
 async function loadProcesses() {
-    const res = await fetch('/api/processes');
-    const data = await res.json();
 
-    const table = document.getElementById('processTable');
-    table.innerHTML = '';
+    try {
 
-    data.forEach(proc => {
-        table.innerHTML += `
-        <tr>
-            <td>${proc.pid}</td>
-            <td>${proc.user}</td>
-            <td>${proc.cpu}%</td>
-            <td>${proc.mem}%</td>
-            <td>${proc.command}</td>
-        </tr>`;
-    });
+        const response = await fetch('/api/processes');
+        const data = await response.json();
+
+        const table = document.getElementById('processTable');
+
+        table.innerHTML = '';
+
+        data.forEach(proc => {
+
+            table.innerHTML += `
+            <tr class="hover:bg-white/[0.02]">
+
+                <td class="px-6 py-4 text-primary">
+                    ${proc.pid}
+                </td>
+
+                <td class="px-6 py-4">
+                    ${proc.user}
+                </td>
+
+                <td class="px-6 py-4">
+                    ${proc.cpu}%
+                </td>
+
+                <td class="px-6 py-4">
+                    ${proc.mem}%
+                </td>
+
+                <td class="px-6 py-4">
+                    ${proc.nice}
+                </td>
+
+                <td class="px-6 py-4">
+                    ${proc.command}
+                </td>
+
+                <td class="px-6 py-4 text-right">
+
+                    <button
+                        onclick="killProcess(${proc.pid})"
+                        class="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded">
+
+                        Kill
+
+                    </button>
+
+                </td>
+
+            </tr>
+            `;
+
+        });
+
+    } catch(error) {
+
+        console.log(error);
+
+    }
+
 }
 
-setInterval(loadProcesses, 3000);
+async function killProcess(pid) {
+
+    if (!confirm("Kill PID " + pid + " ?")) {
+        return;
+    }
+
+    try {
+
+        const response = await fetch(
+            '/api/processes/kill/' + pid,
+            {
+                method: 'POST'
+            }
+        );
+
+        const result = await response.json();
+
+        alert(JSON.stringify(result));
+
+        loadProcesses();
+
+    } catch(error) {
+
+        alert(error);
+
+    }
+
+}
+
 loadProcesses();
+
+setInterval(loadProcesses, 3000);
+
 </script>
 
 </body>
