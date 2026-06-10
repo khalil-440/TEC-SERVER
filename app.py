@@ -41,7 +41,7 @@ def login():
             print("PASSWORD INPUT =", password)
             print("USER DB =", user)
 
-            if user and str(user["password_hash"]).strip() == password:
+		if user and str(user["password_hash"]).strip() == password:
 
 		    session["user"] = user["username"]
 		    session["role"] = user["role"]
