@@ -313,71 +313,22 @@
 let allProcesses = [];
 
 async function loadProcesses() {
-
     try {
 
         const response = await fetch('/api/processes');
         const data = await response.json();
-	allProcesses = data;
-        const table = document.getElementById('processTable');
 
-        table.innerHTML = '';
+        allProcesses = data;
 
-	renderTable(data);
-
-            table.innerHTML += `
-            <tr class="hover:bg-white/[0.02]">
-
-                <td class="px-6 py-4 text-primary">
-                    ${proc.pid}
-                </td>
-
-                <td class="px-6 py-4">
-                    ${proc.user}
-                </td>
-
-                <td class="px-6 py-4">
-                    ${proc.cpu}%
-                </td>
-
-                <td class="px-6 py-4">
-                    ${proc.mem}%
-                </td>
-
-                <td class="px-6 py-4">
-                    ${proc.nice}
-                </td>
-
-                <td class="px-6 py-4">
-                    ${proc.command}
-                </td>
-
-                <td class="px-6 py-4 text-right">
-
-                    <button
-                        onclick="killProcess(${proc.pid})"
-                        class="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded">
-
-                        Kill
-
-                    </button>
-
-                </td>
-
-            </tr>
-            `;
-
-        });
+        renderTable(allProcesses);
 
     } catch(error) {
-
         console.log(error);
-
     }
-
 }
 
 function renderTable(data) {
+
     const table = document.getElementById('processTable');
 
     table.innerHTML = '';
@@ -385,18 +336,40 @@ function renderTable(data) {
     data.forEach(proc => {
 
         table.innerHTML += `
-        <tr>
-            <td>${proc.pid}</td>
-            <td>${proc.user}</td>
-            <td>${proc.cpu}%</td>
-            <td>${proc.mem}%</td>
-            <td>${proc.nice}</td>
-            <td>${proc.command}</td>
-            <td>
-                <button onclick="killProcess(${proc.pid})">
+        <tr class="hover:bg-white/[0.02]">
+
+            <td class="px-6 py-4 text-primary">
+                ${proc.pid}
+            </td>
+
+            <td class="px-6 py-4">
+                ${proc.user}
+            </td>
+
+            <td class="px-6 py-4">
+                ${proc.cpu}%
+            </td>
+
+            <td class="px-6 py-4">
+                ${proc.mem}%
+            </td>
+
+            <td class="px-6 py-4">
+                ${proc.nice}
+            </td>
+
+            <td class="px-6 py-4">
+                ${proc.command}
+            </td>
+
+            <td class="px-6 py-4 text-right">
+                <button
+                    onclick="killProcess(${proc.pid})"
+                    class="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded">
                     Kill
                 </button>
             </td>
+
         </tr>
         `;
     });
@@ -431,18 +404,15 @@ async function killProcess(pid) {
 
 }
 
-document
-.getElementById('searchProcess')
-.addEventListener('keyup', function() {
+document.getElementById('processSearch')
+.addEventListener('input', function() {
 
     const keyword = this.value.toLowerCase();
 
     const filtered = allProcesses.filter(proc =>
-
-        proc.pid.toString().includes(keyword) ||
-        proc.command.toLowerCase().includes(keyword) ||
-        proc.user.toLowerCase().includes(keyword)
-
+        String(proc.pid).includes(keyword) ||
+        proc.user.toLowerCase().includes(keyword) ||
+        proc.command.toLowerCase().includes(keyword)
     );
 
     renderTable(filtered);
