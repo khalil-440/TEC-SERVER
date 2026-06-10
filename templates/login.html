@@ -96,7 +96,7 @@
 <!-- BEGIN: LoginCard -->
 <main class="w-full max-w-md" data-purpose="login-container">
 <div class="login-card-glow bg-tec-dark/60 backdrop-blur-sm border border-tec-border p-10 rounded-xl">
-<form action="#" class="space-y-6" method="POST">
+<form action="/" class="space-y-6" method="POST">
 <!-- Username Field -->
 <div class="space-y-2">
 <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider" for="username">Username</label>
@@ -172,25 +172,30 @@
 <!-- END: FooterStatus -->
 <!-- JavaScript for small UI interactions -->
 <script data-purpose="interactivity">
-    // Simple password visibility toggle
-    document.querySelector('button[type="button"]').addEventListener('click', function() {
-      const passwordInput = document.getElementById('password');
-      if (passwordInput.type === 'password') {
+
+// Show / Hide Password
+document.querySelector('button[type="button"]').addEventListener('click', function() {
+
+    const passwordInput = document.getElementById('password');
+
+    if (passwordInput.type === 'password') {
         passwordInput.type = 'text';
-      } else {
+    } else {
         passwordInput.type = 'password';
-      }
-    });
-
-    // Form submission simulation
-    document.querySelector('form').addEventListener('submit', function(e) {
-      document.querySelector('form').addEventListener('submit', function() {
-
-  const btn = this.querySelector('button[type="submit"]');
-
-  btn.disabled = true;
-  btn.innerHTML = 'Establishing Link...';
+    }
 
 });
+
+// Loading saat login
+document.querySelector('form').addEventListener('submit', function() {
+
+    const btn = this.querySelector('button[type="submit"]');
+
+    btn.disabled = true;
+    btn.innerHTML = 'Establishing Link...';
+
+});
+
+</script>
   </script>
 </body></html>
