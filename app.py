@@ -305,17 +305,17 @@ def unlock_user(username):
 # PROCESS
 # ======================
 
-@app.route("/processes")
-def processes():
+#@app.route("/processes")
+#def processes():
 
-    data = subprocess.check_output(
-        ["bash","scripts/process.sh"]
-    ).decode()
+#   data = subprocess.check_output(
+#        ["bash","scripts/process.sh"]
+#    ).decode()
 
-    return render_template(
-        "processes.html",
-        processes=data
-    )
+#    return render_template(
+#        "processes.html",
+#        processes=data
+#    )
 
 @app.get("/api/processes")
 def get_processes():
