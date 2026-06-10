@@ -206,7 +206,11 @@
 <div class="flex items-center gap-3">
 <div class="relative flex items-center bg-surface-container-low border border-outline-variant rounded-lg px-4 py-2.5 focus-within:border-primary transition-all">
 <span class="material-symbols-outlined text-outline text-sm mr-2">search</span>
-<input class="bg-transparent border-none focus:ring-0 text-body-sm text-on-surface w-48 md:w-64" placeholder="Filter processes..." type="text">
+<input
+    id="searchProcess"
+    class="bg-transparent border-none focus:ring-0 text-body-sm text-on-surface w-48 md:w-64"
+    placeholder="Filter processes..."
+    type="text">
 </div>
 <button class="flex items-center gap-2 bg-primary text-on-primary font-bold px-6 py-2.5 rounded-lg active:scale-95 transition-transform">
 <span class="material-symbols-outlined text-lg">refresh</span>
@@ -306,18 +310,20 @@
 
 <script>
 
+let allProcesses = [];
+
 async function loadProcesses() {
 
     try {
 
         const response = await fetch('/api/processes');
         const data = await response.json();
-
+	allProcesses = data;
         const table = document.getElementById('processTable');
 
         table.innerHTML = '';
 
-        data.forEach(proc => {
+	renderTable(data);
 
             table.innerHTML += `
             <tr class="hover:bg-white/[0.02]">
@@ -403,6 +409,48 @@ async function killProcess(pid) {
 loadProcesses();
 
 setInterval(loadProcesses, 3000);
+
+function renderTable(data) {
+    const table = document.getElementById('processTable');
+
+    table.innerHTML = '';
+
+    data.forEach(proc => {
+
+        table.innerHTML += `
+        <tr>
+            <td>${proc.pid}</td>
+            <td>${proc.user}</td>
+            <td>${proc.cpu}%</td>
+            <td>${proc.mem}%</td>
+            <td>${proc.nice}</td>
+            <td>${proc.command}</td>
+            <td>
+                <button onclick="killProcess(${proc.pid})">
+                    Kill
+                </button>
+            </td>
+        </tr>
+        `;
+    });
+}
+
+document
+.getElementById('searchProcess')
+.addEventListener('keyup', function() {
+
+    const keyword = this.value.toLowerCase();
+
+    const filtered = allProcesses.filter(proc =>
+
+        proc.pid.toString().includes(keyword) ||
+        proc.command.toLowerCase().includes(keyword) ||
+        proc.user.toLowerCase().includes(keyword)
+
+    );
+
+    renderTable(filtered);
+});
 
 </script>
 
