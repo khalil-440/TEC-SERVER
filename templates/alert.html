@@ -340,46 +340,54 @@
 </div>
 </div>
 <script>
-        const clearBtn = document.getElementById('clearBtn');
-        const successModal = document.getElementById('successModal');
-        const modalContent = document.getElementById('modalContent');
 
-        clearBtn.addEventListener('click', () => {
+const clearBtn = document.getElementById('clearBtn');
+const successModal = document.getElementById('successModal');
+const modalContent = document.getElementById('modalContent');
+
+clearBtn.addEventListener('click', async () => {
+
+    if (!confirm("Yakin ingin menghapus semua alert?")) {
+        return;
+    }
+
+    try {
+
+        const response = await fetch("/clear_alerts", {
+            method: "POST"
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+
             successModal.classList.remove('hidden');
+
             setTimeout(() => {
                 successModal.classList.remove('opacity-0');
                 modalContent.classList.remove('scale-95');
             }, 10);
-        });
 
-        function closeModal() {
-            successModal.classList.add('opacity-0');
-            modalContent.classList.add('scale-95');
-            setTimeout(() => {
-                successModal.classList.add('hidden');
-                // Simulate table clearing
-                const rows = document.querySelectorAll('tbody tr');
-                rows.forEach((row, index) => {
-                    if (index > 0) { // Keep one row as placeholder or simulated fresh state
-                        row.classList.add('opacity-0', 'translate-x-4');
-                        setTimeout(() => row.remove(), 300);
-                    }
-                });
-            }, 300);
+        } else {
+
+            alert("Gagal menghapus alert");
         }
 
-        // Add subtle hover interaction for table rows
-        document.querySelectorAll('tbody tr').forEach(row => {
-            row.addEventListener('mouseenter', () => {
-                row.querySelector('.material-symbols-outlined').style.transform = 'scale(1.2)';
-            });
-            row.addEventListener('mouseleave', () => {
-                row.querySelector('.material-symbols-outlined').style.transform = 'scale(1)';
-            });
-        });
-    </script>
+    } catch (error) {
 
+        console.error(error);
+        alert("Server Error");
+    }
 
+});
 
+function closeModal() {
 
-</body></html>
+    location.reload();
+
+}
+
+</script>
+                 
+</body>
+</html>
