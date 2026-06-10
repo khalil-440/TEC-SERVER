@@ -41,24 +41,24 @@ def login():
             print("PASSWORD INPUT =", password)
             print("USER DB =", user)
 
-		if user and str(user["password_hash"]).strip() == password:
+	    if user and str(user["password_hash"]).strip() == password:
 
-		    session["user"] = user["username"]
-		    session["role"] = user["role"]
-		    session["user_id"] = user["id"]
+		session["user"] = user["username"]
+		session["role"] = user["role"]
+		session["user_id"] = user["id"]
 
-		    cur.execute("""
-		        UPDATE users
-		        SET last_login = NOW(),
-		            last_seen = NOW()
-		        WHERE id = %s
-		    """, (user["id"],))
+		cur.execute("""
+		    UPDATE users
+		    SET last_login = NOW(),
+		        last_seen = NOW()
+		    WHERE id = %s
+		""", (user["id"],))
 
-		    db.commit()
+		db.commit()
 
-		    print("LOGIN UPDATED:", user["username"])
+		print("LOGIN UPDATED:", user["username"])
 
-		    return redirect("/dashboard")
+		return redirect("/dashboard")
 
             return render_template(
                 "login.html",

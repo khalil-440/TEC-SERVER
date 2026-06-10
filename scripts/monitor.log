@@ -8735,3 +8735,195 @@ VALUES
 --------------
 
 ERROR 1064 (42000) at line 2: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ','migration/10')' at line 4
+--------------
+INSERT INTO processes
+(pid,user,cpu,mem,nice,command)
+VALUES
+(52,'root',0.0,0.0,-,'idle_inject/1')
+--------------
+
+ERROR 1064 (42000) at line 2: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ','idle_inject/1')' at line 4
+--------------
+INSERT INTO processes
+(pid,user,cpu,mem,nice,command)
+VALUES
+(53,'root',0.0,0.0,-,'migration/1')
+--------------
+
+ERROR 1064 (42000) at line 2: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ','migration/1')' at line 4
+--------------
+INSERT INTO processes
+(pid,user,cpu,mem,nice,command)
+VALUES
+(58,'root',0.0,0.0,-,'idle_inject/3')
+--------------
+
+ERROR 1064 (42000) at line 2: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ','idle_inject/3')' at line 4
+--------------
+INSERT INTO processes
+(pid,user,cpu,mem,nice,command)
+VALUES
+(59,'root',0.0,0.0,-,'migration/3')
+--------------
+
+ERROR 1064 (42000) at line 2: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ','migration/3')' at line 4
+--------------
+INSERT INTO processes
+(pid,user,cpu,mem,nice,command)
+VALUES
+(64,'root',0.0,0.0,-,'idle_inject/5')
+--------------
+
+ERROR 1064 (42000) at line 2: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ','idle_inject/5')' at line 4
+--------------
+INSERT INTO processes
+(pid,user,cpu,mem,nice,command)
+VALUES
+(65,'root',0.0,0.0,-,'migration/5')
+--------------
+
+ERROR 1064 (42000) at line 2: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ','migration/5')' at line 4
+--------------
+INSERT INTO processes
+(pid,user,cpu,mem,nice,command)
+VALUES
+(70,'root',0.0,0.0,-,'idle_inject/7')
+--------------
+
+ERROR 1064 (42000) at line 2: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ','idle_inject/7')' at line 4
+--------------
+INSERT INTO processes
+(pid,user,cpu,mem,nice,command)
+VALUES
+(71,'root',0.0,0.0,-,'migration/7')
+--------------
+
+ERROR 1064 (42000) at line 2: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ','migration/7')' at line 4
+--------------
+INSERT INTO processes
+(pid,user,cpu,mem,nice,command)
+VALUES
+(76,'root',0.0,0.0,-,'idle_inject/9')
+--------------
+
+ERROR 1064 (42000) at line 2: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ','idle_inject/9')' at line 4
+--------------
+INSERT INTO processes
+(pid,user,cpu,mem,nice,command)
+VALUES
+(77,'root',0.0,0.0,-,'migration/9')
+--------------
+
+ERROR 1064 (42000) at line 2: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ','migration/9')' at line 4
+--------------
+INSERT INTO processes
+(pid,user,cpu,mem,nice,command)
+VALUES
+(82,'root',0.0,0.0,-,'idle_inject/11')
+--------------
+
+ERROR 1064 (42000) at line 2: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ','idle_inject/11')' at line 4
+--------------
+INSERT INTO processes
+(pid,user,cpu,mem,nice,command)
+VALUES
+(83,'root',0.0,0.0,-,'migration/11')
+--------------
+
+ERROR 1064 (42000) at line 2: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ','migration/11')' at line 4
+--------------
+INSERT INTO processes
+(pid,user,cpu,mem,nice,command)
+VALUES
+(101,'root',0.0,0.0,-,'irq/9-acpi')
+--------------
+
+ERROR 1064 (42000) at line 2: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ','irq/9-acpi')' at line 4
+--------------
+INSERT INTO processes
+(pid,user,cpu,mem,nice,command)
+VALUES
+(109,'root',0.0,0.0,-,'watchdogd')
+--------------
+
+ERROR 1064 (42000) at line 2: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ','watchdogd')' at line 4
+--------------
+INSERT INTO processes
+(pid,user,cpu,mem,nice,command)
+VALUES
+(116,'root',0.0,0.0,-,'irq/122-aerdrv')
+--------------
+
+ERROR 1064 (42000) at line 2: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ','irq/122-aerdrv')' at line 4
+--------------
+INSERT INTO processes
+(pid,user,cpu,mem,nice,command)
+VALUES
+(117,'root',0.0,0.0,-,'irq/123-aerdrv')
+--------------
+
+ERROR 1064 (42000) at line 2: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ','irq/123-aerdrv')' at line 4
+--------------
+INSERT INTO processes
+(pid,user,cpu,mem,nice,command)
+VALUES
+(570,'root',0.0,0.0,-,'irq/142-mei_me')
+--------------
+
+ERROR 1064 (42000) at line 2: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ','irq/142-mei_me')' at line 4
+--------------
+INSERT INTO processes
+(pid,user,cpu,mem,nice,command)
+VALUES
+(634,'root',0.0,0.0,-,'irq/16-processor_thermal_device_pci')
+--------------
+
+ERROR 1064 (42000) at line 2: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ','irq/16-processor_thermal_device_pci')' at line 4
+--------------
+INSERT INTO processes
+(pid,user,cpu,mem,nice,command)
+VALUES
+(785,'root',0.0,0.0,-,'card1-crtc0')
+--------------
+
+ERROR 1064 (42000) at line 2: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ','card1-crtc0')' at line 4
+--------------
+INSERT INTO processes
+(pid,user,cpu,mem,nice,command)
+VALUES
+(786,'root',0.0,0.0,-,'card1-crtc1')
+--------------
+
+ERROR 1064 (42000) at line 2: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ','card1-crtc1')' at line 4
+--------------
+INSERT INTO processes
+(pid,user,cpu,mem,nice,command)
+VALUES
+(787,'root',0.0,0.0,-,'card1-crtc2')
+--------------
+
+ERROR 1064 (42000) at line 2: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ','card1-crtc2')' at line 4
+--------------
+INSERT INTO processes
+(pid,user,cpu,mem,nice,command)
+VALUES
+(37495,'root',0.0,0.3,-,'multipathd')
+--------------
+
+ERROR 1064 (42000) at line 2: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ','multipathd')' at line 4
+--------------
+INSERT INTO processes
+(pid,user,cpu,mem,nice,command)
+VALUES
+(444390,'root',0.0,0.0,-,'psimon')
+--------------
+
+ERROR 1064 (42000) at line 2: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ','psimon')' at line 4
+--------------
+INSERT INTO processes
+(pid,user,cpu,mem,nice,command)
+VALUES
+(444453,'root',0.0,0.0,-,'psimon')
+--------------
+
+ERROR 1064 (42000) at line 2: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ','psimon')' at line 4
