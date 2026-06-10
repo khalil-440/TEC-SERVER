@@ -247,7 +247,7 @@ def users():
     print("USERS ROUTE V3")
 
     db = get_db()
-    cur = db.cursor(dictionary=True)
+    cur = db.cursor()
 
     cur.execute("""
         SELECT
