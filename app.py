@@ -321,7 +321,7 @@ def unlock_user(username):
 def get_processes():
 
     conn = get_db()
-    cur = conn.cursor(dictionary=True)
+    cur = conn.cursor()
 
     cur.execute("""
         SELECT
