@@ -5,7 +5,6 @@ from config import get_db
 import pwd 
 from flask import redirect
 from datetime import datetime
-from werkzeug.security import check_password_hash
 
 app = Flask(__name__)
 
@@ -15,41 +14,7 @@ app.secret_key = "tec_server_secret"
 # LOGIN
 # ======================
 
-@app.route("/", methods=["GET", "POST"])
-def login():
 
-    if request.method == "POST":
-
-        username = request.form["username"]
-        password = request.form["password"]
-
-        db = get_db()
-        cur = db.cursor()
-
-        cur.execute("""
-            SELECT *
-            FROM users
-            WHERE username = %s
-        """, (username,))
-
-        user = cur.fetchone()
-
-        if user and check_password_hash(
-            user["password_hash"],
-            password
-        ):
-
-            session["user"] = user["username"]
-            session["role"] = user["role"]
-
-            return redirect("/dashboard")
-
-        return render_template(
-            "login.html",
-            error="Username atau password salah"
-        )
-
-    return render_template("login.html")
 
 
 # ======================
