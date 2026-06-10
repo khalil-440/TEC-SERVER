@@ -21,8 +21,8 @@ def login():
 
     if request.method == "POST":
 
-        username = request.form.get("username")
-        password = request.form.get("password")
+        username = request.form.get("username", "").strip()
+        password = request.form.get("password", "").strip()
 
         try:
 
@@ -32,16 +32,16 @@ def login():
             cur.execute("""
                 SELECT *
                 FROM users
-                WHERE username = %s
+                WHERE TRIM(username) = TRIM(%s)
             """, (username,))
 
             user = cur.fetchone()
 
-            print("USERNAME =", username)
-            print("USER =", user)
+            print("USERNAME INPUT =", username)
+            print("PASSWORD INPUT =", password)
+            print("USER DB =", user)
 
-            # Login menggunakan password biasa dari database
-            if user and user["password_hash"] == password:
+            if user and str(user["password_hash"]).strip() == password:
 
                 session["user"] = user["username"]
                 session["role"] = user["role"]
@@ -63,6 +63,7 @@ def login():
             )
 
     return render_template("login.html")
+
 
 
 
