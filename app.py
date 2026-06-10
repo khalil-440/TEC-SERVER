@@ -220,6 +220,8 @@ from datetime import datetime, timedelta
 @app.route("/users")
 def users():
 
+print("USERS ROUTE V3")
+
     db = get_db()
     cur = db.cursor(dictionary=True)
 
