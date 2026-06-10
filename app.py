@@ -34,6 +34,18 @@ def login():
 
         user = cur.fetchone()
 
+        print("USERNAME =", username)
+        print("USER =", user)
+
+        if user:
+            print(
+                "PASSWORD VALID =",
+                check_password_hash(
+                    user["password_hash"],
+                    password
+                )
+            )
+
         if user and check_password_hash(
             user["password_hash"],
             password
