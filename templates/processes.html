@@ -320,26 +320,31 @@ async function loadProcesses() {
 
         allProcesses = data;
 
-	const keyword =
-	document.getElementById('processSearch')
-	.value
-	.toLowerCase();
+        const keyword =
+            document.getElementById('processSearch')
+            .value
+            .toLowerCase();
 
-	if(keyword){
+        if(keyword){
 
-	    const filtered = allProcesses.filter(proc =>
-        	String(proc.pid).includes(keyword) ||
-        	String(proc.user).toLowerCase().includes(keyword) ||
-        	String(proc.command).toLowerCase().includes(keyword)
-    	    );
+            const filtered = allProcesses.filter(proc =>
+                String(proc.pid).includes(keyword) ||
+                String(proc.user).toLowerCase().includes(keyword) ||
+                String(proc.command).toLowerCase().includes(keyword)
+            );
 
-    	    renderTable(filtered);
+            renderTable(filtered);
 
-	} else {
+        } else {
 
-	    renderTable(allProcesses);
+            renderTable(allProcesses);
 
-	}
+        }
+
+    } catch(error) {
+        console.log(error);
+    }
+}
 	
 function renderTable(data) {
 
