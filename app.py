@@ -5,7 +5,6 @@ from config import get_db
 import pwd 
 from flask import redirect
 from datetime import datetime
-import pytz
 
 app = Flask(__name__)
 
