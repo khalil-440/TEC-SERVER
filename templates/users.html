@@ -240,11 +240,22 @@
 
 {% for user in users %}
 <tr>
-    <td>{{ user.username }}</td>
-    <td>{{ user.uid }}/{{ user.gid }}</td>
-    <td>{{ user.home }}</td>
-    <td>{{ user.shell }}</td>
 
+    <td>{{ user.username }}</td>
+
+    <td>{{ user.role }}</td>
+
+    <td>
+        {{ user.last_login if user.last_login else "-" }}
+    </td>
+
+    <td>
+        {% if user.status == "Online" %}
+            🟢 Online
+        {% else %}
+            🔴 Offline
+        {% endif %}
+    </td>
 <td class="px-6 py-4 text-right">
     <div class="flex items-center justify-end gap-2">
 
@@ -417,4 +428,14 @@
     </script>
 
 
+1<script>
+setInterval(() => {
+
+    fetch("/api/heartbeat", {
+        method: "POST",
+        credentials: "include"
+    });
+
+}, 30000);
+</script>
 </body></html>

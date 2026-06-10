@@ -16,57 +16,54 @@ app.secret_key = "tec_server_secret"
 # ======================
 # LOGIN
 # ======================
-
 @app.route("/", methods=["GET", "POST"])
 def login():
 
     if request.method == "POST":
 
-        username = request.form["username"]
-        password = request.form["password"]
+        username = request.form.get("username")
+        password = request.form.get("password")
 
-        db = get_db()
-        cur = db.cursor()
+        try:
 
-        cur.execute("SELECT DATABASE()")
-        print("DATABASE AKTIF =", cur.fetchone())
+            db = get_db()
+            cur = db.cursor()
 
-        cur.execute("""
-            SELECT *
-            FROM users
-            WHERE username = %s
-        """, (username,))
+            cur.execute("""
+                SELECT *
+                FROM users
+                WHERE username = %s
+            """, (username,))
 
-        user = cur.fetchone()
+            user = cur.fetchone()
 
-        print("USERNAME =", username)
-        print("USER =", user)
+            print("USERNAME =", username)
+            print("USER =", user)
 
-        if user:
-            print(
-                "PASSWORD VALID =",
-                check_password_hash(
-                    user["password_hash"],
-                    password
-                )
+            # Login menggunakan password biasa dari database
+            if user and user["password_hash"] == password:
+
+                session["user"] = user["username"]
+                session["role"] = user["role"]
+
+                return redirect("/dashboard")
+
+            return render_template(
+                "login.html",
+                error="Username atau password salah"
             )
 
-        if user and check_password_hash(
-            user["password_hash"],
-            password
-        ):
+        except Exception as e:
 
-            session["user"] = user["username"]
-            session["role"] = user["role"]
+            print("LOGIN ERROR =", e)
 
-            return redirect("/dashboard")
-
-        return render_template(
-            "login.html",
-            error="Username atau password salah"
-        )
+            return render_template(
+                "login.html",
+                error="Terjadi kesalahan sistem"
+            )
 
     return render_template("login.html")
+
 
 
 # ======================
@@ -220,36 +217,73 @@ def alert():
 @app.route("/users")
 def users():
 
-    users = []
+    db = get_db()
+    cur = db.cursor()
 
-    for u in pwd.getpwall():
-        users.append({
-            "username": u.pw_name,
-            "uid": u.pw_uid,
-            "gid": u.pw_gid,
-            "home": u.pw_dir,
-            "shell": u.pw_shell
-        })
+    cur.execute("""
+        SELECT
+            username,
+            role,
+            last_login,
+            last_seen
+        FROM users
+        ORDER BY username
+    """)
+
+    users = cur.fetchall()
 
     return render_template(
         "users.html",
         users=users
     )
 
+from datetime import datetime, timedelta
+
 @app.get("/api/users")
 def get_users():
+
+    db = get_db()
+    cur = db.cursor()
+
+    cur.execute("""
+        SELECT
+            id,
+            username,
+            role,
+            last_login,
+            last_seen
+        FROM users
+        ORDER BY username
+    """)
+
+    rows = cur.fetchall()
+
     users = []
 
-    for user in pwd.getpwall():
+    for row in rows:
+
+        online = False
+
+        if row["last_seen"]:
+
+            if (
+                datetime.now() - row["last_seen"]
+            ) < timedelta(minutes=2):
+                online = True
+
         users.append({
-            "username": user.pw_name,
-            "uid": user.pw_uid,
-            "gid": user.pw_gid,
-            "home": user.pw_dir,
-            "shell": user.pw_shell
+            "id": row["id"],
+            "username": row["username"],
+            "role": row["role"],
+            "last_login": (
+                row["last_login"].strftime("%Y-%m-%d %H:%M:%S")
+                if row["last_login"]
+                else "-"
+            ),
+            "status": "Online" if online else "Offline"
         })
 
-    return users
+    return jsonify(users)
 
 from werkzeug.security import generate_password_hash
 
@@ -380,16 +414,7 @@ def kill_process(pid):
 
 @app.route("/processes")
 def show_processes():
-    conn = get_db()
-    cur = conn.cursor(dictionary=True)
-
-    cur.execute("SELECT * FROM processes")
-    processes = cur.fetchall()
-
-    return render_template(
-        "processes.html",
-        processes=processes
-    )
+    return render_template("processes.html")
 
 @app.route("/api/chart")
 def chart():
