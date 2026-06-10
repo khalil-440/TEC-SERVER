@@ -4,6 +4,8 @@ from flask import *
 from config import get_db
 import pwd 
 from flask import redirect
+from datetime import datetime
+import pytz
 
 app = Flask(__name__)
 
@@ -141,7 +143,6 @@ def test_login():
 # ======================
 # ALERTS
 # ======================
-
 @app.route("/alert")
 def alert():
 
@@ -170,7 +171,6 @@ def alert():
         alert=alerts,
         logs=logs
     )
-
 # ======================
 # USERS
 # ======================
