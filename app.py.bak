@@ -377,36 +377,27 @@ def unlock_user(username):
 @app.get("/api/processes")
 def get_processes():
 
-    processes = []
+    conn = get_db()
+    cur = conn.cursor()
 
-    for p in psutil.process_iter([
-        'pid',
-        'username',
-        'nice',
-        'memory_percent',
-        'cpu_percent',
-        'name'
-    ]):
+    cur.execute("""
+        SELECT
+            pid,
+            user,
+            cpu,
+            mem,
+            nice,
+            command
+        FROM processes
+        ORDER BY cpu DESC
+    """)
 
-        try:
-            processes.append({
-                "pid": p.info["pid"],
-                "user": p.info["username"],
-                "cpu": p.info["cpu_percent"],
-                "mem": round(p.info["memory_percent"], 2),
-                "nice": p.info["nice"],
-                "command": p.info["name"]
-            })
+    data = cur.fetchall()
 
-        except:
-            pass
+    cur.close()
+    conn.close()
 
-    processes.sort(
-        key=lambda x: x["cpu"],
-        reverse=True
-    )
-
-    return jsonify(processes)
+    return jsonify(data)
 
 @app.post("/api/processes/kill/<int:pid>")
 def kill_process(pid):
