@@ -1,5 +1,7 @@
 import psutil
 import subprocess
+import os
+import signal
 from flask import *
 from config import get_db
 import pwd 
@@ -25,6 +27,9 @@ def login():
 
         db = get_db()
         cur = db.cursor()
+
+        cur.execute("SELECT DATABASE()")
+        print("DATABASE AKTIF =", cur.fetchone())
 
         cur.execute("""
             SELECT *
@@ -337,6 +342,42 @@ def get_processes():
             pass
 
     return processes
+
+@app.post("/api/processes/kill/<int:pid>")
+def kill_process(pid):
+
+    try:
+
+        os.kill(pid, signal.SIGTERM)
+
+        conn = get_db()
+        cur = conn.cursor()
+
+        cur.execute("""
+            INSERT INTO process_logs
+            (action, pid, admin)
+            VALUES (%s, %s, %s)
+        """, (
+            "kill",
+            pid,
+            "admin"
+        ))
+
+        conn.commit()
+
+        cur.close()
+        conn.close()
+
+        return {
+            "success": True
+        }
+
+    except Exception as e:
+
+        return {
+            "success": False,
+            "error": str(e)
+        }
 
 @app.route("/processes")
 def show_processes():
