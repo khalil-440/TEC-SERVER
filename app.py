@@ -43,10 +43,22 @@ def login():
 
             if user and str(user["password_hash"]).strip() == password:
 
-                session["user"] = user["username"]
-                session["role"] = user["role"]
+		    session["user"] = user["username"]
+		    session["role"] = user["role"]
+		    session["user_id"] = user["id"]
 
-                return redirect("/dashboard")
+		    cur.execute("""
+		        UPDATE users
+		        SET last_login = NOW(),
+		            last_seen = NOW()
+		        WHERE id = %s
+		    """, (user["id"],))
+
+		    db.commit()
+
+		    print("LOGIN UPDATED:", user["username"])
+
+		    return redirect("/dashboard")
 
             return render_template(
                 "login.html",
@@ -601,6 +613,25 @@ def dbtest():
 
     return "Database Connected"
 
+
+@app.route("/api/heartbeat", methods=["POST"])
+def heartbeat():
+
+    if "user_id" not in session:
+        return jsonify({"success": False}), 401
+
+    db = get_db()
+    cur = db.cursor()
+
+    cur.execute("""
+        UPDATE users
+        SET last_seen = NOW()
+        WHERE id = %s
+    """, (session["user_id"],))
+
+    db.commit()
+
+    return jsonify({"success": True})
 
 if __name__ == "__main__":
     app.run(
