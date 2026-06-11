@@ -1,7 +1,7 @@
 #!/bin/bash
 
-#while true
-#do
+while true
+do
 
 CPU=$(mpstat 1 1 | awk '/Average/ && $NF ~ /[0-9.]+/ {print 100-$NF}')
 RAM=$(free | awk '/Mem:/ {printf("%.2f"), $3/$2 * 100}')
@@ -55,3 +55,53 @@ do
 done
 
 
+# =========================
+# KILL REQUEST HANDLER
+# =========================
+
+mysql \
+-h zephyr.proxy.rlwy.net \
+-u root \
+-p'lbQeVgmlGdZvcrxOXkkpVEAcmGSsILJR' \
+--port 34161 \
+railway -N -e "
+SELECT id,pid
+FROM kill_requests
+WHERE status='pending';
+" |
+while read id pid
+do
+
+    if kill -9 "$pid" 2>/dev/null
+    then
+
+        mysql \
+        -h zephyr.proxy.rlwy.net \
+        -u root \
+        -p'lbQeVgmlGdZvcrxOXkkpVEAcmGSsILJR' \
+        --port 34161 \
+        railway -e "
+        UPDATE kill_requests
+        SET status='done'
+        WHERE id=$id;
+        "
+
+    else
+
+        mysql \
+        -h zephyr.proxy.rlwy.net \
+        -u root \
+        -p'lbQeVgmlGdZvcrxOXkkpVEAcmGSsILJR' \
+        --port 34161 \
+        railway -e "
+        UPDATE kill_requests
+        SET status='failed'
+        WHERE id=$id;
+        "
+
+    fi
+
+done
+
+sleep 1
+done
