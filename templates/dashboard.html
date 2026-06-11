@@ -262,7 +262,7 @@
 <div class="w-3 h-3 rounded-full bg-sky-300 shadow-lg shadow-sky-300/60"></div>
 </div>
 <!---->
-<p class="text-body-sm font-medium text-on-surface-variant mb-1">{{cpu_usage}}</p>
+<p class="text-body-sm font-medium text-on-surface-variant mb-1">CPU Usage</p>
 <div class="flex items-baseline gap-2">
 <h3 id="cpu-usage"
 class="text-headline-lg font-bold text-primary">
@@ -575,21 +575,6 @@ function loadMonitoring() {
         document.getElementById("cpu-usage").innerHTML =
             data.cpu_usage + "<span class='text-[20px] opacity-60'>%</span>";
 	
-	const cpu = parseFloat(data.cpu_usage);
-const cpuBar = document.getElementById("cpu-bar");
-
-cpuBar.style.width = cpu + "%";
-
-if(cpu < 50){
-    cpuBar.className = "h-full bg-green-500 transition-all duration-500";
-}
-else if(cpu < 80){
-    cpuBar.className = "h-full bg-yellow-500 transition-all duration-500";
-}
-else{
-    cpuBar.className = "h-full bg-red-500 transition-all duration-500";
-}
-
         document.getElementById("ram-usage").innerHTML =
             data.ram_usage + "<span class='text-[20px] opacity-60'>%</span>";
 
@@ -610,7 +595,7 @@ else{
 
 	document.getElementById("swap-bar").style.width =
 	    data.swap_usage + "%";
-	
+
 	updateAlerts(data);
 	
     })
