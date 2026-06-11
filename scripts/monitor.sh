@@ -38,17 +38,19 @@ ps -eo pid,user,ni,%cpu,%mem,comm --no-headers |
 while read pid user nice cpu mem command
 do
 
-mysql \
--h zephyr.proxy.rlwy.net \
--u root \
--p'lbQeVgmlGdZvcrxOXkkpVEAcmGSsILJR' \
---port 34161 \
-railway -e "
-INSERT INTO processes
-(pid,user,cpu,mem,nice,command)
-VALUES
-($pid,'$user',$cpu,$mem,$nice,'$command');
-"
+    [ "$nice" = "-" ] && nice=0
+
+    mysql \
+    -h zephyr.proxy.rlwy.net \
+    -u root \
+    -p'lbQeVgmlGdZvcrxOXkkpVEAcmGSsILJR' \
+    --port 34161 \
+    railway -e "
+    INSERT INTO processes
+    (pid,user,cpu,mem,nice,command)
+    VALUES
+    ($pid,'$user',$cpu,$mem,$nice,'$command');
+    " 2>> /tmp/process_error.log
 
 done
 
