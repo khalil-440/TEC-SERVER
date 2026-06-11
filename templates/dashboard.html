@@ -574,6 +574,21 @@ function loadMonitoring() {
         // Card Monitoring
         document.getElementById("cpu-usage").innerHTML =
             data.cpu_usage + "<span class='text-[20px] opacity-60'>%</span>";
+	
+	const cpu = parseFloat(data.cpu_usage);
+const cpuBar = document.getElementById("cpu-bar");
+
+cpuBar.style.width = cpu + "%";
+
+if(cpu < 50){
+    cpuBar.className = "h-full bg-green-500 transition-all duration-500";
+}
+else if(cpu < 80){
+    cpuBar.className = "h-full bg-yellow-500 transition-all duration-500";
+}
+else{
+    cpuBar.className = "h-full bg-red-500 transition-all duration-500";
+}
 
         document.getElementById("ram-usage").innerHTML =
             data.ram_usage + "<span class='text-[20px] opacity-60'>%</span>";
