@@ -449,15 +449,20 @@ def kill_process(pid):
 
     try:
 
-        os.kill(pid, signal.SIGTERM)
-
         conn = get_db()
         cur = conn.cursor()
 
+        # simpan request kill
         cur.execute("""
-            INSERT INTO process_logs
-            (action, pid, admin)
-            VALUES (%s, %s, %s)
+        INSERT INTO kill_requests(pid)
+        VALUES(%s)
+        """, (pid,))
+
+        # simpan log
+        cur.execute("""
+        INSERT INTO process_logs
+        (action, pid, admin)
+        VALUES (%s, %s, %s)
         """, (
             "kill",
             pid,
@@ -520,6 +525,15 @@ def reports():
 
     reports = cur.fetchall()
 
+    cur.execute("""
+        SELECT
+            MIN(timestamp) AS start_date,
+            MAX(timestamp) AS end_date
+        FROM monitoring_logs
+    """)
+
+    date_range = cur.fetchone()
+
     if reports:
 
         avg_cpu = round(
@@ -542,13 +556,22 @@ def reports():
         max_ram = 0
         disk_growth = 0
 
+if reports:
+    start_date = reports[-1]["timestamp"].strftime("%d %b %Y")
+    end_date = reports[0]["timestamp"].strftime("%d %b %Y")
+else:
+    start_date = "-"
+    end_date = "-"
+
     return render_template(
-        "reports.html",
-        reports=reports,
-        avg_cpu=avg_cpu,
-        max_ram=max_ram,
-        disk_growth=disk_growth
-    )
+    "reports.html",
+    reports=reports,
+    avg_cpu=avg_cpu,
+    max_ram=max_ram,
+    disk_growth=disk_growth,
+    start_date=date_range["start_date"],
+    end_date=date_range["end_date"]
+)
 
 @app.route("/kill-process", methods=["POST"])
 def kill_process_reports():
@@ -568,7 +591,7 @@ def kill_process_reports():
         cur.execute("""
         INSERT INTO process_logs
         (action,pid,admin)
-        VALUES
+A        VALUES
         (%s,%s,%s)
         """,
         (
@@ -644,7 +667,7 @@ def renice_process():
         if not pid.isdigit():
             return redirect("/processes")
 
-        subprocess.run(
+ B       subprocess.run(
             [
                 "renice",
                 priority,

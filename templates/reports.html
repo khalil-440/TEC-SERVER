@@ -196,7 +196,9 @@
 <!-- Date Picker Simulation -->
 <div class="flex items-center bg-surface-container border border-outline-variant rounded-lg px-4 py-2 gap-3 cursor-pointer hover:bg-surface-container-high transition-colors">
 <span class="material-symbols-outlined text-primary" data-icon="calendar_today">calendar_today</span>
-<span class="font-mono-code text-mono-code text-on-surface">Oct 12, 2023 - Oct 19, 2023</span>
+<span class="font-mono-code text-mono-code text-on-surface">
+    {{ start_date }} - {{ end_date }}
+</span>
 <span class="material-symbols-outlined text-on-surface-variant" data-icon="expand_more">expand_more</span>
 </div>
 <!-- Export Actions -->
