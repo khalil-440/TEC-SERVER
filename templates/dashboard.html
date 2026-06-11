@@ -509,21 +509,6 @@ class="text-headline-lg font-bold text-primary">
             }
         });
 
-        // Micro-interaction: Periodic update simulation
-        setInterval(() => {
-            if (!isRealtime) return;
-            
-            // Randomize last data point slightly
-            const lastCpu = usageChart.data.datasets[0].data[usageChart.data.datasets[0].data.length - 1];
-            const newVal = Math.max(10, Math.min(95, lastCpu + (Math.random() * 10 - 5)));
-            
-            usageChart.data.datasets[0].data.shift();
-            usageChart.data.datasets[0].data.push(newVal);
-	    console.log(labels);
-	    console.log(cpuHistory);
-	    console.log(ramHistory);
-            usageChart.update('none');
-        }, 2000);
     </script>
 <script>
 
@@ -765,7 +750,7 @@ let monitoringInterval =
     setInterval(loadMonitoring, 1000);
 
 let processInterval =
-    setInterval(loadProcesses, 1000);
+    setInterval(loadProcesses, 5000);
 </script>
 </body>
 </html>
