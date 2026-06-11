@@ -647,25 +647,7 @@ function toggleRealtime() {
 
         console.log("Realtime ON");
     }
-}
 
-function refreshData() {
-
-    const btn = document.getElementById("refreshBtn");
-
-    btn.disabled = true;
-
-    loadMonitoring();
-    loadHistory();
-    loadProcesses();
-
-    setTimeout(() => {
-        btn.disabled = false;
-    }, 500);
-}
-
-function refreshData() {
-    window.location.reload(true);
 }
 
 function updateAlerts(data) {
@@ -742,15 +724,142 @@ loadProcesses();
 // Status realtime
 let realtimeEnabled = true;
 
-// Simpan interval
+// Interval normal
 let historyInterval =
-    setInterval(loadHistory, 100);
+    setInterval(loadHistory, 1000);
 
 let monitoringInterval =
-    setInterval(loadMonitoring, 100);
+    setInterval(loadMonitoring, 1000);
 
 let processInterval =
-    setInterval(loadProcesses, 100);
+    setInterval(loadProcesses, 3000);
+
+function toggleRealtime() {
+
+    if (realtimeEnabled) {
+
+        clearInterval(historyInterval);
+        clearInterval(monitoringInterval);
+        clearInterval(processInterval);
+
+        realtimeEnabled = false;
+
+        console.log("Realtime OFF");
+
+    } else {
+
+        historyInterval =
+            setInterval(loadHistory, 1000);
+
+        monitoringInterval =
+            setInterval(loadMonitoring, 1000);
+
+        processInterval =
+            setInterval(loadProcesses, 3000);
+
+        realtimeEnabled = true;
+
+        console.log("Realtime ON");
+    }
+}
+
+// Jalankan pertama kali
+loadHistory();
+loadMonitoring();
+loadProcesses();
+
+// Status realtime
+let realtimeEnabled = true;
+
+// Interval normal
+let historyInterval =
+    setInterval(loadHistory, 1000);
+
+let monitoringInterval =
+    setInterval(loadMonitoring, 1000);
+
+let processInterval =
+    setInterval(loadProcesses, 3000);
+
+function toggleRealtime() {
+
+    if (realtimeEnabled) {
+
+        clearInterval(historyInterval);
+        clearInterval(monitoringInterval);
+        clearInterval(processInterval);
+
+        realtimeEnabled = false;
+
+        console.log("Realtime OFF");
+
+    } else {
+
+        historyInterval =
+            setInterval(loadHistory, 1000);
+
+        monitoringInterval =
+            setInterval(loadMonitoring, 1000);
+
+        processInterval =
+            setInterval(loadProcesses, 3000);
+
+        realtimeEnabled = true;
+
+        console.log("Realtime ON");
+    }
+}
+
+// Jalankan pertama kali
+loadHistory();
+loadMonitoring();
+loadProcesses();
+
+// Status realtime
+let realtimeEnabled = true;
+
+// Interval normal
+let historyInterval =
+    setInterval(loadHistory, 1000);
+
+let monitoringInterval =
+    setInterval(loadMonitoring, 1000);
+
+let processInterval =
+    setInterval(loadProcesses, 3000);
+
+function toggleRealtime() {
+
+    if (realtimeEnabled) {
+
+        clearInterval(historyInterval);
+        clearInterval(monitoringInterval);
+        clearInterval(processInterval);
+
+        realtimeEnabled = false;
+
+        console.log("Realtime OFF");
+
+    } else {
+
+        historyInterval =
+            setInterval(loadHistory, 1000);
+
+        monitoringInterval =
+            setInterval(loadMonitoring, 1000);
+
+        processInterval =
+            setInterval(loadProcesses, 3000);
+
+        realtimeEnabled = true;
+
+        console.log("Realtime ON");
+    }
+}
+
+function refreshData() {
+    window.location.reload();
+}
 </script>
 </body>
 </html>
