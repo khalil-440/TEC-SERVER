@@ -556,12 +556,12 @@ def reports():
         max_ram = 0
         disk_growth = 0
 
-if reports:
-    start_date = reports[-1]["timestamp"].strftime("%d %b %Y")
-    end_date = reports[0]["timestamp"].strftime("%d %b %Y")
-else:
-    start_date = "-"
-    end_date = "-"
+    if reports:
+        start_date = reports[-1]["timestamp"].strftime("%d %b %Y")
+        end_date = reports[0]["timestamp"].strftime("%d %b %Y")
+    else:
+        start_date = "-"
+        end_date = "-"
 
     return render_template(
     "reports.html",
