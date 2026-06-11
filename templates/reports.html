@@ -200,13 +200,13 @@
 </div>
 <!-- Export Actions -->
 <div class="flex items-center gap-2">
-<button class="flex items-center gap-2 bg-surface-container-high hover:bg-surface-variant text-on-surface px-4 py-2 rounded-lg border border-outline-variant transition-colors active:scale-95">
-<span class="material-symbols-outlined text-[20px]" data-icon="picture_as_pdf">picture_as_pdf</span>
-<span class="font-body-sm">PDF</span>
+<button onclick="window.location.href='/export-pdf'">
+    PDF
 </button>
-<button class="flex items-center gap-2 bg-primary text-on-primary px-4 py-2 rounded-lg font-bold transition-colors active:scale-95 active-glow">
-<span class="material-symbols-outlined text-[20px]" data-icon="csv">csv</span>
-<span class="font-body-sm uppercase">Export CSV</span>
+<button onclick="window.location.href='/export-csv'"
+class="flex items-center gap-2 bg-primary text-on-primary px-4 py-2 rounded-lg font-bold">
+<span class="material-symbols-outlined">csv</span>
+<span>EXPORT CSV</span>
 </button>
 </div>
 </div>
