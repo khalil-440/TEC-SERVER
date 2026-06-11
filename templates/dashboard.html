@@ -734,34 +734,6 @@ let monitoringInterval =
 let processInterval =
     setInterval(loadProcesses, 3000);
 
-function toggleRealtime() {
-
-    if (realtimeEnabled) {
-
-        clearInterval(historyInterval);
-        clearInterval(monitoringInterval);
-        clearInterval(processInterval);
-
-        realtimeEnabled = false;
-
-        console.log("Realtime OFF");
-
-    } else {
-
-        historyInterval =
-            setInterval(loadHistory, 1000);
-
-        monitoringInterval =
-            setInterval(loadMonitoring, 1000);
-
-        processInterval =
-            setInterval(loadProcesses, 3000);
-
-        realtimeEnabled = true;
-
-        console.log("Realtime ON");
-    }
-}
 
 function refreshData() {
     window.location.reload();
