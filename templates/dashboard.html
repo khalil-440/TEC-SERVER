@@ -261,7 +261,8 @@
 <span class="material-symbols-outlined text-primary p-2 bg-primary/10 rounded-lg">speed</span>
 <div class="w-3 h-3 rounded-full bg-sky-300 shadow-lg shadow-sky-300/60"></div>
 </div>
-<p class="text-body-sm font-medium text-on-surface-variant mb-1">CPU Usage</p>
+<!---->
+<p class="text-body-sm font-medium text-on-surface-variant mb-1">{{cpu_usage}}</p>
 <div class="flex items-baseline gap-2">
 <h3 id="cpu-usage"
 class="text-headline-lg font-bold text-primary">
@@ -764,7 +765,7 @@ let monitoringInterval =
     setInterval(loadMonitoring, 1000);
 
 let processInterval =
-    setInterval(loadProcesses, 5000);
+    setInterval(loadProcesses, 1000);
 </script>
 </body>
 </html>
