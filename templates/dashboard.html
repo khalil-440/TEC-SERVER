@@ -635,13 +635,13 @@ function toggleRealtime() {
     } else {
 
         historyInterval =
-            setInterval(loadHistory, 1000);
+            setInterval(loadHistory, 100);
 
         monitoringInterval =
-            setInterval(loadMonitoring, 1000);
+            setInterval(loadMonitoring, 100);
 
         processInterval =
-            setInterval(loadProcesses, 5000);
+            setInterval(loadProcesses, 100);
 
         realtimeEnabled = true;
 
@@ -744,13 +744,13 @@ let realtimeEnabled = true;
 
 // Simpan interval
 let historyInterval =
-    setInterval(loadHistory, 1000);
+    setInterval(loadHistory, 100);
 
 let monitoringInterval =
-    setInterval(loadMonitoring, 250);
+    setInterval(loadMonitoring, 100);
 
 let processInterval =
-    setInterval(loadProcesses, 5000);
+    setInterval(loadProcesses, 100);
 </script>
 </body>
 </html>
