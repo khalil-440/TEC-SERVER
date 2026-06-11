@@ -733,6 +733,11 @@ def heartbeat():
 
     return jsonify({"success": True})
 
+@app.route("/settings")
+def settings():
+    return render_template("settings.html")
+
+
 if __name__ == "__main__":
     app.run(
         host="0.0.0.0",
