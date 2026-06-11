@@ -199,15 +199,17 @@
 <span class="material-symbols-outlined text-on-surface-variant" data-icon="expand_more">expand_more</span>
 </div>
 <!-- Export Actions -->
-<div class="flex items-center gap-2">
-<button onclick="window.location.href='/export-pdf'">
-    PDF
-</button>
-<button onclick="window.location.href='/export-csv'"
-class="flex items-center gap-2 bg-primary text-on-primary px-4 py-2 rounded-lg font-bold">
-<span class="material-symbols-outlined">csv</span>
-<span>EXPORT CSV</span>
-</button>
+<a href="/export-pdf"
+   class="flex items-center gap-2 bg-surface-container-high hover:bg-surface-variant text-on-surface px-4 py-2 rounded-lg border border-outline-variant">
+    <span class="material-symbols-outlined">picture_as_pdf</span>
+    <span>PDF</span>
+</a>
+
+<a href="/export-csv"
+   class="flex items-center gap-2 bg-primary text-on-primary px-4 py-2 rounded-lg font-bold">
+    <span class="material-symbols-outlined">csv</span>
+    <span>EXPORT CSV</span>
+</a>
 </div>
 </div>
 </section>
