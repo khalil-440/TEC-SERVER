@@ -620,7 +620,7 @@ function loadProcesses() {
         });
 }
 
-function toggleRealtime() {
+<!--function toggleRealtime() {
 
     if (realtimeEnabled) {
 
@@ -648,7 +648,7 @@ function toggleRealtime() {
         console.log("Realtime ON");
     }
 }
-
+-->
 function refreshData() {
 
     const btn = document.getElementById("refreshBtn");
@@ -735,10 +735,10 @@ function updateAlerts(data) {
 }
 
 // Jalankan pertama kali
-loadHistory();
+<!--loadHistory();
 loadMonitoring();
 loadProcesses();
-
+-->
 // Status realtime
 let realtimeEnabled = true;
 
@@ -747,7 +747,7 @@ let historyInterval =
     setInterval(loadHistory, 1000);
 
 let monitoringInterval =
-    setInterval(loadMonitoring, 1000);
+    setInterval(loadMonitoring, 250);
 
 let processInterval =
     setInterval(loadProcesses, 5000);
