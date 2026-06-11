@@ -103,6 +103,7 @@ do
 
 done
 
+echo "$(date)"
 sleep 1
 
 done
