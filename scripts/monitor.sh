@@ -25,85 +25,85 @@ VALUES
 # PROCESS MONITORING
 # =========================
 
-mysql \
--h zephyr.proxy.rlwy.net \
--u root \
--p'lbQeVgmlGdZvcrxOXkkpVEAcmGSsILJR' \
---port 34161 \
-railway -e "
-TRUNCATE TABLE processes;
-"
-
-ps -eo pid,user,ni,%cpu,%mem,comm --no-headers |
-while read pid user nice cpu mem command
-do
-
-    [ "$nice" = "-" ] && nice=0
-
-    mysql \
-    -h zephyr.proxy.rlwy.net \
-    -u root \
-    -p'lbQeVgmlGdZvcrxOXkkpVEAcmGSsILJR' \
-    --port 34161 \
-    railway -e "
-    INSERT INTO processes
-    (pid,user,cpu,mem,nice,command)
-    VALUES
-    ($pid,'$user',$cpu,$mem,$nice,'$command');
-    " 2>> /tmp/process_error.log
-
-done
+#mysql \
+#-h zephyr.proxy.rlwy.net \
+#-u root \
+#-p'lbQeVgmlGdZvcrxOXkkpVEAcmGSsILJR' \
+#--port 34161 \
+#railway -e "
+#TRUNCATE TABLE processes;
+#"
+#
+#ps -eo pid,user,ni,%cpu,%mem,comm --no-headers |
+#while read pid user nice cpu mem command
+#do
+#
+#    [ "$nice" = "-" ] && nice=0
+#
+#    mysql \
+#    -h zephyr.proxy.rlwy.net \
+#    -u root \
+#    -p'lbQeVgmlGdZvcrxOXkkpVEAcmGSsILJR' \
+#    --port 34161 \
+#    railway -e "
+#    INSERT INTO processes
+#    (pid,user,cpu,mem,nice,command)
+#    VALUES
+#    ($pid,'$user',$cpu,$mem,$nice,'$command');
+#    " 2>> /tmp/process_error.log
+#
+#done
 
 
 # =========================
 # KILL REQUEST HANDLER
 # =========================
 
-mysql \
--h zephyr.proxy.rlwy.net \
--u root \
--p'lbQeVgmlGdZvcrxOXkkpVEAcmGSsILJR' \
---port 34161 \
-railway -N -e "
-SELECT id,pid
-FROM kill_requests
-WHERE status='pending';
-" |
-while read id pid
-do
+#mysql \
+#-h zephyr.proxy.rlwy.net \
+#-u root \
+#-p'lbQeVgmlGdZvcrxOXkkpVEAcmGSsILJR' \
+#--port 34161 \
+#railway -N -e "
+#SELECT id,pid
+#FROM kill_requests
+#WHERE status='pending';
+#" |
+#while read id pid
+#do
+#
+#    if kill -9 "$pid" 2>/dev/null
+#    then
+#
+#        mysql \
+#        -h zephyr.proxy.rlwy.net \
+#        -u root \
+#        -p'lbQeVgmlGdZvcrxOXkkpVEAcmGSsILJR' \
+#        --port 34161 \
+#        railway -e "
+#        UPDATE kill_requests
+#        SET status='done'
+#        WHERE id=$id;
+#        "
+#
+#    else
+#
+#        mysql \
+#        -h zephyr.proxy.rlwy.net \
+#        -u root \
+#        -p'lbQeVgmlGdZvcrxOXkkpVEAcmGSsILJR' \
+#        --port 34161 \
+#        railway -e "
+#        UPDATE kill_requests
+#        SET status='failed'
+#        WHERE id=$id;
+#        "
+#
+#    fi
+#
+#done
 
-    if kill -9 "$pid" 2>/dev/null
-    then
 
-        mysql \
-        -h zephyr.proxy.rlwy.net \
-        -u root \
-        -p'lbQeVgmlGdZvcrxOXkkpVEAcmGSsILJR' \
-        --port 34161 \
-        railway -e "
-        UPDATE kill_requests
-        SET status='done'
-        WHERE id=$id;
-        "
-
-    else
-
-        mysql \
-        -h zephyr.proxy.rlwy.net \
-        -u root \
-        -p'lbQeVgmlGdZvcrxOXkkpVEAcmGSsILJR' \
-        --port 34161 \
-        railway -e "
-        UPDATE kill_requests
-        SET status='failed'
-        WHERE id=$id;
-        "
-
-    fi
-
-done
-
-echo "$(date)"
 sleep 1
 
 done
