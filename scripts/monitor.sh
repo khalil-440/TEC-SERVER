@@ -1,7 +1,7 @@
 #!/bin/bash
 
-while true
-do
+#while true
+#do
 
 CPU=$(mpstat 1 1 | awk '/Average/ && $NF ~ /[0-9.]+/ {print 100-$NF}')
 RAM=$(free | awk '/Mem:/ {printf("%.2f"), $3/$2 * 100}')
@@ -54,6 +54,4 @@ do
 
 done
 
-sleep 1
 
-done

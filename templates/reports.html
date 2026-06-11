@@ -118,6 +118,7 @@
           },
         }
     </script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body class="bg-background text-on-background font-body-base">
 <!-- Top Navigation -->
@@ -274,14 +275,8 @@
 </div>
 </div>
 <!-- Mock Chart Visualization -->
-<div class="h-[400px] w-full flex flex-col justify-between relative pt-4">
-<div class="absolute inset-0 flex items-end justify-between px-2 pb-8">
-<!-- Chart Lines (Stylized with div paths) -->
-<div class="absolute inset-0 chart-gradient opacity-40"></div>
-<svg class="absolute inset-0 w-full h-full" preserveAspectRatio="none">
-<path d="M0,350 Q50,300 100,320 T200,280 T300,310 T400,240 T500,260 T600,200 T700,220 T800,180 T900,190 T1000,150 T1100,170 T1200,100 T1300,120 T1400,80 T1500,100" fill="none" stroke="#a4e6ff" stroke-width="2.5"></path>
-<path d="M0,380 Q50,340 100,360 T200,320 T300,340 T400,280 T500,300 T600,240 T700,260 T800,220 T900,230 T1000,190 T1100,210 T1200,140 T1300,160 T1400,120 T1500,140" fill="none" stroke="#4edea3" stroke-dasharray="4 4" stroke-width="2"></path>
-</svg>
+<div class="h-[400px]">
+    <canvas id="resourceChart"></canvas>
 </div>
 <!-- Grid Lines -->
 <div class="border-b border-outline-variant/30 h-1/4 w-full"></div>
@@ -427,8 +422,81 @@ Healthy
             });
         });
     </script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+
+let resourceChart;
+
+async function loadChart() {
+
+    const response = await fetch('/api/monitoring/history');
+    const data = await response.json();
+
+    const labels = data.map(item =>
+        new Date(item.timestamp).toLocaleTimeString()
+    );
+
+    const cpuData = data.map(item => item.cpu_usage);
+    const ramData = data.map(item => item.ram_usage);
+
+    if (!resourceChart) {
+
+        const ctx = document
+            .getElementById('resourceChart')
+            .getContext('2d');
+
+        resourceChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [
+                    {
+                        label: 'CPU Usage (%)',
+                        data: cpuData,
+                        borderColor: '#a4e6ff',
+                        backgroundColor: 'rgba(164,230,255,0.1)',
+                        tension: 0.4
+                    },
+                    {
+                        label: 'RAM Usage (%)',
+                        data: ramData,
+                        borderColor: '#4edea3',
+                        backgroundColor: 'rgba(78,222,163,0.1)',
+                        tension: 0.4
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                animation: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 100
+                    }
+                }
+            }
+        });
+
+    } else {
+
+        resourceChart.data.labels = labels;
+        resourceChart.data.datasets[0].data = cpuData;
+        resourceChart.data.datasets[1].data = ramData;
+
+        resourceChart.update();
+    }
+}
+
+loadChart();
+
+setInterval(loadChart, 5000);
+
+</script>
 
 
 
-
-</body></html>
+</body>
+</html>

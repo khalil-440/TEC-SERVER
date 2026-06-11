@@ -292,10 +292,15 @@ def users():
             if selisih < timedelta(minutes=2):
                 status = "Online"
 
+        last_login = row["last_login"]
+
+        if last_login:
+            last_login = last_login + timedelta(hours=7)
+
         users.append({
             "username": row["username"],
             "role": row["role"],
-            "last_login": row["last_login"],
+            "last_login": last_login,
             "status": status
         })
 
