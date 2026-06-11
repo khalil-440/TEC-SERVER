@@ -667,7 +667,7 @@ def renice_process():
         if not pid.isdigit():
             return redirect("/processes")
 
- B       subprocess.run(
+        subprocess.run(
             [
                 "renice",
                 priority,
