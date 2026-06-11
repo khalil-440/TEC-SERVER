@@ -220,7 +220,7 @@
 <span class="material-symbols-outlined text-secondary opacity-50" data-icon="bolt">bolt</span>
 </div>
 <div class="flex items-baseline gap-2">
-<span class="font-headline-lg text-headline-lg text-on-surface">42.8%</span>
+<span class="font-headline-lg text-headline-lg text-on-surface">{{ avg_cpu }}%</span>
 <span class="text-secondary text-body-sm flex items-center gap-1">
 <span class="material-symbols-outlined text-[16px]" data-icon="trending_down">trending_down</span> 4.2%
                         </span>
@@ -234,7 +234,7 @@
 <span class="material-symbols-outlined text-tertiary opacity-50" data-icon="memory">memory</span>
 </div>
 <div class="flex items-baseline gap-2">
-<span class="font-headline-lg text-headline-lg text-on-surface">14.2 GB</span>
+<span class="font-headline-lg text-headline-lg text-on-surface">{{ max_ram }}%</span>
 <span class="text-tertiary text-body-sm flex items-center gap-1">
 <span class="material-symbols-outlined text-[16px]" data-icon="trending_up">trending_up</span> 1.8%
                         </span>
@@ -248,7 +248,7 @@
 <span class="material-symbols-outlined text-primary opacity-50" data-icon="database">database</span>
 </div>
 <div class="flex items-baseline gap-2">
-<span class="font-headline-lg text-headline-lg text-on-surface">+840 MB</span>
+<span class="font-headline-lg text-headline-lg text-on-surface">{{ disk_growth }}%</span>
 <span class="text-on-surface-variant text-body-sm">Last 7 Days</span>
 </div>
 <div class="absolute bottom-0 left-0 right-0 h-1 bg-primary/10 group-hover:bg-primary/20 transition-colors"></div>
@@ -326,67 +326,58 @@
 </tr>
 </thead>
 <tbody class="divide-y divide-outline-variant">
-<!-- Row 1 -->
+
+{% for row in reports %}
+
 <tr class="hover:bg-white/[0.02] transition-colors group">
-<td class="px-6 py-4 font-mono-data text-mono-data text-on-surface">2023-10-19 14:32:05</td>
-<td class="px-6 py-4 font-mono-data text-mono-data text-on-surface-variant">Worker-Node-04</td>
+
+<td class="px-6 py-4 font-mono-data text-mono-data text-on-surface">
+    {{ row.timestamp }}
+</td>
+
+<td class="px-6 py-4 font-mono-data text-mono-data text-on-surface-variant">
+    Root-Node-01
+</td>
+
 <td class="px-6 py-4">
-<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-secondary/15 text-secondary text-[11px] font-bold">
-<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span> Healthy
-                                    </span>
+
+{% if row.cpu_usage > 90 %}
+<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-red-500/15 text-red-500 text-[11px] font-bold">
+Critical
+</span>
+
+{% elif row.cpu_usage > 70 %}
+<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-yellow-500/15 text-yellow-500 text-[11px] font-bold">
+Warning
+</span>
+
+{% else %}
+<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-green-500/15 text-green-500 text-[11px] font-bold">
+Healthy
+</span>
+{% endif %}
+
 </td>
-<td class="px-6 py-4 font-mono-data text-mono-data text-on-surface text-right">24.5%</td>
-<td class="px-6 py-4 font-mono-data text-mono-data text-on-surface text-right">4.8 GB</td>
+
+<td class="px-6 py-4 font-mono-data text-mono-data text-on-surface text-right">
+    {{ row.cpu_usage }}%
+</td>
+
+<td class="px-6 py-4 font-mono-data text-mono-data text-on-surface text-right">
+    {{ row.ram_usage }}%
+</td>
+
 <td class="px-6 py-4 text-center">
-<button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors" data-icon="visibility">visibility</button>
+    <button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors">
+        visibility
+    </button>
 </td>
+
 </tr>
-<!-- Row 2 -->
-<tr class="hover:bg-white/[0.02] transition-colors group">
-<td class="px-6 py-4 font-mono-data text-mono-data text-on-surface">2023-10-19 14:15:12</td>
-<td class="px-6 py-4 font-mono-data text-mono-data text-on-surface-variant">Database-Cluster-01</td>
-<td class="px-6 py-4">
-<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-tertiary/15 text-tertiary text-[11px] font-bold">
-<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span> Warning
-                                    </span>
-</td>
-<td class="px-6 py-4 font-mono-data text-mono-data text-on-surface text-right">88.2%</td>
-<td class="px-6 py-4 font-mono-data text-mono-data text-on-surface text-right">31.4 GB</td>
-<td class="px-6 py-4 text-center">
-<button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors" data-icon="visibility">visibility</button>
-</td>
-</tr>
-<!-- Row 3 -->
-<tr class="hover:bg-white/[0.02] transition-colors group">
-<td class="px-6 py-4 font-mono-data text-mono-data text-on-surface">2023-10-19 13:45:00</td>
-<td class="px-6 py-4 font-mono-data text-mono-data text-on-surface-variant">Auth-Service-A</td>
-<td class="px-6 py-4">
-<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-secondary/15 text-secondary text-[11px] font-bold">
-<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span> Healthy
-                                    </span>
-</td>
-<td class="px-6 py-4 font-mono-data text-mono-data text-on-surface text-right">12.1%</td>
-<td class="px-6 py-4 font-mono-data text-mono-data text-on-surface text-right">2.1 GB</td>
-<td class="px-6 py-4 text-center">
-<button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors" data-icon="visibility">visibility</button>
-</td>
-</tr>
-<!-- Row 4 -->
-<tr class="hover:bg-white/[0.02] transition-colors group">
-<td class="px-6 py-4 font-mono-data text-mono-data text-on-surface">2023-10-19 13:22:44</td>
-<td class="px-6 py-4 font-mono-data text-mono-data text-on-surface-variant">Log-Processor-02</td>
-<td class="px-6 py-4">
-<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-error/15 text-error text-[11px] font-bold">
-<span class="w-1.5 h-1.5 rounded-full bg-error"></span> Critical
-                                    </span>
-</td>
-<td class="px-6 py-4 font-mono-data text-mono-data text-on-surface text-right">99.9%</td>
-<td class="px-6 py-4 font-mono-data text-mono-data text-on-surface text-right">15.9 GB</td>
-<td class="px-6 py-4 text-center">
-<button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors" data-icon="visibility">visibility</button>
-</td>
-</tr>
-</tbody>
+
+{% endfor %}
+
+</tbody> 
 </table>
 </div>
 <!-- Pagination -->

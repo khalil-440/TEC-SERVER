@@ -495,33 +495,49 @@ def chart():
 # ======================
 # REPORT
 # ======================
-
 @app.route("/reports")
 def reports():
 
-    try:
+    db = get_db()
+    cur = db.cursor()
 
-        db = get_db()
-        cur = db.cursor()
-
-        cur.execute("""
+    cur.execute("""
         SELECT *
         FROM monitoring_logs
         ORDER BY timestamp DESC
         LIMIT 100
-        """)
+    """)
 
-        data = cur.fetchall()
+    reports = cur.fetchall()
 
-    except Exception as e:
+    if reports:
 
-        print("DB ERROR:", e)
+        avg_cpu = round(
+            sum(r["cpu_usage"] for r in reports)
+            / len(reports), 1
+        )
 
-        data = []
+        max_ram = max(
+            r["ram_usage"] for r in reports
+        )
+
+        disk_growth = (
+            reports[0]["disk_usage"]
+            - reports[-1]["disk_usage"]
+        )
+
+    else:
+
+        avg_cpu = 0
+        max_ram = 0
+        disk_growth = 0
 
     return render_template(
         "reports.html",
-        reports=data
+        reports=reports,
+        avg_cpu=avg_cpu,
+        max_ram=max_ram,
+        disk_growth=disk_growth
     )
 
 @app.route("/kill-process", methods=["POST"])
