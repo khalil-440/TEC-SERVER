@@ -263,13 +263,20 @@ def clear_alerts():
 
 @app.route('/api/alerts')
 def api_alerts():
+
     conn = get_db()
     cur = conn.cursor(pymysql.cursors.DictCursor)
 
     cur.execute("""
-        SELECT *
+        SELECT
+            id,
+            type,
+            value,
+            status,
+            DATE_ADD(created_at, INTERVAL 7 HOUR) AS created_at
         FROM alerts
-        ORDER BY created_at DESC
+        ORDER BY id DESC
+        LIMIT 20
     """)
 
     data = cur.fetchall()
