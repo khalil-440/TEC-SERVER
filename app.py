@@ -253,6 +253,25 @@ def clear_alerts():
             "success": False,
             "error": str(e)
         })
+
+@app.route('/api/alerts')
+def api_alerts():
+    conn = get_db()
+    cur = conn.cursor(pymysql.cursors.DictCursor)
+
+    cur.execute("""
+        SELECT *
+        FROM alerts
+        ORDER BY created_at DESC
+    """)
+
+    data = cur.fetchall()
+
+    cur.close()
+    conn.close()
+
+    return jsonify(data)
+
 # ======================
 # USERS
 # ======================
