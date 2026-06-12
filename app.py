@@ -213,7 +213,14 @@ def alert():
         FROM alerts
         ORDER BY id DESC
     """)
+
     alerts = cur.fetchall()
+
+    from datetime import timedelta
+
+    for a in alerts:
+        if a["created_at"]:
+            a["created_at"] = a["created_at"] + timedelta(hours=7)
 
     # Dispatch log (simulasi email)
     cur.execute("""
