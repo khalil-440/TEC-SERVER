@@ -214,9 +214,11 @@ def alert():
         type,
         value,
         status,
+	created_at
     FROM alerts
     ORDER BY id DESC
     """)
+
     alerts = cur.fetchall()
 
 #    from datetime import timedelta
