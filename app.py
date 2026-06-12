@@ -545,10 +545,11 @@ def reports():
     cur = db.cursor()
 
     cur.execute("""
-        SELECT *
-        FROM monitoring_logs
-        ORDER BY timestamp DESC
-        LIMIT 100
+      SELECT *
+      FROM monitoring_logs
+      WHERE timestamp <= NOW() - INTERVAL 1 MINUTE
+      ORDER BY timestamp DESC
+      LIMIT 100
     """)
 
     reports = cur.fetchall()
