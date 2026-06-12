@@ -209,11 +209,22 @@ def alert():
 
     # Alert history
     cur.execute("""
-        SELECT *
-        FROM alerts
-        ORDER BY id DESC
+    SELECT
+        id,
+        type,
+        value,
+        status,
+        DATE_ADD(created_at, INTERVAL 7 HOUR) AS created_at
+    FROM alerts
+    ORDER BY id DESC
     """)
     alerts = cur.fetchall()
+
+    from datetime import timedelta
+
+    for a in alerts:
+        if a["created_at"]:
+            a["created_at"] = a["created_at"] + timedelta(hours=7)
 
     # Dispatch log (simulasi email)
     cur.execute("""
@@ -718,6 +729,24 @@ def renice_process():
 
     return redirect("/processes")
 
+@app.route("/api/reports/filter")
+def filter_reports():
+
+    hours = request.args.get("hours", 24)
+
+    db = get_db()
+    cur = db.cursor()
+
+    cur.execute("""
+        SELECT *
+        FROM monitoring_logs
+        WHERE timestamp >= NOW() - INTERVAL %s HOUR
+        ORDER BY timestamp DESC
+    """, (hours,))
+
+    reports = cur.fetchall()
+
+    return jsonify(reports)
 
 # ======================
 # TEST

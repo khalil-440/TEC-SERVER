@@ -189,7 +189,17 @@
 </div>
 <div class="flex flex-wrap items-center gap-4">
 <!-- Date Picker Simulation -->
-<div class="flex items-center bg-surface-container border border-outline-variant rounded-lg px-4 py-2 gap-3 cursor-pointer hover:bg-surface-container-high transition-colors">
+<select
+    id="timeFilter"
+    onchange="loadFilteredData()"
+    class="bg-surface-container border border-outline-variant rounded-lg px-4 py-2 text-on-surface">
+
+    <option value="1">Last 1 Hour</option>
+    <option value="24" selected>Last 24 Hours</option>
+    <option value="168">Last 7 Days</option>
+    <option value="720">Last 30 Days</option>
+
+</select>
 <span class="material-symbols-outlined text-primary" data-icon="calendar_today">calendar_today</span>
 <span class="font-mono-code text-mono-code text-on-surface">
     {{ start_date }} - {{ end_date }}
@@ -318,7 +328,9 @@
 <th class="px-6 py-4 font-mono-code text-[11px] text-on-surface-variant uppercase tracking-widest text-center">Actions</th>
 </tr>
 </thead>
-<tbody class="divide-y divide-outline-variant">
+<tbody
+    id="reportTable"
+    class="divide-y divide-outline-variant">
 
 {% for row in reports %}
 
@@ -493,7 +505,88 @@ setInterval(loadChart, 5000);
 
 </script>
 
+<script>
 
+async function loadFilteredData() {
+
+    const hours =
+        document.getElementById("timeFilter").value;
+
+    const response =
+        await fetch(
+            `/api/reports/filter?hours=${hours}`
+        );
+
+    const data =
+        await response.json();
+
+    let html = "";
+
+    data.forEach(row => {
+
+        let status = `
+            <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-green-500/15 text-green-500 text-[11px] font-bold">
+                Healthy
+            </span>
+        `;
+
+        if (row.cpu_usage > 90) {
+
+            status = `
+            <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-red-500/15 text-red-500 text-[11px] font-bold">
+                Critical
+            </span>
+            `;
+        }
+        else if (row.cpu_usage > 70) {
+
+            status = `
+            <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-yellow-500/15 text-yellow-500 text-[11px] font-bold">
+                Warning
+            </span>
+            `;
+        }
+
+        html += `
+        <tr class="hover:bg-white/[0.02]">
+
+            <td class="px-6 py-4">
+                ${row.timestamp}
+            </td>
+
+            <td class="px-6 py-4">
+                Root-Node-01
+            </td>
+
+            <td class="px-6 py-4">
+                ${status}
+            </td>
+
+            <td class="px-6 py-4 text-right">
+                ${row.cpu_usage}%
+            </td>
+
+            <td class="px-6 py-4 text-right">
+                ${row.ram_usage}%
+            </td>
+
+            <td class="px-6 py-4 text-center">
+                <button class="material-symbols-outlined">
+                    visibility
+                </button>
+            </td>
+
+        </tr>
+        `;
+    });
+
+    document.getElementById("reportTable")
+        .innerHTML = html;
+}
+
+loadFilteredData();
+
+</script>
 
 </body>
 </html>
