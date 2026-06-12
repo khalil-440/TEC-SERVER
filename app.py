@@ -209,11 +209,10 @@ def alert():
 
     # Alert history
     cur.execute("""
-    SELECT
-    FROM alerts
-    ORDER BY id DESC
+        SELECT *
+        FROM alerts
+        ORDER BY id DESC
     """)
-
     alerts = cur.fetchall()
 
     # Dispatch log (simulasi email)
