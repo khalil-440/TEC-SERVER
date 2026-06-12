@@ -214,17 +214,16 @@ def alert():
         type,
         value,
         status,
-        DATE_ADD(created_at, INTERVAL 7 HOUR) AS created_at
     FROM alerts
     ORDER BY id DESC
     """)
     alerts = cur.fetchall()
 
-    from datetime import timedelta
-
-    for a in alerts:
-        if a["created_at"]:
-            a["created_at"] = a["created_at"] + timedelta(hours=7)
+#    from datetime import timedelta
+#
+#   for a in alerts:
+#        if a["created_at"]:
+#           a["created_at"] = a["created_at"] + timedelta(hours=7)
 
     # Dispatch log (simulasi email)
     cur.execute("""
