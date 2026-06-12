@@ -210,7 +210,8 @@
     <span class="material-symbols-outlined">picture_as_pdf</span>
 </a>
 
-<a href="/export-csv"
+<a id="csvExportBtn"
+   href="/export-csv?hours=1"
    class="flex items-center gap-2 bg-primary text-on-primary px-4 py-2 rounded-lg font-bold">
     <span class="material-symbols-outlined">csv</span>
     <span>EXPORT CSV</span>
@@ -390,6 +391,24 @@ Healthy
         });
     </script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+
+function updateExportLink() {
+
+    const hours =
+        document.getElementById("timeFilter").value;
+
+    document.getElementById("csvExportBtn")
+        .href = `/export-csv?hours=${hours}`;
+}
+
+document.getElementById("timeFilter")
+    .addEventListener("change", updateExportLink);
+
+updateExportLink();
+
+</script>
 
 </body>
 </html>

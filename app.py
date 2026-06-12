@@ -637,6 +637,8 @@ A        VALUES
 @app.route("/export-csv")
 def export_csv():
 
+    hours = request.args.get("hours", 1)
+
     db = get_db()
     cur = db.cursor()
 
@@ -647,8 +649,9 @@ def export_csv():
                disk_usage,
                swap_usage
         FROM monitoring_logs
+        WHERE timestamp >= NOW() - INTERVAL %s HOUR
         ORDER BY timestamp DESC
-    """)
+    """, (hours,))
 
     rows = cur.fetchall()
 
