@@ -412,23 +412,18 @@ def add_user():
 
     return redirect("/users")
 
-@app.route("/lock_user/<username>")
-def lock_user(username):
+@app.route("/kick_user/<username>")
+def kick_user(username):
 
-    subprocess.run(
-        ["usermod", "-L", username],
-        check=True
-    )
+    try:
 
-    return redirect("/users")
+        subprocess.run(
+            ["pkill", "-KILL", "-u", username],
+            check=False
+        )
 
-@app.route("/unlock_user/<username>")
-def unlock_user(username):
-
-    subprocess.run(
-        ["usermod", "-U", username],
-        check=True
-    )
+    except Exception as e:
+        print("KICK USER ERROR:", e)
 
     return redirect("/users")
 
