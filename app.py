@@ -210,10 +210,6 @@ def alert():
     # Alert history
     cur.execute("""
     SELECT
-        id,
-        type,
-        value,
-        status,
     FROM alerts
     ORDER BY id DESC
     """)
