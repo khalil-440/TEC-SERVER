@@ -215,6 +215,7 @@ def alert():
         value,
         status,
 	created_at
+	DATE_ADD(created_at, INTERVAL 7 HOUR) AS created_at
     FROM alerts
     ORDER BY id DESC
     """)
