@@ -196,7 +196,7 @@
 <header class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
 <div>
 <h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">System Processes</h1>
-<p class="text-on-surface-variant text-body-base mt-1">Real-time resource monitoring and process thread control.</p>
+<p class="text-on-surface-variant text-body-base mt-1"></p>
 </div>
 <div class="flex items-center gap-3">
 <div class="relative flex items-center bg-surface-container-low border border-outline-variant rounded-lg px-4 py-2.5 focus-within:border-primary transition-all">
@@ -227,7 +227,7 @@
 <th class="px-6 py-4 font-bold">MEM%</th>
 <th class="px-6 py-4 font-bold">NICE</th>
 <th class="px-6 py-4 font-bold">COMMAND</th>
-<th class="px-6 py-4 font-bold text-right">ACTIONS</th>
+<th class="px-6 py-4 font-bold text-right"></th>
 </tr>
 </thead>
 <tbody
@@ -376,47 +376,11 @@ function renderTable(data) {
                 ${proc.command}
             </td>
 
-            <td class="px-6 py-4 text-right">
-                <button
-                    onclick="killProcess(${proc.pid})"
-                    class="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded">
-                    Kill
-                </button>
-            </td>
-
         </tr>
         `;
     });
 }
 
-async function killProcess(pid) {
-
-    if (!confirm("Kill PID " + pid + " ?")) {
-        return;
-    }
-
-    try {
-
-        const response = await fetch(
-            '/api/processes/kill/' + pid,
-            {
-                method: 'POST'
-            }
-        );
-
-        const result = await response.json();
-
-        alert(JSON.stringify(result));
-
-        loadProcesses();
-
-    } catch(error) {
-
-        alert(error);
-
-    }
-
-}
 
 document.getElementById('processSearch')
 .addEventListener('input', function() {
